@@ -1,0 +1,26 @@
+{
+  "name": "cisco_app",
+  "version": "1.0.0",
+  "description": "Cisco standalone app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3",
+    "body-parser": "1.15.2",
+    "method-override": "2.3.6",
+    "errorhandler": "1.4.3",
+    "serve-favicon": "2.3.0",
+    "jive-sdk":"*",
+    "consolidate": "0.14.1",
+    "q": "1.4.1",
+    "request": "2.74.0",
+    "pg":"6.4.0",
+    "rgb-hex":"2.1.0",
+    "pdfkit":"0.8.3",
+    "node-datetime":"1.0.1"
+  }
+}
