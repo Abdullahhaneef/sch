@@ -12,35 +12,9 @@ var dt = dateTime.create();
 var formatted = dt.format('m-d-Y');
 var client;
 
-///////Admin Capability/////////
+var conString = "postgres://ahaneef:123456@localhost:5432/revel_ashes"
 
-var common_skills_list=[];
-var requester_list=[];
-//var resource_type_list=[];
-var region_list =[];
-var total_bandwidth1;
-var average_bandwidth1;
-var ADMIN_PDF_DIR_NAME = 'trend_analysis_reports/';
-var doc;
-
-var architecture_service_solution = [];
-var architecture_service_solution_count = [];
-var field_skills = [];
-var field_skills_count = [];
-var exec_accel = [];
-var exec_accel_count = [];
-var transformation = [];
-var transformation_count = [];
-var shared_service = [];
-var shared_service_count = [];
-
-/////////////////////////////////
-
-
-//var conString = "pg://adminuz3epcl:JdQ3JSSSxwjt@toalgostage-lc6djk3xpsn3-2-toalgostage.cloudapps.cisco.com:56391/lc6djk3xpsn3";
-
-var conString = "pg://postgres@localhost:5432/revel_ashes"
-app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}));
 
 var setupResponse = function(res) {
     res.writeHead(200, {'Content-Type': 'application/json'});
@@ -71,10 +45,30 @@ router.get('/analytics',function(req, res){
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////ADMIN CAPABILITY///////////////////////////////////////////////////////////////////
-///////////////////////////Get Employees////////////////////////////////////////////////////
+///////////////////////////Add Employees////////////////////////////////////////////////////
 
+app.post("/addEmployee", function(req, res) {
+    setupResponse(res);
+    var empId=0;
+    query_add_employee = "INSERT INTO employees(name) values('"+req.body.empName+"') RETURNING id";
+    client.query(query_add_employee, function(err, result) {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            empId = result.rows[0].id;
+            client.end();
+            
+        }
+        res.end(JSON.stringify({"status":"success", "empId":empId}));
+    });
+});
+
+
+
+////////////////////////////Add Employee Skills///////////////////////////////////////////////
 app.post("/addEmpSkill", function(req, res) {
-    console.log(req.body);
+    console.log(req.body.empId);
 });
 
 

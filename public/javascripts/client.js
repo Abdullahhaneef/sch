@@ -1,17 +1,35 @@
-
-  var emp_id;
-  
-  function addEmployee(){
   var SERVER_URI = "http://localhost:3000";
-  
+  var empId = 0;
   function showCommunityAnalytics() {
-    window.open(SERVER_URI + '/analytics','_blank');
+    addEmployee();
   }
 
   function showCommunityTransformation() {
-    window.open(SERVER_URI + '/transformation','_blank');
-  }
+    window.open(SERVER_URI + '/transformation','_self');
+  }  
 
+
+
+  function addEmployee(){
+    empName  = document.getElementById("user").value;
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": SERVER_URI+"/addEmployee",
+      "method": "POST",
+      "headers": {
+        "content-type": "application/x-www-form-urlencoded",
+        "cache-control": "no-cache",
+      },
+      "data": {
+        empName
+      }
+    }
+    $.ajax(settings).done(function (response) {      
+        empId = response.empId;
+        window.open(SERVER_URI + '/analytics','_self');
+    });    
+  }
 
 
   function addEmpSkill(){
@@ -206,6 +224,7 @@
     console.log('cert' + certification);
     console.log('li' + learning_interest);
 */
+    console.log(empId);
     var settings = {
       "async": true,
       "crossDomain": true,
@@ -216,7 +235,7 @@
         "cache-control": "no-cache",
       },
       "data": {
-        core_competency , tool_capability , category , skill , experience , level , certification , learning_interest
+        empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
       }
     }
     $.ajax(settings).done(function (response) {      
