@@ -1,9 +1,15 @@
-  //var http = new XMLHttpRequest();
-  var SERVER_URI = "localhost:3000";
+
   var emp_id;
   
   function addEmployee(){
+  var SERVER_URI = "http://localhost:3000";
+  
+  function showCommunityAnalytics() {
+    window.open(SERVER_URI + '/analytics','_blank');
+  }
 
+  function showCommunityTransformation() {
+    window.open(SERVER_URI + '/transformation','_blank');
   }
 
 
