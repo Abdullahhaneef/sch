@@ -1,18 +1,16 @@
 
   var emp_id;
-  
-  function addEmployee(){
+
   var SERVER_URI = "http://localhost:3000";
   
   function showCommunityAnalytics() {
-    window.open(SERVER_URI + '/analytics','_blank');
+    console.log("hahaaha")
+    window.open(SERVER_URI + '/analytics','_self');
   }
 
   function showCommunityTransformation() {
-    window.open(SERVER_URI + '/transformation','_blank');
+    window.open(SERVER_URI + '/transformation','_self');
   }
-
-
 
   function addEmpSkill(){
 
@@ -224,3 +222,4 @@
     });
     window.scrollTo(0,0);
   }
+
