@@ -1,5 +1,5 @@
   //var http = new XMLHttpRequest();
-  var SERVER_URI = "https://localhost:3000";
+  var SERVER_URI = "localhost:3000";
   var emp_id;
   
   function addEmployee(){
@@ -28,7 +28,7 @@
       else{
 /////////////////////////////////////////////////////////
 
-//////////////////values from id/////////////////////////
+//////////////////values from tag id/////////////////////////
 
 ////////////////////////////////////////////////////////        
 //////////////////// Core competency/////////////////////
@@ -152,16 +152,46 @@
 
 //////////////////////////////////////////////////////////////////
         var rowValue = $(myRows[i]).find('td');
-        experience[index] = rowValue.find("Select")[0].value;
+
+////////////////////Experience////////////////////////////////////////        
+        if (rowValue.find("Select")[0].value == 'Project Experience'){
+          experience[index] = 1;
+        }
+        else if (rowValue.find("Select")[0].value == 'General Education'){
+          experience[index] = 2; 
+        }
+        else if (rowValue.find("Select")[0].value == 'N/A'){
+          experience[index] = 3; 
+        }
+
+/////////////////////////Level///////////////////////////////////////////
+
         level[index] = rowValue.find("Select")[1].value;
-        certification[index] = rowValue.find("Select")[2].value;
-        learning_interest[index] = rowValue.find("Select")[3].value;        
+
+/////////////////////////Certification//////////////////////////////////////
+
+        if (rowValue.find("Select")[2].value == 'YES'){
+          certification[index] = 1;
+        }
+        else if (rowValue.find("Select")[2].value == 'NO'){
+          certification[index] = 2; 
+        }
+
+/////////////////////////Learning Interest//////////////////////////////////////
+
+        if (rowValue.find("Select")[3].value == 'YES'){
+          learning_interest[index] = 1;
+        }
+        else if (rowValue.find("Select")[3].value == 'NO'){
+          learning_interest[index] = 2; 
+        }
 
 //////////////////index increasing for values in array////////////////////
+
         index = index + 1;
       }
     }
-    console.log('cc' + core_competency);
+/*    console.log('cc' + core_competency);
     console.log('t_c' + tool_capability);
     console.log('cat' + category);
     console.log('sk' + skill);
@@ -169,36 +199,22 @@
     console.log('le' + level);
     console.log('cert' + certification);
     console.log('li' + learning_interest);
-
-/*    var settings = {
+*/
+    var settings = {
       "async": true,
       "crossDomain": true,
-      "url": SERVER_URI+"/add_employee",
+      "url": SERVER_URI+"/addEmpSkill",
       "method": "POST",
       "headers": {
         "content-type": "application/x-www-form-urlencoded",
         "cache-control": "no-cache",
       },
       "data": {
-        data
+        core_competency , tool_capability , category , skill , experience , level , certification , learning_interest
       }
     }
     $.ajax(settings).done(function (response) {      
-        jQuery('#requestFormDiv').hide();
-        jQuery('#adminCapabilityButton').hide();
-        jQuery('#requestFormButton').hide();
-        jQuery('#adminCapabilityDiv').show();
-        jQuery('#mainPage').hide();
-        jQuery('#aptitude').hide();
-        jQuery('#interest').hide();
-        jQuery('#interestAdd').hide();
-        jQuery('#addEmp').show();
-        jQuery('#addEmplyeeBtn').show();
-        emp_table.destroy(false);
-        getEmployee();
-        document.getElementById("employeeForm").reset();
-        $('input[type="radio"]').attr('checked', false); 
         jQuery.notify("Employee Added Successfully.", "success");
     });
-    window.scrollTo(0,0);*/
+    window.scrollTo(0,0);
   }
