@@ -1,0 +1,253 @@
+<html>
+<head>
+    <link rel="stylesheet" href="stylesheets/main.css" type="text/css" media="screen" />
+    <link rel="stylesheet" href="stylesheets/sweetalert2.min.css" type="text/css" media="screen" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> 
+    <link href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css" rel="stylesheet"> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/client.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/sweetalert2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="javascripts/notify.min.js"></script>
+    <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
+    
+    <link rel="stylesheet" src="stylesheets/bootstrap-slider.css" type="text/css">
+    <!-- <link rel="stylesheet" src="stylesheets/bootstrap-slider.min.css" type="text/css"> -->
+    <script type="text/javascript" charset="utf-8" src="javascripts/bootstrap-slider.js"></script>
+    <!-- <script type="text/javascript" charset="utf-8" src="javascripts/bootstrap-slider.min.js"></script> -->
+    <!-- <script href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.1/bootstrap-slider.js"></script> -->
+    <!-- <script href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.1/bootstrap-slider.min.js"></script> -->
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+</head>
+
+
+<script type="text/javascript">
+    var slider = new Slider("#ex13", {
+    ticks: [0, 100, 200, 300, 400],
+    ticks_labels: ['$0', '$100', '$200', '$300', '$400'],
+    ticks_snap_bounds: 30
+});
+</script>
+
+<style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
+
+    <style type="text/css">
+        body {
+          /*background-color:#fff;*/
+          background-color:#36a1d5;
+          -webkit-font-smoothing: antialiased;
+          font: normal 14px sans-serif;
+      }
+
+    .block{
+        background: #36a1d5; /* Old browsers */
+        background: -moz-linear-gradient(top, #36a1d5 0%, #3073b4 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #36a1d5 0%,#3073b4 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #36a1d5 0%,#3073b4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#36a1d5', endColorstr='#3073b4',GradientType=0 );
+        padding: 10px 20px 30px 20px;
+    }
+    .block-center {
+        max-width: 420px;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .button {
+      display: inline-block;
+      border: none;
+      color: #333;
+      text-decoration: none;
+      background-color: #fdfdfd;
+      padding: 15px 25px;
+      font-size: 15px;
+      font-weight: 400;
+      letter-spacing: 2px;
+      -webkit-border-radius: 2px;
+      border-radius: 2px;
+      text-align: center;
+      position: relative;
+      outline: none;
+      -webkit-transition: background-color .1s ease;
+      -o-transition: background-color .1s ease;
+      transition: background-color .1s ease;
+      border-bottom: 4px solid #ccc;
+  }
+
+  .button::after {
+    -webkit-transition: background-color .2s ease;
+    -o-transition: background-color .2s ease;
+    transition: background-color .2s ease;
+    position: absolute;
+    content: '';
+    height: 4px;
+    bottom: 0;
+    width: 100%;
+    background-color: #434343;
+    opacity: .28;
+    -webkit-border-bottom-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    -webkit-border-bottom-right-radius: 2px;
+    border-bottom-right-radius: 2px;
+    left: 0; 
+    border-bottom: 4px solid #ccc;
+  }
+
+    .button:focus, .button:hover {
+        text-decoration: none;
+        color: #fff; 
+        border-bottom: 4px solid #10215F;
+    }
+
+    .button:hover {
+        background-color: #015383;
+        border-bottom: 4px solid #10215F; 
+    }
+
+    .button:hover::after {
+      opacity: .22; 
+  }
+
+  .button:active {
+    background-color: #f8bf50;
+}
+
+.button:active::after {
+  opacity: .32; 
+}
+
+p{
+    font-size: 30px;
+    text-align: center;
+    color: white;
+    margin: 24px 0;
+    font-family: "Roboto",arial,sans-serif;
+}
+.wrapper {
+    text-align: center;
+}
+
+</style>
+
+<body>
+  <div id = "mainPage">
+      <div class="block-center">
+          <h4 style="text-align: center; height: 115px; margin-top: 0px;" > <img src="http://www.firescope.com/images/Logos/Integration/Cisco.png" style="color: white; max-width:226px;"></h4>
+          <p>REVEL<br> Human Element Survey</p>
+      </div>
+      <div style="margin: 15">
+        <div class="form-group">
+          <!-- My Persona -->
+            <label style="color: white;" for="head_main_persona"><h4><b>MY PERSONA</b></h4></label>
+            <br />
+            <label style="margin-left: 20; margin-top: 0" for="head_sub_persona"><i>what is your mix ?</i></label>
+            <br />
+            <label style="margin-left: 40;" for="head_ques_persona">If you have not already taken Revel’s personality quiz to get your climber / dreamer / purist mix (or you have forgotten your mix), you can find the quiz </label>
+            <a href="http://revelconsulting.com/test/persona/" role="button"><i><b>Here</b></i></a>
+            <br />
+            <br />
+            <div class="col-xs-2">
+              <label style="color: white;" for="climber">Climber (0-100%)</label>
+              <input type="text" class="form-control" id="climber">
+              <br />
+              <label style="color: white;" for="dreamer">Dreamer (0-100%)</label>
+              <input type="text" class="form-control" id="dreamer">
+              <br />
+              <label style="color: white;" for="purist">Purist (0-100%)</label>
+              <input type="text" class="form-control" id="purist">
+            </div>
+
+            <br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br />
+
+          <!-- My Satisfaction -->
+            <label style="color: white;" for="head_main_satisfaction"><h4><b>MY SATISFACTION</b></h4></label>
+            <br />
+            <label style="margin-left: 20;" for="head_ques_satisfaction">how are you? Please enter where you derive satisfaction, on a scale from 1-5, where 5 is highest and 1 is lowest:</label>
+            <br />
+            <br />
+            <div class="col-xs-2">
+              <label style="color: white;" for="self">Self (1-5)</label>
+              <input type="text" class="form-control" id="self">
+              <br />
+              <label style="color: white;" for="project">Project (1-5)</label>
+              <input type="text" class="form-control" id="project">
+              <br />
+              <label style="color: white;" for="client">Client (1-5)</label>
+              <input type="text" class="form-control" id="client">
+              <br />
+              <label style="color: white;" for="community">Community (1-5)</label>
+              <input type="text" class="form-control" id="community">
+              <br />
+              <label style="color: white;" for="revel">Revel (1-5)</label>
+              <input type="text" class="form-control" id="revel">
+              <br />
+              <label style="color: white;" for="career">Career (1-5)</label>
+              <input type="text" class="form-control" id="career">
+            </div>
+
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <br /><br /><br /><br /><br /><br /><br /><br />
+
+          <!-- My Goal -->
+            <label style="color: white;" for="head_main_goal"><h4><b>MY GOAL</b></h4></label>
+            <br />
+            <label style="margin-left: 40;" for="head_ques_goal">what is your long-term vision of success? who do you want to be? where do you want to grow?</label>
+            <br />
+            <br />
+            <div class="col-xs-4">
+              <textarea class="form-control" rows="5" id="goal"></textarea>
+            </div>
+
+            <br /><br /><br /><br /><br /><br /><br /><br />
+
+          <!-- My Win -->
+            <label style="color: white;" for="head_main_win"><h4><b>MY WINS</b></h4></label>
+            <br />
+            <label style="margin-left: 40;" for="head_ques_win">what are you most proud of accomplishing?</label>
+            <br />
+            <br />
+            <div class="col-xs-4">
+              <textarea class="form-control" rows="5" id="win"></textarea>
+            </div>
+
+            <br /><br /><br /><br /><br /><br /><br /><br />
+
+          <!-- My Loses -->
+            <label style="color: white;" for="head_main_loss"><h4><b>MY LOSES</b></h4></label>
+            <br />
+            <label style="margin-left: 40;" for="head_ques_loss">what did you try that didn’t work out?</label>
+            <br />
+            <br />
+            <div class="col-xs-4">
+              <textarea class="form-control" rows="5" id="loss"></textarea>
+            </div>
+
+            <br /><br /><br /><br /><br /><br /><br /><br />
+          
+          <!-- My Personal Brand -->
+            <label style="color: white;" for="head_main_brand"><h4><b>MY PERSONAL BRAND</b></h4></label>
+            <br />
+            <label style="margin-left: 40;" for="head_ques_brand">what is your unique value proposition?</label>
+            <br />
+            <br />
+            <div class="col-xs-4">
+              <textarea class="form-control" rows="5" id="brand"></textarea>
+            </div>
+
+            <br /><br /><br /><br /><br /><br /><br /><br />
+
+          <!-- My Habits -->
+            <label style="color: white;" for="head_main_brand"><h4><b>MY HABITS</b></h4></label>
+            <br />
+            <label style="margin-left: 40;" for="head_ques_brand">where do you fall on the following spectrums?</label>
+            <br />
+            <br />
+            <input id="ex13" type="text" data-slider-ticks="[0, 100, 200, 300, 400]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='["$0", "$100", "$200", "$300", "$400"]'/>
+        </div>
+        <br /><br /><br /><br /><br /><br /><br /><br />
+      </div>
+  </div>
+</body>
+</html>

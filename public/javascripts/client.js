@@ -31,7 +31,6 @@
     });    
   }
 
-
   function addEmpSkill(){
 
     var core_competency=[];
@@ -243,3 +242,4 @@
     });
     window.scrollTo(0,0);
   }
+
