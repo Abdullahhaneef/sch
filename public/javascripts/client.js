@@ -1,14 +1,23 @@
   var SERVER_URI = "http://localhost:3000";
   var empId;
+
   function showCommunityAnalytics() {
-    addEmployee();
+    var user = document.getElementById("user").value
+    if (user != "") {
+      addEmployee();
+    }else{
+      jQuery.notify("Enter user name first", "error"); 
+    }
   }
 
   function showCommunityTransformation() {
-    window.open(SERVER_URI + '/transformation','_self');
+        var user = document.getElementById("user").value
+    if (user != "") {
+          window.open(SERVER_URI + '/transformation','_self');
+    }else{
+      jQuery.notify("Enter user name first", "error"); 
+    }
   }  
-
-
 
   function addEmployee(){
     empName  = document.getElementById("user").value;

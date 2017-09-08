@@ -9,31 +9,18 @@
     <script type="text/javascript" charset="utf-8" src="javascripts/sweetalert2.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="javascripts/notify.min.js"></script>
     <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
-    
-    <link rel="stylesheet" src="stylesheets/bootstrap-slider.css" type="text/css">
-    <!-- <link rel="stylesheet" src="stylesheets/bootstrap-slider.min.css" type="text/css"> -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.1/css/bootstrap-slider.css" rel="stylesheet"> 
+    <!-- <link rel="stylesheet" src="stylesheets/bootstrap-slider.css" type="text/css" /> -->
     <script type="text/javascript" charset="utf-8" src="javascripts/bootstrap-slider.js"></script>
-    <!-- <script type="text/javascript" charset="utf-8" src="javascripts/bootstrap-slider.min.js"></script> -->
-    <!-- <script href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.1/bootstrap-slider.js"></script> -->
-    <!-- <script href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.8.1/bootstrap-slider.min.js"></script> -->
     <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
 </head>
-
-
-<script type="text/javascript">
-    var slider = new Slider("#ex13", {
-    ticks: [0, 100, 200, 300, 400],
-    ticks_labels: ['$0', '$100', '$200', '$300', '$400'],
-    ticks_snap_bounds: 30
-});
-</script>
 
 <style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
 
     <style type="text/css">
         body {
-          /*background-color:#fff;*/
-          background-color:#36a1d5;
+          background-color:#fff;
+          /*background-color:#36a1d5;*/
           -webkit-font-smoothing: antialiased;
           font: normal 14px sans-serif;
       }
@@ -118,7 +105,8 @@
 p{
     font-size: 30px;
     text-align: center;
-    color: white;
+    /*color: white;*/
+    color: #2196f3;
     margin: 24px 0;
     font-family: "Roboto",arial,sans-serif;
 }
@@ -126,18 +114,30 @@ p{
     text-align: center;
 }
 
+.slider{
+  top: 30;
+}
+
+.slider.slider-horizontal{
+  width: 500px;
+  height: 20px;
+}
+
+.slider-tick-label{
+  color: white;
+}
+
 </style>
 
 <body>
   <div id = "mainPage">
       <div class="block-center">
-          <h4 style="text-align: center; height: 115px; margin-top: 0px;" > <img src="http://www.firescope.com/images/Logos/Integration/Cisco.png" style="color: white; max-width:226px;"></h4>
           <p>REVEL<br> Human Element Survey</p>
       </div>
       <div style="margin: 15">
         <div class="form-group">
           <!-- My Persona -->
-            <label style="color: white;" for="head_main_persona"><h4><b>MY PERSONA</b></h4></label>
+            <label style="color: #2196f3;" for="head_main_persona"><h4><b>MY PERSONA</b></h4></label>
             <br />
             <label style="margin-left: 20; margin-top: 0" for="head_sub_persona"><i>what is your mix ?</i></label>
             <br />
@@ -146,13 +146,13 @@ p{
             <br />
             <br />
             <div class="col-xs-2">
-              <label style="color: white;" for="climber">Climber (0-100%)</label>
+              <label style="color: #2196f3;" for="climber">Climber (0-100%)</label>
               <input type="text" class="form-control" id="climber">
               <br />
-              <label style="color: white;" for="dreamer">Dreamer (0-100%)</label>
+              <label style="color: #2196f3;" for="dreamer">Dreamer (0-100%)</label>
               <input type="text" class="form-control" id="dreamer">
               <br />
-              <label style="color: white;" for="purist">Purist (0-100%)</label>
+              <label style="color: #2196f3;" for="purist">Purist (0-100%)</label>
               <input type="text" class="form-control" id="purist">
             </div>
 
@@ -161,28 +161,28 @@ p{
             <br /><br /><br /><br /><br />
 
           <!-- My Satisfaction -->
-            <label style="color: white;" for="head_main_satisfaction"><h4><b>MY SATISFACTION</b></h4></label>
+            <label style="color: #2196f3;" for="head_main_satisfaction"><h4><b>MY SATISFACTION</b></h4></label>
             <br />
             <label style="margin-left: 20;" for="head_ques_satisfaction">how are you? Please enter where you derive satisfaction, on a scale from 1-5, where 5 is highest and 1 is lowest:</label>
             <br />
             <br />
             <div class="col-xs-2">
-              <label style="color: white;" for="self">Self (1-5)</label>
+              <label style="color: #2196f3;" for="self">Self (1-5)</label>
               <input type="text" class="form-control" id="self">
               <br />
-              <label style="color: white;" for="project">Project (1-5)</label>
+              <label style="color: #2196f3;" for="project">Project (1-5)</label>
               <input type="text" class="form-control" id="project">
               <br />
-              <label style="color: white;" for="client">Client (1-5)</label>
+              <label style="color: #2196f3;" for="client">Client (1-5)</label>
               <input type="text" class="form-control" id="client">
               <br />
-              <label style="color: white;" for="community">Community (1-5)</label>
+              <label style="color: #2196f3;" for="community">Community (1-5)</label>
               <input type="text" class="form-control" id="community">
               <br />
-              <label style="color: white;" for="revel">Revel (1-5)</label>
+              <label style="color: #2196f3;" for="revel">Revel (1-5)</label>
               <input type="text" class="form-control" id="revel">
               <br />
-              <label style="color: white;" for="career">Career (1-5)</label>
+              <label style="color: #2196f3;" for="career">Career (1-5)</label>
               <input type="text" class="form-control" id="career">
             </div>
 
@@ -191,7 +191,7 @@ p{
             <br /><br /><br /><br /><br /><br /><br /><br />
 
           <!-- My Goal -->
-            <label style="color: white;" for="head_main_goal"><h4><b>MY GOAL</b></h4></label>
+            <label style="color: #2196f3;" for="head_main_goal"><h4><b>MY GOAL</b></h4></label>
             <br />
             <label style="margin-left: 40;" for="head_ques_goal">what is your long-term vision of success? who do you want to be? where do you want to grow?</label>
             <br />
@@ -203,7 +203,7 @@ p{
             <br /><br /><br /><br /><br /><br /><br /><br />
 
           <!-- My Win -->
-            <label style="color: white;" for="head_main_win"><h4><b>MY WINS</b></h4></label>
+            <label style="color: #2196f3;" for="head_main_win"><h4><b>MY WINS</b></h4></label>
             <br />
             <label style="margin-left: 40;" for="head_ques_win">what are you most proud of accomplishing?</label>
             <br />
@@ -215,7 +215,7 @@ p{
             <br /><br /><br /><br /><br /><br /><br /><br />
 
           <!-- My Loses -->
-            <label style="color: white;" for="head_main_loss"><h4><b>MY LOSES</b></h4></label>
+            <label style="color: #2196f3;" for="head_main_loss"><h4><b>MY LOSES</b></h4></label>
             <br />
             <label style="margin-left: 40;" for="head_ques_loss">what did you try that didn’t work out?</label>
             <br />
@@ -227,7 +227,7 @@ p{
             <br /><br /><br /><br /><br /><br /><br /><br />
           
           <!-- My Personal Brand -->
-            <label style="color: white;" for="head_main_brand"><h4><b>MY PERSONAL BRAND</b></h4></label>
+            <label style="color: #2196f3;" for="head_main_brand"><h4><b>MY PERSONAL BRAND</b></h4></label>
             <br />
             <label style="margin-left: 40;" for="head_ques_brand">what is your unique value proposition?</label>
             <br />
@@ -239,14 +239,268 @@ p{
             <br /><br /><br /><br /><br /><br /><br /><br />
 
           <!-- My Habits -->
-            <label style="color: white;" for="head_main_brand"><h4><b>MY HABITS</b></h4></label>
+            <label style="color: #2196f3;" for="head_main_brand"><h4><b>MY HABITS</b></h4></label>
             <br />
             <label style="margin-left: 40;" for="head_ques_brand">where do you fall on the following spectrums?</label>
             <br />
             <br />
-            <input id="ex13" type="text" data-slider-ticks="[0, 100, 200, 300, 400]" data-slider-ticks-snap-bounds="30" data-slider-ticks-labels='["$0", "$100", "$200", "$300", "$400"]'/>
+            <label style="color: #2196f3; width: 75px;" for="chameleon">Chameleon</label>
+            <input id="habit1" type="text"
+              data-provide="slider"
+              data-slider-ticks="[1, 2, 3, 4, 5]"
+              data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
+              data-slider-min="1"
+              data-slider-max="5"
+              data-slider-step="1"
+              data-slider-value="1"
+              data-slider-tooltip="hide" />
+            <label style="color: #2196f3;" for="peacock">Peacock</label>
+            <br /> <br /> <br />
+            <label style="color: #2196f3; width: 75px;" for="gatherer">Gatherer</label>
+            <input id="habit2" type="text"
+              data-provide="slider"
+              data-slider-ticks="[1, 2, 3, 4, 5]"
+              data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
+              data-slider-min="1"
+              data-slider-max="5"
+              data-slider-step="1"
+              data-slider-value="1"
+              data-slider-tooltip="hide" />
+            <label style="color: #2196f3;" for="hunter">Hunter</label>
+            <br /> <br /> <br />
+            <label style="color: #2196f3; width: 75px;" for="ambiguity">Ambiguity</label>
+            <input id="habit3" type="text"
+              data-provide="slider"
+              data-slider-ticks="[1, 2, 3, 4, 5]"
+              data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
+              data-slider-min="1"
+              data-slider-max="5"
+              data-slider-step="1"
+              data-slider-value="1"
+              data-slider-tooltip="hide" />
+            <label style="color: #2196f3;" for="structure">Structure</label>
+            <br /> <br /> <br />
+            <label style="color: #2196f3; width: 75px;" for="introvert">Introvert</label>
+            <input id="habit4" type="text"
+              data-provide="slider"
+              data-slider-ticks="[1, 2, 3, 4, 5]"
+              data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
+              data-slider-min="1"
+              data-slider-max="5"
+              data-slider-step="1"
+              data-slider-value="1"
+              data-slider-tooltip="hide" />
+            <label style="color: #2196f3;" for="extrovert">Extrovert</label>
+            <br /> <br /> <br />
+            <label style="color: #2196f3; width: 75px;" for="morning_lark">Morning Lark</label>
+            <input id="habit5" type="text"
+              data-provide="slider"
+              data-slider-ticks="[1, 2, 3, 4, 5]"
+              data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
+              data-slider-min="1"
+              data-slider-max="5"
+              data-slider-step="1"
+              data-slider-value="1"
+              data-slider-tooltip="hide" />
+            <label style="color: #2196f3;" for="night_owl">Night Owl</label>
+            <br /> <br /> <br />
+            <label style="color: #2196f3; width: 75px;" for="evolution">Evolution</label>
+            <input id="habit6" type="text"
+              data-provide="slider"
+              data-slider-ticks="[1, 2, 3, 4, 5]"
+              data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
+              data-slider-min="1"
+              data-slider-max="5"
+              data-slider-step="1"
+              data-slider-value="1"
+              data-slider-tooltip="hide" />
+            <label style="color: #2196f3;" for="revolution">Revolution</label>
+            <br /> <br /> <br />
+            <label style="color: #2196f3; width: 75px;" for="script">Script</label>
+            <input id="habit7" type="text"
+              data-provide="slider"
+              data-slider-ticks="[1, 2, 3, 4, 5]"
+              data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
+              data-slider-min="1"
+              data-slider-max="5"
+              data-slider-step="1"
+              data-slider-value="1"
+              data-slider-tooltip="hide" />
+            <label style="color: #2196f3;" for="improve">Improve</label>
+            <br /> <br /> <br />
+            <label style="color: #2196f3; width: 75px;" for="think">Think</label>
+            <input id="habit8" type="text"
+              data-provide="slider"
+              data-slider-ticks="[1, 2, 3, 4, 5]"
+              data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
+              data-slider-min="1"
+              data-slider-max="5"
+              data-slider-step="1"
+              data-slider-value="1"
+              data-slider-tooltip="hide" />
+            <label style="color: #2196f3;" for="do">Do</label>
+            <br /> <br /> <br />
+            <label style="color: #2196f3; width: 75px;" for="build">Build</label>
+            <input id="habit9" type="text"
+              data-provide="slider"
+              data-slider-ticks="[1, 2, 3, 4, 5]"
+              data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
+              data-slider-min="1"
+              data-slider-max="5"
+              data-slider-step="1"
+              data-slider-value="1"
+              data-slider-tooltip="hide" />
+            <label style="color: #2196f3;" for="improve">Improve</label>
+            <br /><br /><br /><br /><br /><br />
+          <!-- My Motivation -->
+            <label style="color: #2196f3;" for="head_main_motivation"><h4><b>MY MOTIVATION</b></h4></label>
+            <br />
+            <label style="margin-left: 40;" for="head_ques_motivation">how would you stack rank the following?</label>
+            <br />
+            <br />
+            <div class="col-xs-2">
+              <label style="color: #2196f3;" for="advancement">Advancement</label>
+              <select class="form-control" id="sel_advancement">
+                <option>1st</option>
+                <option>2nd</option>
+                <option>3rd</option>
+                <option>4th</option>
+                <option>5th</option>
+                <option>6th</option>
+                <option>7th</option>
+                <option>8th</option>
+                <option>9th</option>
+                <option>10th</option>
+              </select>
+              <br />
+              <label style="color: #2196f3;" for="autonomy">Autonomy</label>
+              <select class="form-control" id="sel_autonomy">
+                <option>1st</option>
+                <option>2nd</option>
+                <option>3rd</option>
+                <option>4th</option>
+                <option>5th</option>
+                <option>6th</option>
+                <option>7th</option>
+                <option>8th</option>
+                <option>9th</option>
+                <option>10th</option>
+              </select>
+              <br />
+              <label style="color: #2196f3;" for="work_life_balance">Work/Life Balance</label>
+              <select class="form-control" id="sel_work_life_balance">
+                <option>1st</option>
+                <option>2nd</option>
+                <option>3rd</option>
+                <option>4th</option>
+                <option>5th</option>
+                <option>6th</option>
+                <option>7th</option>
+                <option>8th</option>
+                <option>9th</option>
+                <option>10th</option>
+              </select>
+              <br />
+              <label style="color: #2196f3;" for="influencing">Influencing</label>
+              <select class="form-control" id="sel_influencing">
+                <option>1st</option>
+                <option>2nd</option>
+                <option>3rd</option>
+                <option>4th</option>
+                <option>5th</option>
+                <option>6th</option>
+                <option>7th</option>
+                <option>8th</option>
+                <option>9th</option>
+                <option>10th</option>
+              </select>
+              <br />
+              <label style="color: #2196f3;" for="mastery">Mastery</label>
+              <select class="form-control" id="sel_mastery">
+                <option>1st</option>
+                <option>2nd</option>
+                <option>3rd</option>
+                <option>4th</option>
+                <option>5th</option>
+                <option>6th</option>
+                <option>7th</option>
+                <option>8th</option>
+                <option>9th</option>
+                <option>10th</option>
+              </select>
+              <br />
+              <label style="color: #2196f3;" for="money">Money</label>
+              <select class="form-control" id="sel_money">
+                <option>1st</option>
+                <option>2nd</option>
+                <option>3rd</option>
+                <option>4th</option>
+                <option>5th</option>
+                <option>6th</option>
+                <option>7th</option>
+                <option>8th</option>
+                <option>9th</option>
+                <option>10th</option>
+              </select>
+              <br />
+              <label style="color: #2196f3;" for="praise">Praise</label>
+              <select class="form-control" id="sel_praise">
+                <option>1st</option>
+                <option>2nd</option>
+                <option>3rd</option>
+                <option>4th</option>
+                <option>5th</option>
+                <option>6th</option>
+                <option>7th</option>
+                <option>8th</option>
+                <option>9th</option>
+                <option>10th</option>
+              </select>
+              <br />
+              <label style="color: #2196f3;" for="problem_solving">Problem-Solving</label>
+              <select class="form-control" id="sel_problem_solving">
+                <option>1st</option>
+                <option>2nd</option>
+                <option>3rd</option>
+                <option>4th</option>
+                <option>5th</option>
+                <option>6th</option>
+                <option>7th</option>
+                <option>8th</option>
+                <option>9th</option>
+                <option>10th</option>
+              </select>
+              <br />
+              <label style="color: #2196f3;" for="purpose">Purpose</label>
+              <select class="form-control" id="sel_purpose">
+                <option>1st</option>
+                <option>2nd</option>
+                <option>3rd</option>
+                <option>4th</option>
+                <option>5th</option>
+                <option>6th</option>
+                <option>7th</option>
+                <option>8th</option>
+                <option>9th</option>
+                <option>10th</option>
+              </select>
+              <br />
+              <label style="color: #2196f3;" for="relationships">Relationships</label>
+              <select class="form-control" id="sel_relationships">
+                <option>1st</option>
+                <option>2nd</option>
+                <option>3rd</option>
+                <option>4th</option>
+                <option>5th</option>
+                <option>6th</option>
+                <option>7th</option>
+                <option>8th</option>
+                <option>9th</option>
+                <option>10th</option>
+              </select>
+              <br /><br /><br />
+            </div>
         </div>
-        <br /><br /><br /><br /><br /><br /><br /><br />
       </div>
   </div>
 </body>
