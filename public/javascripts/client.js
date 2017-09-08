@@ -230,15 +230,9 @@
         index = index + 1;
       }
     }
-/*    console.log('cc' + core_competency);
-    console.log('t_c' + tool_capability);
-    console.log('cat' + category);
-    console.log('sk' + skill);
-    console.log('exp' + experience);
-    console.log('le' + level);
-    console.log('cert' + certification);
-    console.log('li' + learning_interest);
-*/
+
+//////////////////////post request//////////////////////////////
+
     var settings = {
       "async": true,
       "crossDomain": true,
@@ -255,6 +249,6 @@
     $.ajax(settings).done(function (response) {      
         jQuery.notify("Employee Added Successfully.", "success");
     });
-    window.scrollTo(0,0);
+    window.open(SERVER_URI + '/transformation','_self');
   }
 
