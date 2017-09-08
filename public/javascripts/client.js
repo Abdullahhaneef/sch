@@ -13,7 +13,7 @@
   function showCommunityTransformation() {
         var user = document.getElementById("user").value
     if (user != "") {
-          window.open(SERVER_URI + '/transformation','_self');
+          //window.open(SERVER_URI + '/transformation','_self');
     }else{
       jQuery.notify("Enter user name first", "error"); 
     }
@@ -249,6 +249,6 @@
     $.ajax(settings).done(function (response) {      
         jQuery.notify("Employee Added Successfully.", "success");
     });
-    window.open(SERVER_URI + '/transformation','_self');
+    //window.open(SERVER_URI + '/transformation','_self');
   }
 

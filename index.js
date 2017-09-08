@@ -31,7 +31,7 @@ var path = __dirname + '/views/';
 var javascript_path = __dirname + '/javascripts/';
 
 app.use('/',router);
-app.use(express.static('public'))
+app.use(express.static('public'));
   
 router.get('/',function(req, res){
   res.sendFile(path + 'index.html');
