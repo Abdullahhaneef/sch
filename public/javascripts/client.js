@@ -1,5 +1,5 @@
   var SERVER_URI = "http://localhost:3000";
-  var empId = 0;
+  var empId;
   function showCommunityAnalytics() {
     addEmployee();
   }
@@ -26,13 +26,17 @@
       }
     }
     $.ajax(settings).done(function (response) {      
-        empId = response.empId;
+        setEmpId(response);
         window.open(SERVER_URI + '/analytics','_self');
     });    
   }
 
+  function setEmpId(response){
+    empId = response.empId;
+    localStorage.setItem("empId",empId);
+  }
   function addEmpSkill(){
-
+    empId = localStorage.getItem("empId") 
     var core_competency=[];
     var tool_capability = [];
     var category = [];
@@ -151,20 +155,23 @@
         if ($(myRows[i]).attr('id').split("_")[2] == 'dasa'){
           category[index] = 21;
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'rts'){
+        if ($(myRows[i]).attr('id').split("_")[2] == 'wa'){
           category[index] = 22;
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'aca'){
+        if ($(myRows[i]).attr('id').split("_")[2] == 'rts'){
           category[index] = 23;
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'dmp'){
+        if ($(myRows[i]).attr('id').split("_")[2] == 'aca'){
           category[index] = 24;
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'pl'){
+        if ($(myRows[i]).attr('id').split("_")[2] == 'dmp'){
           category[index] = 25;
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'acc'){
+        if ($(myRows[i]).attr('id').split("_")[2] == 'pl'){
           category[index] = 26;
+        }
+        if ($(myRows[i]).attr('id').split("_")[2] == 'acc'){
+          category[index] = 27;
         }
 
         skill[index] = $(myRows[i]).attr('id').split("_")[3]
@@ -223,7 +230,6 @@
     console.log('cert' + certification);
     console.log('li' + learning_interest);
 */
-    console.log(empId);
     var settings = {
       "async": true,
       "crossDomain": true,
