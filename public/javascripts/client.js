@@ -1,5 +1,6 @@
   var SERVER_URI = "http://localhost:3000";
   var empId = 0;
+
   function showCommunityAnalytics() {
     addEmployee();
   }
@@ -7,8 +8,6 @@
   function showCommunityTransformation() {
     window.open(SERVER_URI + '/transformation','_self');
   }  
-
-
 
   function addEmployee(){
     empName  = document.getElementById("user").value;
