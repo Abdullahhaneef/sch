@@ -2,11 +2,21 @@
   var empId = 0;
 
   function showCommunityAnalytics() {
-    addEmployee();
+    var user = document.getElementById("user").value
+    if (user != "") {
+      addEmployee();
+    }else{
+      jQuery.notify("Enter user name first", "error"); 
+    }
   }
 
   function showCommunityTransformation() {
-    window.open(SERVER_URI + '/transformation','_self');
+        var user = document.getElementById("user").value
+    if (user != "") {
+          window.open(SERVER_URI + '/transformation','_self');
+    }else{
+      jQuery.notify("Enter user name first", "error"); 
+    }
   }  
 
   function addEmployee(){
