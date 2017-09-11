@@ -4,7 +4,8 @@
   function showCommunityAnalytics() {
     var user = document.getElementById("user").value
     if (user != "") {
-      addEmployee();
+      // addEmployee();
+      window.open(SERVER_URI + '/analytics','_self');
     }else{
       jQuery.notify("Enter user name first", "error"); 
     }
@@ -13,7 +14,7 @@
   function showCommunityTransformation() {
         var user = document.getElementById("user").value
     if (user != "") {
-          //window.open(SERVER_URI + '/transformation','_self');
+          window.open(SERVER_URI + '/transformation','_self');
     }else{
       jQuery.notify("Enter user name first", "error"); 
     }
