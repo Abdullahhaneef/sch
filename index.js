@@ -42,7 +42,7 @@ router.get('/analytics',function(req, res){
 });
 
 router.get('/transformation',function(req, res){
-  res.sendFile(path + 'human_resources.html');
+  res.sendFile(path + 'transformation.html');
 });
 
 
