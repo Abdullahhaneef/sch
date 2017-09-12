@@ -12,7 +12,7 @@ var dt = dateTime.create();
 var formatted = dt.format('m-d-Y');
 var client;
 
-var conString = "postgres://ahaneef:123456@huresys.com/revel_ashes"
+var conString = "postgres://ahaneef:123456@localhost:5432/revel_ashes"
 
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}));
 
@@ -43,6 +43,7 @@ router.get('/analytics',function(req, res){
 
 router.get('/transformation',function(req, res){
   res.sendFile(path + 'transformation.html');
+  //res.sendFile(path + 'human_resources.html');
 });
 
 
@@ -73,7 +74,7 @@ app.post("/addEmployee", function(req, res) {
 ////////////////////////////Add Employee Skills///////////////////////////////////////////////
 app.post("/addEmpSkill", function(req, res) {
     setupResponse(res);
-    query_add_skill = "INSERT INTO emp_skill_reference (\
+    query_add_skill = "INSERT INTO analytics_emp_skill_reference (\
             emp_id, core_competency_id, tool_capability_id, category_id, \
             skill_id, experience_id, level_id, certification_id, learning_interest_id) VALUES "
     len = req.body.skill.length;

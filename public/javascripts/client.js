@@ -4,8 +4,8 @@
   function showCommunityAnalytics() {
     var user = document.getElementById("user").value
     if (user != "") {
-      // addEmployee();
-      window.open(SERVER_URI + '/analytics','_self');
+       addEmployee();
+      //window.open(SERVER_URI + '/analytics','_self');
     }else{
       jQuery.notify("Enter user name first", "error"); 
     }
@@ -247,9 +247,9 @@
         empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
       }
     }
-    $.ajax(settings).done(function (response) {      
+    $.ajax(settings).done(function (response) {
+        window.open(SERVER_URI,'_self');   
         jQuery.notify("Employee Added Successfully.", "success");
     });
-    //window.open(SERVER_URI + '/transformation','_self');
   }
 
