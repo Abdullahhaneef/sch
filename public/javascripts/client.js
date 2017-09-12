@@ -252,4 +252,20 @@
         jQuery.notify("Employee Added Successfully.", "success");
     });
   }
+////////////////////////////////////////////////////////////////////////
 
+////////////////////////////Human Element Survey////////////////////////////
+
+///////////////////////////////////////////////////////////////////////////
+function addHumanElement(){
+  var name=[];
+  var value=[];
+  var len = document.getElementById('mainPage').children[1].length
+    for (var i = 0; i< len; i++) {
+      name[i] =  document.getElementById('mainPage').children[1][i].id;
+      value[i] =  document.getElementById('mainPage').children[1][i].value;
+    }
+
+  console.log(name);
+  console.log(value);
+}

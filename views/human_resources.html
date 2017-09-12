@@ -134,6 +134,7 @@ p{
       <div class="block-center">
           <p>REVEL<br> Human Element Survey</p>
       </div>
+      <form id = "humanElement" enctype='multipart/form-data'>
       <div style="margin: 15">
         <div class="form-group">
           <!-- My Persona -->
@@ -147,13 +148,13 @@ p{
             <br />
             <div class="col-xs-2">
               <label style="color: #2196f3;" for="climber">Climber (0-100%)</label>
-              <input type="text" class="form-control" id="climber">
+              <input type=number min=0 max=100 class="form-control" id="climber">
               <br />
               <label style="color: #2196f3;" for="dreamer">Dreamer (0-100%)</label>
-              <input type="text" class="form-control" id="dreamer">
+              <input type=number min=0 max=100 class="form-control" id="dreamer">
               <br />
               <label style="color: #2196f3;" for="purist">Purist (0-100%)</label>
-              <input type="text" class="form-control" id="purist">
+              <input type=number min=0 max=100 class="form-control" id="purist">
             </div>
 
             <br /><br /><br /><br /><br />
@@ -168,22 +169,118 @@ p{
             <br />
             <div class="col-xs-2">
               <label style="color: #2196f3;" for="self">Self (1-5)</label>
-              <input type="text" class="form-control" id="self">
+                <center><select class="select form-control">
+                   <option value="1">
+                    1
+                   </option>
+                   <option value="2">
+                    2
+                   </option>
+                   <option value="3">
+                    3
+                   </option>
+                   <option value="4">
+                    4
+                   </option>
+                   <option value="5">
+                    5
+                   </option>
+            </select></center>
               <br />
               <label style="color: #2196f3;" for="project">Project (1-5)</label>
-              <input type="text" class="form-control" id="project">
+                              <center><select class="select form-control" id = "project">
+                   <option value="1">
+                    1
+                   </option>
+                   <option value="2">
+                    2
+                   </option>
+                   <option value="3">
+                    3
+                   </option>
+                   <option value="4">
+                    4
+                   </option>
+                   <option value="5">
+                    5
+                   </option>
+            </select></center>
               <br />
               <label style="color: #2196f3;" for="client">Client (1-5)</label>
-              <input type="text" class="form-control" id="client">
+              <center><select class="select form-control" id = "client">
+                   <option value="1">
+                    1
+                   </option>
+                   <option value="2">
+                    2
+                   </option>
+                   <option value="3">
+                    3
+                   </option>
+                   <option value="4">
+                    4
+                   </option>
+                   <option value="5">
+                    5
+                   </option>
+            </select></center>
               <br />
               <label style="color: #2196f3;" for="community">Community (1-5)</label>
-              <input type="text" class="form-control" id="community">
+                <center><select class="select form-control" id="community">
+                   <option value="1">
+                    1
+                   </option>
+                   <option value="2">
+                    2
+                   </option>
+                   <option value="3">
+                    3
+                   </option>
+                   <option value="4">
+                    4
+                   </option>
+                   <option value="5">
+                    5
+                   </option>
+            </select></center>
               <br />
               <label style="color: #2196f3;" for="revel">Revel (1-5)</label>
-              <input type="text" class="form-control" id="revel">
+                <center><select class="select form-control" id="revel">
+                   <option value="1">
+                    1
+                   </option>
+                   <option value="2">
+                    2
+                   </option>
+                   <option value="3">
+                    3
+                   </option>
+                   <option value="4">
+                    4
+                   </option>
+                   <option value="5">
+                    5
+                   </option>
+            </select></center>
               <br />
               <label style="color: #2196f3;" for="career">Career (1-5)</label>
-              <input type="text" class="form-control" id="career">
+                <center><select class="select form-control" id="career">
+                   <option value="1">
+                    1
+                   </option>
+                   <option value="2">
+                    2
+                   </option>
+                   <option value="3">
+                    3
+                   </option>
+                   <option value="4">
+                    4
+                   </option>
+                   <option value="5">
+                    5
+                   </option>
+            </select></center>
             </div>
 
             <br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
@@ -501,7 +598,12 @@ p{
               <br /><br /><br />
             </div>
         </div>
+  <button onclick="addHumanElement()">Submit</button>
       </div>
+  
+      </form>
   </div>
+  
 </body>
+
 </html>
