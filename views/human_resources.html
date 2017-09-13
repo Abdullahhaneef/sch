@@ -135,12 +135,12 @@ p{
           <p>REVEL<br> Human Element Survey</p>
       </div>
       <form id = "humanElement" enctype='multipart/form-data'>
-      <div style="margin: 15">
+      <div style="margin: 15; margin-left: 100px;">
         <div class="form-group">
           <!-- My Persona -->
             <label style="color: #2196f3;" for="head_main_persona"><h4><b>MY PERSONA</b></h4></label>
             <br />
-            <label style="margin-left: 20; margin-top: 0" for="head_sub_persona"><i>what is your mix ?</i></label>
+            <label style="margin-left: 20; margin-top: 0" for="head_sub_persona"><i>What is your mix?</i></label>
             <br />
             <label style="margin-left: 40;" for="head_ques_persona">If you have not already taken Revel’s personality quiz to get your climber / dreamer / purist mix (or you have forgotten your mix), you can find the quiz </label>
             <a href="http://revelconsulting.com/test/persona/" role="button"><i><b>Here</b></i></a>
@@ -148,13 +148,13 @@ p{
             <br />
             <div class="col-xs-2">
               <label style="color: #2196f3;" for="climber">Climber (0-100%)</label>
-              <input type=number min=0 max=100 class="form-control" id="climber">
+              <input type=number min=0 max=100 class="form-control" id="personality_climber">
               <br />
               <label style="color: #2196f3;" for="dreamer">Dreamer (0-100%)</label>
-              <input type=number min=0 max=100 class="form-control" id="dreamer">
+              <input type=number min=0 max=100 class="form-control" id="personality_dreamer">
               <br />
               <label style="color: #2196f3;" for="purist">Purist (0-100%)</label>
-              <input type=number min=0 max=100 class="form-control" id="purist">
+              <input type=number min=0 max=100 class="form-control" id="personality_purist">
             </div>
 
             <br /><br /><br /><br /><br />
@@ -164,12 +164,12 @@ p{
           <!-- My Satisfaction -->
             <label style="color: #2196f3;" for="head_main_satisfaction"><h4><b>MY SATISFACTION</b></h4></label>
             <br />
-            <label style="margin-left: 20;" for="head_ques_satisfaction">how are you? Please enter where you derive satisfaction, on a scale from 1-5, where 5 is highest and 1 is lowest:</label>
+            <label style="margin-left: 20;" for="head_ques_satisfaction">How are you? Please enter where you derive satisfaction, on a scale from 1-5, where 5 is highest and 1 is lowest:</label>
             <br />
             <br />
             <div class="col-xs-2">
               <label style="color: #2196f3;" for="self">Self (1-5)</label>
-                <center><select class="select form-control">
+                <center><select class="select form-control" id="satisfaction_self">
                    <option value="1">
                     1
                    </option>
@@ -188,7 +188,7 @@ p{
             </select></center>
               <br />
               <label style="color: #2196f3;" for="project">Project (1-5)</label>
-                              <center><select class="select form-control" id = "project">
+                              <center><select class="select form-control" id = "satisfaction_project">
                    <option value="1">
                     1
                    </option>
@@ -207,7 +207,7 @@ p{
             </select></center>
               <br />
               <label style="color: #2196f3;" for="client">Client (1-5)</label>
-              <center><select class="select form-control" id = "client">
+              <center><select class="select form-control" id = "satisfaction_client">
                    <option value="1">
                     1
                    </option>
@@ -226,7 +226,7 @@ p{
             </select></center>
               <br />
               <label style="color: #2196f3;" for="community">Community (1-5)</label>
-                <center><select class="select form-control" id="community">
+                <center><select class="select form-control" id="satisfaction_community">
                    <option value="1">
                     1
                    </option>
@@ -245,7 +245,7 @@ p{
             </select></center>
               <br />
               <label style="color: #2196f3;" for="revel">Revel (1-5)</label>
-                <center><select class="select form-control" id="revel">
+                <center><select class="select form-control" id="satisfaction_revel">
                    <option value="1">
                     1
                    </option>
@@ -264,7 +264,7 @@ p{
             </select></center>
               <br />
               <label style="color: #2196f3;" for="career">Career (1-5)</label>
-                <center><select class="select form-control" id="career">
+                <center><select class="select form-control" id="satisfaction_career">
                    <option value="1">
                     1
                    </option>
@@ -290,11 +290,11 @@ p{
           <!-- My Goal -->
             <label style="color: #2196f3;" for="head_main_goal"><h4><b>MY GOAL</b></h4></label>
             <br />
-            <label style="margin-left: 40;" for="head_ques_goal">what is your long-term vision of success? who do you want to be? where do you want to grow?</label>
+            <label style="margin-left: 40;" for="head_ques_goal">What is your long-term vision of success? Who do you want to be? Where do you want to grow?</label>
             <br />
             <br />
             <div class="col-xs-4">
-              <textarea class="form-control" rows="5" id="goal"></textarea>
+              <textarea class="form-control" rows="5" id="My Goals"></textarea>
             </div>
 
             <br /><br /><br /><br /><br /><br /><br /><br />
@@ -302,11 +302,11 @@ p{
           <!-- My Win -->
             <label style="color: #2196f3;" for="head_main_win"><h4><b>MY WINS</b></h4></label>
             <br />
-            <label style="margin-left: 40;" for="head_ques_win">what are you most proud of accomplishing?</label>
+            <label style="margin-left: 40;" for="head_ques_win">What are you most proud of accomplishing?</label>
             <br />
             <br />
             <div class="col-xs-4">
-              <textarea class="form-control" rows="5" id="win"></textarea>
+              <textarea class="form-control" rows="5" id="My Wins"></textarea>
             </div>
 
             <br /><br /><br /><br /><br /><br /><br /><br />
@@ -314,11 +314,11 @@ p{
           <!-- My Loses -->
             <label style="color: #2196f3;" for="head_main_loss"><h4><b>MY LOSES</b></h4></label>
             <br />
-            <label style="margin-left: 40;" for="head_ques_loss">what did you try that didn’t work out?</label>
+            <label style="margin-left: 40;" for="head_ques_loss">What did you try that didn’t work out?</label>
             <br />
             <br />
             <div class="col-xs-4">
-              <textarea class="form-control" rows="5" id="loss"></textarea>
+              <textarea class="form-control" rows="5" id="My Losses"></textarea>
             </div>
 
             <br /><br /><br /><br /><br /><br /><br /><br />
@@ -326,11 +326,11 @@ p{
           <!-- My Personal Brand -->
             <label style="color: #2196f3;" for="head_main_brand"><h4><b>MY PERSONAL BRAND</b></h4></label>
             <br />
-            <label style="margin-left: 40;" for="head_ques_brand">what is your unique value proposition?</label>
+            <label style="margin-left: 40;" for="head_ques_brand">What is your unique value proposition?</label>
             <br />
             <br />
             <div class="col-xs-4">
-              <textarea class="form-control" rows="5" id="brand"></textarea>
+              <textarea class="form-control" rows="5" id="My Personal Brand"></textarea>
             </div>
 
             <br /><br /><br /><br /><br /><br /><br /><br />
@@ -338,11 +338,11 @@ p{
           <!-- My Habits -->
             <label style="color: #2196f3;" for="head_main_brand"><h4><b>MY HABITS</b></h4></label>
             <br />
-            <label style="margin-left: 40;" for="head_ques_brand">where do you fall on the following spectrums?</label>
+            <label style="margin-left: 40;" for="head_ques_brand">Where do you fall on the following spectrums?</label>
             <br />
             <br />
             <label style="color: #2196f3; width: 75px;" for="chameleon">Chameleon</label>
-            <input id="habit1" type="text"
+            <input id="habit_Chameleon to Peacock" type="text"
               data-provide="slider"
               data-slider-ticks="[1, 2, 3, 4, 5]"
               data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
@@ -354,7 +354,7 @@ p{
             <label style="color: #2196f3;" for="peacock">Peacock</label>
             <br /> <br /> <br />
             <label style="color: #2196f3; width: 75px;" for="gatherer">Gatherer</label>
-            <input id="habit2" type="text"
+            <input id="habit_Gatherer to Hunter" type="text"
               data-provide="slider"
               data-slider-ticks="[1, 2, 3, 4, 5]"
               data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
@@ -366,7 +366,7 @@ p{
             <label style="color: #2196f3;" for="hunter">Hunter</label>
             <br /> <br /> <br />
             <label style="color: #2196f3; width: 75px;" for="ambiguity">Ambiguity</label>
-            <input id="habit3" type="text"
+            <input id="habit_Ambiguity to Structure" type="text"
               data-provide="slider"
               data-slider-ticks="[1, 2, 3, 4, 5]"
               data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
@@ -378,7 +378,7 @@ p{
             <label style="color: #2196f3;" for="structure">Structure</label>
             <br /> <br /> <br />
             <label style="color: #2196f3; width: 75px;" for="introvert">Introvert</label>
-            <input id="habit4" type="text"
+            <input id="habit_Introvert to Extrovert" type="text"
               data-provide="slider"
               data-slider-ticks="[1, 2, 3, 4, 5]"
               data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
@@ -390,7 +390,7 @@ p{
             <label style="color: #2196f3;" for="extrovert">Extrovert</label>
             <br /> <br /> <br />
             <label style="color: #2196f3; width: 75px;" for="morning_lark">Morning Lark</label>
-            <input id="habit5" type="text"
+            <input id="habit_Morning Lark to Night Owl" type="text"
               data-provide="slider"
               data-slider-ticks="[1, 2, 3, 4, 5]"
               data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
@@ -402,7 +402,7 @@ p{
             <label style="color: #2196f3;" for="night_owl">Night Owl</label>
             <br /> <br /> <br />
             <label style="color: #2196f3; width: 75px;" for="evolution">Evolution</label>
-            <input id="habit6" type="text"
+            <input id="habit_Evolution to Revolution" type="text"
               data-provide="slider"
               data-slider-ticks="[1, 2, 3, 4, 5]"
               data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
@@ -414,7 +414,7 @@ p{
             <label style="color: #2196f3;" for="revolution">Revolution</label>
             <br /> <br /> <br />
             <label style="color: #2196f3; width: 75px;" for="script">Script</label>
-            <input id="habit7" type="text"
+            <input id="habit_Script to Improv" type="text"
               data-provide="slider"
               data-slider-ticks="[1, 2, 3, 4, 5]"
               data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
@@ -426,7 +426,7 @@ p{
             <label style="color: #2196f3;" for="improve">Improve</label>
             <br /> <br /> <br />
             <label style="color: #2196f3; width: 75px;" for="think">Think</label>
-            <input id="habit8" type="text"
+            <input id="habit_Think to Do" type="text"
               data-provide="slider"
               data-slider-ticks="[1, 2, 3, 4, 5]"
               data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
@@ -438,7 +438,7 @@ p{
             <label style="color: #2196f3;" for="do">Do</label>
             <br /> <br /> <br />
             <label style="color: #2196f3; width: 75px;" for="build">Build</label>
-            <input id="habit9" type="text"
+            <input id="habit_Build to Improve" type="text"
               data-provide="slider"
               data-slider-ticks="[1, 2, 3, 4, 5]"
               data-slider-ticks-labels='["1", "2", "3", "4", "5"]'
@@ -452,12 +452,12 @@ p{
           <!-- My Motivation -->
             <label style="color: #2196f3;" for="head_main_motivation"><h4><b>MY MOTIVATION</b></h4></label>
             <br />
-            <label style="margin-left: 40;" for="head_ques_motivation">how would you stack rank the following?</label>
+            <label style="margin-left: 40;" for="head_ques_motivation">How would you stack rank the following?</label>
             <br />
             <br />
             <div class="col-xs-2">
               <label style="color: #2196f3;" for="advancement">Advancement</label>
-              <select class="form-control" id="sel_advancement">
+              <select class="form-control" id="motivation_Advancement">
                 <option>1st</option>
                 <option>2nd</option>
                 <option>3rd</option>
@@ -471,7 +471,7 @@ p{
               </select>
               <br />
               <label style="color: #2196f3;" for="autonomy">Autonomy</label>
-              <select class="form-control" id="sel_autonomy">
+              <select class="form-control" id="motivation_autonomy">
                 <option>1st</option>
                 <option>2nd</option>
                 <option>3rd</option>
@@ -485,7 +485,7 @@ p{
               </select>
               <br />
               <label style="color: #2196f3;" for="work_life_balance">Work/Life Balance</label>
-              <select class="form-control" id="sel_work_life_balance">
+              <select class="form-control" id="motivation_work/Life Balance">
                 <option>1st</option>
                 <option>2nd</option>
                 <option>3rd</option>
@@ -499,7 +499,7 @@ p{
               </select>
               <br />
               <label style="color: #2196f3;" for="influencing">Influencing</label>
-              <select class="form-control" id="sel_influencing">
+              <select class="form-control" id="motivation_influencing">
                 <option>1st</option>
                 <option>2nd</option>
                 <option>3rd</option>
@@ -513,7 +513,7 @@ p{
               </select>
               <br />
               <label style="color: #2196f3;" for="mastery">Mastery</label>
-              <select class="form-control" id="sel_mastery">
+              <select class="form-control" id="motivation_mastery">
                 <option>1st</option>
                 <option>2nd</option>
                 <option>3rd</option>
@@ -527,7 +527,7 @@ p{
               </select>
               <br />
               <label style="color: #2196f3;" for="money">Money</label>
-              <select class="form-control" id="sel_money">
+              <select class="form-control" id="motivation_money">
                 <option>1st</option>
                 <option>2nd</option>
                 <option>3rd</option>
@@ -541,7 +541,7 @@ p{
               </select>
               <br />
               <label style="color: #2196f3;" for="praise">Praise</label>
-              <select class="form-control" id="sel_praise">
+              <select class="form-control" id="motivation_praise">
                 <option>1st</option>
                 <option>2nd</option>
                 <option>3rd</option>
@@ -555,7 +555,7 @@ p{
               </select>
               <br />
               <label style="color: #2196f3;" for="problem_solving">Problem-Solving</label>
-              <select class="form-control" id="sel_problem_solving">
+              <select class="form-control" id="motivation_problem_solving">
                 <option>1st</option>
                 <option>2nd</option>
                 <option>3rd</option>
@@ -569,7 +569,7 @@ p{
               </select>
               <br />
               <label style="color: #2196f3;" for="purpose">Purpose</label>
-              <select class="form-control" id="sel_purpose">
+              <select class="form-control" id="motivation_purpose">
                 <option>1st</option>
                 <option>2nd</option>
                 <option>3rd</option>
@@ -583,7 +583,7 @@ p{
               </select>
               <br />
               <label style="color: #2196f3;" for="relationships">Relationships</label>
-              <select class="form-control" id="sel_relationships">
+              <select class="form-control" id="motivation_relationships">
                 <option>1st</option>
                 <option>2nd</option>
                 <option>3rd</option>
@@ -596,9 +596,9 @@ p{
                 <option>10th</option>
               </select>
               <br /><br /><br />
+              <button onclick="addHumanElement()" style="margin-bottom: 55px;">Submit</button>
             </div>
         </div>
-  <button onclick="addHumanElement()">Submit</button>
       </div>
   
       </form>

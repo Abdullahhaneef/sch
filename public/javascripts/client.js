@@ -22,7 +22,7 @@
 
   function addEmployee(){
     empName  = document.getElementById("user").value;
-    var settings = {
+/*    var settings = {
       "async": true,
       "crossDomain": true,
       "url": SERVER_URI+"/addEmployee",
@@ -38,7 +38,9 @@
     $.ajax(settings).done(function (response) {      
         setEmpId(response);
         window.open(SERVER_URI + '/analytics','_self');
-    });    
+    }); */
+    setEmpId({"empId" : 48})   
+    window.open(SERVER_URI + '/analytics','_self');
   }
 
   function setEmpId(response){
@@ -46,7 +48,7 @@
     localStorage.setItem("empId",empId);
   }
   function addEmpSkill(){
-    empId = localStorage.getItem("empId") 
+    empId = localStorage.getItem("empId");
     var core_competency=[];
     var tool_capability = [];
     var category = [];
@@ -234,7 +236,7 @@
 
 //////////////////////post request//////////////////////////////
 
-    var settings = {
+/*    var settings = {
       "async": true,
       "crossDomain": true,
       "url": SERVER_URI+"/addEmpSkill",
@@ -250,7 +252,8 @@
     $.ajax(settings).done(function (response) {
         window.open(SERVER_URI,'_self');   
         jQuery.notify("Employee Added Successfully.", "success");
-    });
+    });*/
+    window.open(SERVER_URI + '/human_resources','_self');
   }
 ////////////////////////////////////////////////////////////////////////
 
@@ -260,12 +263,33 @@
 function addHumanElement(){
   var name=[];
   var value=[];
+  empId = localStorage.getItem("empId");
   var len = document.getElementById('mainPage').children[1].length
-    for (var i = 0; i< len; i++) {
+    for (var i = 0; i< len - 1; i++) {
       name[i] =  document.getElementById('mainPage').children[1][i].id;
       value[i] =  document.getElementById('mainPage').children[1][i].value;
     }
+    for (var j = 0; j < 3; j++) {
+      value[j] = value[j]/100;
+    }
+    console.log(value);
+  //////////////////////post request//////////////////////////////
 
-  console.log(name);
-  console.log(value);
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": SERVER_URI+"/addHumanElement",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/x-www-form-urlencoded",
+      "cache-control": "no-cache",
+    },
+    "data": {
+      empId, name , value
+    }
+  }
+  $.ajax(settings).done(function (response) {
+      window.open(SERVER_URI + '/human_resources','_self');   
+      jQuery.notify("Employee Added Successfully.", "success");
+  });
 }

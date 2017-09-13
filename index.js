@@ -109,18 +109,57 @@ app.post("/addEmpSkill", function(req, res) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+/////////////////////////////////////////Add Human Element////////////////////////////////////////////////
+
+app.post("/addHumanElement", function(req, res) {
+    var query_add_human="";
+    var category =[];
+    var dimension =[];
+    for (var i = 0; i<req.body.name.length; i++){
+        if(req.body.name[i].split("_")[1] != undefined){
+            if(req.body.name[i].split("_")[0] == 'personality'){
+                category[i] = 'My Personality'
+            }
+            else if(req.body.name[i].split("_")[0] == 'satisfaction'){
+                category[i] = 'My Satisfaction'
+            }
+            else if(req.body.name[i].split("_")[0] == 'habit'){
+                category[i] = 'My Habits'
+            }
+            else if(req.body.name[i].split("_")[0] == 'motivation'){
+                category[i] = 'My Motivations'
+            }
+            dimension[i] = req.body.name[i].split("_")[1].charAt(0).toUpperCase() + req.body.name[i].split("_")[1].slice(1);;
+        }
+        else{
+            category[i] = req.body.name[i];
+            dimension[i] = req.body.name[i];
+        }
+    }
+    setupResponse(res);
+    query_add_human = "INSERT INTO human_element_survey (emp_id, category, dimension, value) VALUES "
+    len = category.length;
+    for(i = 0; i < len; i++){
+        query_add_human=query_add_human+"("+req.body.empId+",'"+category[i]+"','"+dimension[i]+"','"+req.body.value[i]+"'), ";
+    }
+    console.log(query_add_human.substring(0, query_add_human.length - 2) + ";");
+    client.query(query_add_human.substring(0, query_add_human.length - 2) + ";", function(err, result) {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            client.end();
+        }
+        res.end(JSON.stringify({"status":"success"}));
+    });
+});
 
 
-
-
+////////////////////////////////////////////////////////////////////////////////////////////////////
 app.use('*',function(req, res){
   res.send('Error 404: Not Found!');
 });
 
-
-/*var server = app.listen(8090, process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1', function () {
-    console.log("Express server listening on " + server.address().address +':'+server.address().port);
-});*/
 app.listen(3000,function(){
   console.log('Server running at Port 3000');
 });
