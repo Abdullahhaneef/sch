@@ -140,7 +140,8 @@ app.post("/addHumanElement", function(req, res) {
     query_add_human = "INSERT INTO human_element_survey (emp_id, category, dimension, value) VALUES "
     len = category.length;
     for(i = 0; i < len; i++){
-        query_add_human=query_add_human+"("+req.body.empId+",'"+category[i]+"','"+dimension[i]+"','"+req.body.value[i]+"'), ";
+        var val = req.body.value[i].replace(/'/g, "''");
+        query_add_human=query_add_human+"("+req.body.empId+",'"+category[i]+"','"+dimension[i]+"','"+val+"'), ";
     }
     console.log(query_add_human.substring(0, query_add_human.length - 2) + ";");
     client.query(query_add_human.substring(0, query_add_human.length - 2) + ";", function(err, result) {

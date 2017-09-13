@@ -22,7 +22,7 @@
 
   function addEmployee(){
     empName  = document.getElementById("user").value;
-/*    var settings = {
+    var settings = {
       "async": true,
       "crossDomain": true,
       "url": SERVER_URI+"/addEmployee",
@@ -38,9 +38,9 @@
     $.ajax(settings).done(function (response) {      
         setEmpId(response);
         window.open(SERVER_URI + '/analytics','_self');
-    }); */
-    setEmpId({"empId" : 48})   
-    window.open(SERVER_URI + '/analytics','_self');
+    }); 
+/*    setEmpId({"empId" : empId})   
+    window.open(SERVER_URI + '/analytics','_self');*/
   }
 
   function setEmpId(response){
@@ -236,7 +236,7 @@
 
 //////////////////////post request//////////////////////////////
 
-/*    var settings = {
+    var settings = {
       "async": true,
       "crossDomain": true,
       "url": SERVER_URI+"/addEmpSkill",
@@ -250,10 +250,9 @@
       }
     }
     $.ajax(settings).done(function (response) {
-        window.open(SERVER_URI,'_self');   
+        window.open(SERVER_URI + '/human_resources','_self');   
         jQuery.notify("Employee Added Successfully.", "success");
-    });*/
-    window.open(SERVER_URI + '/human_resources','_self');
+    });
   }
 ////////////////////////////////////////////////////////////////////////
 
@@ -272,7 +271,6 @@ function addHumanElement(){
     for (var j = 0; j < 3; j++) {
       value[j] = value[j]/100;
     }
-    console.log(value);
   //////////////////////post request//////////////////////////////
 
   var settings = {
@@ -289,7 +287,7 @@ function addHumanElement(){
     }
   }
   $.ajax(settings).done(function (response) {
-      window.open(SERVER_URI + '/human_resources','_self');   
+      window.open(SERVER_URI,'_self');   
       jQuery.notify("Employee Added Successfully.", "success");
   });
 }
