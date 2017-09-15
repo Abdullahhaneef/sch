@@ -12,10 +12,10 @@
   }
 
   function showCommunityTransformation() {
-        var user = document.getElementById("user").value
+    var user = document.getElementById("user").value
     if (user != "") {
-          // addEmployeeTransformation();
-          window.open(SERVER_URI + '/transformation','_self');
+          addEmployeeTransformation();
+          // window.open(SERVER_URI + '/transformation','_self');
     }else{
       jQuery.notify("Enter user name first", "error"); 
     }
@@ -414,6 +414,21 @@ function addTransformationEmpSkill(){
 /////////////////////////Level///////////////////////////////////////////
 
         level[index] = rowValue.find("Select")[1].value;
+        if (rowValue.find("Select")[1].value == '0 - No Experience'){
+          level[index] = 1;
+        }
+        else if (rowValue.find("Select")[1].value == '1 - Competent'){
+          level[index] = 2; 
+        }
+        else if (rowValue.find("Select")[1].value == '2 - Proficient'){
+          level[index] = 3; 
+        }
+        else if (rowValue.find("Select")[1].value == '3 - Advanced'){
+          level[index] = 4; 
+        }
+        else if (rowValue.find("Select")[1].value == '4 - Mastery'){
+          level[index] = 5; 
+        }
 
 /////////////////////////Certification//////////////////////////////////////
 
@@ -429,7 +444,7 @@ function addTransformationEmpSkill(){
         if (rowValue.find("Select")[3].value == '0 - Avoid'){
           learning_interest[index] = 1;
         }
-        else if (rowValue.find("Select")[3].value == '1 - Develop '){
+        else if (rowValue.find("Select")[3].value == '1 - Develop'){
           learning_interest[index] = 2; 
         }
         else if (rowValue.find("Select")[3].value == '2 - Engage'){
@@ -446,23 +461,33 @@ function addTransformationEmpSkill(){
 
 //////////////////////post request//////////////////////////////
 
-    var settings = {
-      "async": true,
-      "crossDomain": true,
-      "url": SERVER_URI+"/addEmpSkill",
-      "method": "POST",
-      "headers": {
-        "content-type": "application/x-www-form-urlencoded",
-        "cache-control": "no-cache",
-      },
-      "data": {
-        empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
-      }
-    }
-    $.ajax(settings).done(function (response) {
-        window.open(SERVER_URI + '/human_resources','_self');   
-        jQuery.notify("Employee Added Successfully.", "success");
-    });
+  console.log("finished");
+  // console.log(core_competency)
+  // console.log(tool_capability)
+  // console.log(category)
+  // console.log(skill)
+  // console.log(experience)
+  console.log(level)
+  // console.log(certification)
+  console.log(learning_interest)
+
+    // var settings = {
+    //   "async": true,
+    //   "crossDomain": true,
+    //   "url": SERVER_URI+"/addEmpSkill",
+    //   "method": "POST",
+    //   "headers": {
+    //     "content-type": "application/x-www-form-urlencoded",
+    //     "cache-control": "no-cache",
+    //   },
+    //   "data": {
+    //     empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
+    //   }
+    // }
+    // $.ajax(settings).done(function (response) {
+    //     window.open(SERVER_URI + '/human_resources','_self');   
+    //     jQuery.notify("Employee Added Successfully.", "success");
+    // });
   }
 
 ////////////////////////////////////////////////////////////////////////

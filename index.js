@@ -12,7 +12,7 @@ var dt = dateTime.create();
 var formatted = dt.format('m-d-Y');
 var client;
 
-var conString = "postgres://ahaneef:123456@localhost:5432/revel_ashes"
+var conString = "postgres://postgres@localhost:5432/revel_ashes"
 
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}));
 
