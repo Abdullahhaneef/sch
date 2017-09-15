@@ -12,7 +12,7 @@ var dt = dateTime.create();
 var formatted = dt.format('m-d-Y');
 var client;
 
-var conString = "postgres://postgres@localhost:5432/revel_ashes"
+var conString = "postgres://ahaneef:123456@localhost:5432/revel_ashes"
 
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}));
 
@@ -74,7 +74,6 @@ app.post("/addEmployee", function(req, res) {
 });
 
 
-
 ////////////////////////////Add Employee Skills///////////////////////////////////////////////
 app.post("/addEmpSkill", function(req, res) {
     setupResponse(res);
@@ -106,6 +105,32 @@ app.post("/addEmpSkill", function(req, res) {
     });
 });
 //    
+
+////////////////////////////Add Transformation Skills///////////////////////////////////////////////
+app.post("/addTransformationEmpSkill", function(req, res) {
+    setupResponse(res);
+    query_add_skill = "INSERT INTO skill_survey (\
+            emp_id, core_competency, tool_capability_id, category, \
+            skill, experience_id, level, certification_id, learning_interest,community_id) VALUES "
+    len = req.body.skill.length;
+    for(i = 0; i < len; i++){
+        query_add_skill = query_add_skill + "(" + req.body.empId + ",'" +req.body.core_competency[i] + "'\
+        ," +req.body.tool_capability[i] + ",'" + req.body.category[i] + "','" + req.body.skill[i] + "'," + req.body.experience[i] + "\
+        ,'" + req.body.level[i] + "'," + req.body.certification[i] + ",'" + req.body.learning_interest[i] + "',2), "
+    }
+    console.log(query_add_skill.substring(0, query_add_skill.length - 2) + ";");
+    client.query(query_add_skill.substring(0, query_add_skill.length - 2) + ";", function(err, result) {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            client.end();
+            
+        }
+        res.end(JSON.stringify({"status":"success"}));
+    });
+});
+
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

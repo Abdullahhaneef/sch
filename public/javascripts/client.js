@@ -305,29 +305,29 @@ function addTransformationEmpSkill(){
 ////////////////////////////////////////////////////////        
 //////////////////// Core competency/////////////////////
         if ($(myRows[i]).attr('id').split("_")[0] == 'cc'){
-          core_competency[index] = 1; 
+          core_competency[index] = 'CORE CONSULTING'; 
         }
         else if($(myRows[i]).attr('id').split("_")[0] == 'pm'){
-          core_competency[index] = 2;
+          core_competency[index] = 'PROGRAM MANAGEMENT';
         }
         else if($(myRows[i]).attr('id').split("_")[0] == 'prm'){
-          core_competency[index] = 3;          
+          core_competency[index] = 'PRODUCT MANAGEMENT ';
         }
         else if($(myRows[i]).attr('id').split("_")[0] == 'de'){
-          core_competency[index] = 4;          
+          core_competency[index] = 'DIGITAL ENABLEMENT';          
         }
         else if($(myRows[i]).attr('id').split("_")[0] == 'deo'){
-          core_competency[index] = 5;          
+          core_competency[index] = 'DIGITAL ENGAGEMENT & OPERATIONS';          
         }
 ///////////////////tool or capability/////////////////////////////
 
         if ($(myRows[i]).attr('id').split("_")[1] == 'tool'){
           tool_capability[index] = 1;
         }
-        else if($(myRows[i]).attr('id').split("_")[1] == 'sk'){
+        else if($(myRows[i]).attr('id').split("_")[1] == 'cp'){
           tool_capability[index] = 2;
         }
-        else if($(myRows[i]).attr('id').split("_")[1] == 'cp'){
+        else if($(myRows[i]).attr('id').split("_")[1] == 'sk'){
           tool_capability[index] = 3;
         }
         else if($(myRows[i]).attr('id').split("_")[1] == 'p'){
@@ -335,61 +335,61 @@ function addTransformationEmpSkill(){
         }
 ///////////////////////category////////////////////////////////
         if ($(myRows[i]).attr('id').split("_")[2] == 'ccfl'){
-          category[index] = 1;          
+          category[index] = 'Core Consulting, Finance, Leadership';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'fe'){
-          category[index] = 2;
+          category[index] = 'Functional Experience';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'ive'){
-          category[index] = 3;
+          category[index] = 'Industry Vertical Experience';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'edu'){
-          category[index] = 4;
+          category[index] = 'Education';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'general'){
-          category[index] = 5;
+          category[index] = 'General (PROGRAM MANAGEMENT)';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'ee'){
-          category[index] = 6;
+          category[index] = 'Execution Experience ';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'pms'){
-          category[index] = 7;
+          category[index] = 'Project Management Suites';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'cert'){
-          category[index] = 8;
+          category[index] = 'Certifications (PROGRAM MANAGEMENT)';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'gt'){
-          category[index] = 9;
+          category[index] = 'General Tools';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'c'){
-          category[index] = 10;
+          category[index] = 'Certifications (PRODUCT MANAGEMENT)';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'gud'){
-          category[index] = 11;
+          category[index] = 'General / UX Design';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'se'){
-          category[index] = 12;
+          category[index] = 'Strategy & Execution';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'mt'){
-          category[index] = 13;
+          category[index] = 'MarTech';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'ec'){
-          category[index] = 14;
+          category[index] = 'e-Commerce';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'crm'){
-          category[index] = 15;
+          category[index] = 'CRM';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'erp'){
-          category[index] = 16;
+          category[index] = 'ERP';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'cloud'){
-          category[index] = 17;
+          category[index] = 'Cloud';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'mobile'){
-          category[index] = 18;
+          category[index] = 'Mobile';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'gen'){
-          category[index] = 19;
+          category[index] = 'General (DIGITAL ENABLEMENT)';
         }
         skill[index] = $(myRows[i]).attr('id').split("_")[3]
 
@@ -414,22 +414,6 @@ function addTransformationEmpSkill(){
 /////////////////////////Level///////////////////////////////////////////
 
         level[index] = rowValue.find("Select")[1].value;
-        if (rowValue.find("Select")[1].value == '0 - No Experience'){
-          level[index] = 1;
-        }
-        else if (rowValue.find("Select")[1].value == '1 - Competent'){
-          level[index] = 2; 
-        }
-        else if (rowValue.find("Select")[1].value == '2 - Proficient'){
-          level[index] = 3; 
-        }
-        else if (rowValue.find("Select")[1].value == '3 - Advanced'){
-          level[index] = 4; 
-        }
-        else if (rowValue.find("Select")[1].value == '4 - Mastery'){
-          level[index] = 5; 
-        }
-
 /////////////////////////Certification//////////////////////////////////////
 
         if (rowValue.find("Select")[2].value == 'YES'){
@@ -441,18 +425,7 @@ function addTransformationEmpSkill(){
 
 /////////////////////////Learning Interest//////////////////////////////////////
 
-        if (rowValue.find("Select")[3].value == '0 - Avoid'){
-          learning_interest[index] = 1;
-        }
-        else if (rowValue.find("Select")[3].value == '1 - Develop'){
-          learning_interest[index] = 2; 
-        }
-        else if (rowValue.find("Select")[3].value == '2 - Engage'){
-          learning_interest[index] = 3; 
-        }
-        else if (rowValue.find("Select")[3].value == '3 - Accelerate'){
-          learning_interest[index] = 4; 
-        }
+        learning_interest[index] = rowValue.find("Select")[3].value;
 //////////////////index increasing for values in array////////////////////
 
         index = index + 1;
@@ -461,33 +434,33 @@ function addTransformationEmpSkill(){
 
 //////////////////////post request//////////////////////////////
 
-  console.log("finished");
-  // console.log(core_competency)
-  // console.log(tool_capability)
-  // console.log(category)
-  // console.log(skill)
-  // console.log(experience)
+/*  console.log("finished");
+  console.log(core_competency)
+  console.log(tool_capability)
+  console.log(category)
+  console.log(skill)
+  console.log(experience)
   console.log(level)
-  // console.log(certification)
-  console.log(learning_interest)
+  console.log(certification)
+  console.log(learning_interest)*/
 
-    // var settings = {
-    //   "async": true,
-    //   "crossDomain": true,
-    //   "url": SERVER_URI+"/addEmpSkill",
-    //   "method": "POST",
-    //   "headers": {
-    //     "content-type": "application/x-www-form-urlencoded",
-    //     "cache-control": "no-cache",
-    //   },
-    //   "data": {
-    //     empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
-    //   }
-    // }
-    // $.ajax(settings).done(function (response) {
-    //     window.open(SERVER_URI + '/human_resources','_self');   
-    //     jQuery.notify("Employee Added Successfully.", "success");
-    // });
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": SERVER_URI+"/addTransformationEmpSkill",
+      "method": "POST",
+      "headers": {
+        "content-type": "application/x-www-form-urlencoded",
+        "cache-control": "no-cache",
+      },
+      "data": {
+        empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
+      }
+    }
+    $.ajax(settings).done(function (response) {
+        window.open(SERVER_URI + '/human_resources','_self');   
+        jQuery.notify("Employee Added Successfully.", "success");
+    });
   }
 
 ////////////////////////////////////////////////////////////////////////
