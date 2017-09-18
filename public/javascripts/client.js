@@ -391,8 +391,13 @@ function addTransformationEmpSkill(){
         if ($(myRows[i]).attr('id').split("_")[2] == 'gen'){
           category[index] = 'General (DIGITAL ENABLEMENT)';
         }
-        skill[index] = $(myRows[i]).attr('id').split("_")[3]
-
+/////////////////////////////skill///////////////////////////////////////////        
+        if ($(myRows[i]).attr('id').split("_")[3] == 'other1' || $(myRows[i]).attr('id').split("_")[3] == 'other2' || $(myRows[i]).attr('id').split("_")[3] == 'other3'){
+          skill[index] = $(myRows[i]).find('td').find("input")[0].value;
+        }
+        else{
+          skill[index] = $(myRows[i]).attr('id').split("_")[3]
+        }
 /////////////////////////////////////////////////////////////////////
 
 ////////////////////values from form////////////////////////////////
