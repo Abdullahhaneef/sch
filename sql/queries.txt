@@ -1,0 +1,50 @@
+select  distinct(emp_id) from analytics_emp_skill_reference where tool_capability_id = 2 and core_competency_id =3  and experience_id IN (1,2);
+
+4.2500000000000000
+2.2307692307692308
+4.0937500000000000
+3.3571428571428571
+2.3333333333333333
+3.0909090909090909
+2.3846153846153846
+3.2142857142857143
+2.1111111111111111
+
+Insert into test_analytics_emp_skill_reference
+(Select analytics_emp_skill_reference.id,employees.name, core_competency.name, tool_capability.name,category.name, skill.name, experience.name, certification.value,learning_interest.value,level.name from analytics_emp_skill_reference,employees, core_competency, category, tool_capability, skill, experience,level, certification,learning_interest Where emp_id = employees.id AND core_competency.id = core_competency_id AND category.id = category_id AND tool_capability.id = tool_capability_id AND skill.id = skill_id AND experience.id = experience_id AND level.id = level_id AND certification.id =certification_id  AND learning_interest.id = learning_interest_id);
+
+
+-- Table: public.test_analytics_emp_skill_reference
+
+-- DROP TABLE public.test_analytics_emp_skill_reference;
+
+CREATE TABLE public.test_analytics_emp_skill_reference
+(
+  id integer NOT NULL DEFAULT nextval('emp_skill_reference_id_seq'::regclass),
+  emp_name character varying(200),
+  core_competency character varying(500),
+  tool_capability character varying(100),
+  category character varying(250),
+  skill character varying(500),
+  experience character varying(250),
+  certification character varying(10),
+  learning_interest character varying(10),
+  level character varying(250)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.test_analytics_emp_skill_reference
+  OWNER TO postgres;
+
+
+update skill_survey set level = 1 where level = 'INTRODUCTORY';
+update skill_survey set level = 2 where level = 'BASIC';
+update skill_survey set level = 3 where level = 'PROFICIENT';
+update skill_survey set level = 4 where level = 'ADVANCED';
+update skill_survey set level = 5 where level = 'MASTERY';
+update skill_survey set level = 6 where level = '0 - No Experience';
+update skill_survey set level = 7 where level = '1 - Competent';
+update skill_survey set level = 8 where level = '2 - Proficient';
+update skill_survey set level = 9 where level = '3 - Advanced';
+update skill_survey set level = 10 where level = '4 - Mastery';
