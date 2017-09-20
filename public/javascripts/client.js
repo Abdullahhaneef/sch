@@ -1,6 +1,7 @@
   var SERVER_URI = "http://localhost:3000";
   var empId;
 
+
   function showCommunityAnalytics() {
     var user = document.getElementById("user").value
     if (user != "") {
@@ -71,6 +72,7 @@
   }
 
   function addEmpSkill(){
+    isEmpty = false;
     empId = localStorage.getItem("empId");
     var core_competency=[];
     var tool_capability = [];
@@ -227,11 +229,16 @@
         }
         else if (rowValue.find("Select")[0].value == 'N/A'){
           experience[index] = 3; 
+        }else if (rowValue.find("Select")[0].value == ''){
+          isEmpty = true 
         }
 
 /////////////////////////Level///////////////////////////////////////////
 
         level[index] = rowValue.find("Select")[1].value;
+        if (rowValue.find("Select")[1].value == ''){
+          isEmpty = true 
+        }
 /////////////////////////Certification//////////////////////////////////////
 
         if (rowValue.find("Select")[2].value == 'YES'){
@@ -239,12 +246,16 @@
         }
         else if (rowValue.find("Select")[2].value == 'NO'){
           certification[index] = 2; 
+        }else if (rowValue.find("Select")[2].value == ''){
+          isEmpty = true 
         }
 
 /////////////////////////Learning Interest//////////////////////////////////////
 
         learning_interest[index] = rowValue.find("Select")[3].value;
-
+        if (rowValue.find("Select")[3].value == ''){
+          isEmpty = true 
+        }
 //////////////////index increasing for values in array////////////////////
 
         index = index + 1;
@@ -253,23 +264,27 @@
 
 //////////////////////post request//////////////////////////////
     
-    var settings = {
-      "async": true,
-      "crossDomain": true,
-      "url": SERVER_URI+"/addAnalyticsEmpSkill",
-      "method": "POST",
-      "headers": {
-        "content-type": "application/x-www-form-urlencoded",
-        "cache-control": "no-cache",
-      },
-      "data": {
-        empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
+    if (isEmpty) {
+      jQuery.notify("Fill the empty field", "error");
+    }else{
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": SERVER_URI+"/addAnalyticsEmpSkill",
+        "method": "POST",
+        "headers": {
+          "content-type": "application/x-www-form-urlencoded",
+          "cache-control": "no-cache",
+        },
+        "data": {
+          empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
+        }
       }
+      $.ajax(settings).done(function (response) {
+          window.open(SERVER_URI + '/human_resources','_self');   
+          jQuery.notify("Employee Added Successfully.", "success");
+      });
     }
-    $.ajax(settings).done(function (response) {
-        window.open(SERVER_URI + '/human_resources','_self');   
-        jQuery.notify("Employee Added Successfully.", "success");
-    });
   }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -277,6 +292,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 function addTransformationEmpSkill(){
+    isEmpty = false;
     empId = localStorage.getItem("empId");
     var core_competency=[];
     var tool_capability = [];
@@ -410,6 +426,8 @@ function addTransformationEmpSkill(){
         }
         else if (rowValue.find("Select")[0].value == 'N/A'){
           experience[index] = 3; 
+        }else if (rowValue.find("Select")[0].value == ''){
+          isEmpty = true 
         }
 
 /////////////////////////Level///////////////////////////////////////////
@@ -428,6 +446,8 @@ function addTransformationEmpSkill(){
         }
         else if(rowValue.find("Select")[1].value == '4 - Mastery'){
           level[index] = 10;  
+        }else if (rowValue.find("Select")[1].value == ''){
+          isEmpty = true 
         }
 
 /////////////////////////Certification//////////////////////////////////////
@@ -437,11 +457,16 @@ function addTransformationEmpSkill(){
         }
         else if (rowValue.find("Select")[2].value == 'NO'){
           certification[index] = 2; 
+        }else if (rowValue.find("Select")[2].value == ''){
+          isEmpty = true 
         }
 
 /////////////////////////Learning Interest//////////////////////////////////////
 
         learning_interest[index] = rowValue.find("Select")[3].value;
+        if (rowValue.find("Select")[3].value == ''){
+          isEmpty = true 
+        }
 //////////////////index increasing for values in array////////////////////
 
         index = index + 1;
@@ -449,24 +474,27 @@ function addTransformationEmpSkill(){
     }
 
 //////////////////////post request//////////////////////////////
-
+  if (isEmpty) {
+    jQuery.notify("Fill the empty field", "error");
+  }else{
     var settings = {
-      "async": true,
-      "crossDomain": true,
-      "url": SERVER_URI+"/addTransformationEmpSkill",
-      "method": "POST",
-      "headers": {
-        "content-type": "application/x-www-form-urlencoded",
-        "cache-control": "no-cache",
-      },
-      "data": {
-        empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
+        "async": true,
+        "crossDomain": true,
+        "url": SERVER_URI+"/addTransformationEmpSkill",
+        "method": "POST",
+        "headers": {
+          "content-type": "application/x-www-form-urlencoded",
+          "cache-control": "no-cache",
+        },
+        "data": {
+          empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
+        }
       }
+      $.ajax(settings).done(function (response) {
+          window.open(SERVER_URI + '/human_resources','_self');   
+          jQuery.notify("Employee Added Successfully.", "success");
+      });
     }
-    $.ajax(settings).done(function (response) {
-        window.open(SERVER_URI + '/human_resources','_self');   
-        jQuery.notify("Employee Added Successfully.", "success");
-    });
   }
 
 ////////////////////////////////////////////////////////////////////////
