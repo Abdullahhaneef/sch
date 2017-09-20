@@ -48,3 +48,14 @@ update skill_survey set level = 7 where level = '1 - Competent';
 update skill_survey set level = 8 where level = '2 - Proficient';
 update skill_survey set level = 9 where level = '3 - Advanced';
 update skill_survey set level = 10 where level = '4 - Mastery';
+
+
+Select employees.name, skill_survey.core_competency, tool_capability.name,skill_survey.category, skill_survey.skill, experience.name,level.name, certification.value,skill_survey.learning_interest 
+from skill_survey 
+Left join level on level.id = skill_survey.level_id
+Left join employees on emp_id = employees.id
+Left join tool_capability on tool_capability.id = tool_capability_id 
+Left join experience on experience.id = experience_id
+Left join certification on certification.id =certification_id
+WHERE skill_survey.community_id = 2
+Order by emp_id;
