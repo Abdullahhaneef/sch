@@ -22,7 +22,8 @@
   }  
 
   function addEmployee(){
-    empName  = document.getElementById("user").value;
+    var empName  = document.getElementById("user").value;
+    var community = 1;
     var settings = {
       "async": true,
       "crossDomain": true,
@@ -33,7 +34,7 @@
         "cache-control": "no-cache",
       },
       "data": {
-        empName
+        empName , community
       }
     }
     $.ajax(settings).done(function (response) {      
@@ -43,7 +44,8 @@
   }
 
   function addEmployeeTransformation(){
-    empName  = document.getElementById("user").value;
+    var empName  = document.getElementById("user").value;
+    var community = 2;
     var settings = {
       "async": true,
       "crossDomain": true,
@@ -54,7 +56,7 @@
         "cache-control": "no-cache",
       },
       "data": {
-        empName
+        empName , community
       }
     }
     $.ajax(settings).done(function (response) {      
@@ -93,28 +95,28 @@
 ////////////////////////////////////////////////////////        
 //////////////////// Core competency/////////////////////
         if ($(myRows[i]).attr('id').split("_")[0] == 'cc'){
-          core_competency[index] = 1; 
+          core_competency[index] = 'CORE CONSULTING'; 
         }
         else if($(myRows[i]).attr('id').split("_")[0] == 'dv'){
-          core_competency[index] = 2;
+          core_competency[index] = 'DATA VISUALIZATION';
         }
         else if($(myRows[i]).attr('id').split("_")[0] == 'di'){
-          core_competency[index] = 3;          
+          core_competency[index] = 'DATA INTEGRATION';          
         }
         else if($(myRows[i]).attr('id').split("_")[0] == 'aa'){
-          core_competency[index] = 4;          
+          core_competency[index] = 'ADVANCED ANALYTICS';
         }
         else if($(myRows[i]).attr('id').split("_")[0] == 'saias'){
-          core_competency[index] = 5;          
+          core_competency[index] = 'SOLUTION ARCHITECTURE, INFRASTRUCTURE, AND SECURITY';
         }
         else if($(myRows[i]).attr('id').split("_")[0] == 'dmwa'){
-          core_competency[index] = 6;          
+          core_competency[index] = 'DIGITAL MARKETING & WEB ANALYTICS';          
         }
         else if($(myRows[i]).attr('id').split("_")[0] == 'p'){
-          core_competency[index] = 7;         
+          core_competency[index] = 'PROGRAMMING';
         }
         else if($(myRows[i]).attr('id').split("_")[0] == 'acc'){
-          core_competency[index] = 8;          
+          core_competency[index] = 'ADOBE CREATIVE CLOUD';
         }
 ///////////////////tool or capacity/////////////////////////////
 
@@ -126,85 +128,85 @@
         }
 ///////////////////////category////////////////////////////////
         if ($(myRows[i]).attr('id').split("_")[2] == 'pms'){
-          category[index] = 1;          
+          category[index] = 'Project Management Suites';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'pm'){
-          category[index] = 2;
+          category[index] = 'Project Management';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'ccfl'){
-          category[index] = 3;
+          category[index] = 'Core Consulting, Finance, Leadership';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'fe'){
-          category[index] = 4;
+          category[index] = 'Functional Experience';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'ive'){
-          category[index] = 5;
+          category[index] = 'Industry Vertical Experience';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'edu'){
-          category[index] = 6;
+          category[index] = 'Education';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'dvt'){
-          category[index] = 7;
+          category[index] = 'Data Visualization tools';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'oordt'){
-          category[index] = 8;
+          category[index] = 'OLAP & Operational Reporting, Dashboarding tools';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'dv'){
-          category[index] = 9;
+          category[index] = 'Data Visualization';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'dit'){
-          category[index] = 10;
+          category[index] = 'Data Integration tools';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'dwp'){
-          category[index] = 11;
+          category[index] = 'Data Warehousing platforms';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'dmt'){
-          category[index] = 12;
+          category[index] = 'Data Modeling tools';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'nst'){
-          category[index] = 13;
+          category[index] = 'NoSQL tools';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'bdt'){
-          category[index] = 14;
+          category[index] = 'Big Data tools';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'iot'){
-          category[index] = 15;
+          category[index] = 'IoT tools';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'od'){
-          category[index] = 16;
+          category[index] = 'OLTP Databases';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'di'){
-          category[index] = 17;
+          category[index] = 'Data Integration';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'aa'){
-          category[index] = 18;
+          category[index] = 'Advanced Analytics';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'st'){
-          category[index] = 19;
+          category[index] = 'Statistics';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'ci'){
-          category[index] = 20;
+          category[index] = 'Cloud Infrastructure';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'dasa'){
-          category[index] = 21;
+          category[index] = 'Database Admin, Server Admin';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'wa'){
-          category[index] = 22;
+          category[index] = 'Web Analytics';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'rts'){
-          category[index] = 23;
+          category[index] = 'Real-time Stats';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'aca'){
-          category[index] = 24;
+          category[index] = 'Advanced Customer Analytics';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'dmp'){
-          category[index] = 25;
+          category[index] = 'Data Management Platforms';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'pl'){
-          category[index] = 26;
+          category[index] = 'Programming Languages';
         }
         if ($(myRows[i]).attr('id').split("_")[2] == 'acc'){
-          category[index] = 27;
+          category[index] = 'Adobe Creative Cloud';
         }
 
         skill[index] = $(myRows[i]).attr('id').split("_")[3]
@@ -230,7 +232,6 @@
 /////////////////////////Level///////////////////////////////////////////
 
         level[index] = rowValue.find("Select")[1].value;
-
 /////////////////////////Certification//////////////////////////////////////
 
         if (rowValue.find("Select")[2].value == 'YES'){
@@ -242,12 +243,7 @@
 
 /////////////////////////Learning Interest//////////////////////////////////////
 
-        if (rowValue.find("Select")[3].value == 'YES'){
-          learning_interest[index] = 1;
-        }
-        else if (rowValue.find("Select")[3].value == 'NO'){
-          learning_interest[index] = 2; 
-        }
+        learning_interest[index] = rowValue.find("Select")[3].value;
 
 //////////////////index increasing for values in array////////////////////
 
@@ -256,11 +252,11 @@
     }
 
 //////////////////////post request//////////////////////////////
-
+    
     var settings = {
       "async": true,
       "crossDomain": true,
-      "url": SERVER_URI+"/addEmpSkill",
+      "url": SERVER_URI+"/addAnalyticsEmpSkill",
       "method": "POST",
       "headers": {
         "content-type": "application/x-www-form-urlencoded",
@@ -418,7 +414,22 @@ function addTransformationEmpSkill(){
 
 /////////////////////////Level///////////////////////////////////////////
 
-        level[index] = rowValue.find("Select")[1].value;
+        if(rowValue.find("Select")[1].value == '0 - No Experience'){
+          level[index] = 6;  
+        }
+        else if(rowValue.find("Select")[1].value == '1 - Competent'){
+          level[index] = 7;  
+        }
+        else if(rowValue.find("Select")[1].value == '2 - Proficient'){
+          level[index] = 8;  
+        }
+        else if(rowValue.find("Select")[1].value == '3 - Advanced'){
+          level[index] = 9;  
+        }
+        else if(rowValue.find("Select")[1].value == '4 - Mastery'){
+          level[index] = 10;  
+        }
+
 /////////////////////////Certification//////////////////////////////////////
 
         if (rowValue.find("Select")[2].value == 'YES'){
@@ -438,16 +449,6 @@ function addTransformationEmpSkill(){
     }
 
 //////////////////////post request//////////////////////////////
-
-/*  console.log("finished");
-  console.log(core_competency)
-  console.log(tool_capability)
-  console.log(category)
-  console.log(skill)
-  console.log(experience)
-  console.log(level)
-  console.log(certification)
-  console.log(learning_interest)*/
 
     var settings = {
       "async": true,

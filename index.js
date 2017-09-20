@@ -59,7 +59,7 @@ router.get('/human_resources',function(req, res){
 app.post("/addEmployee", function(req, res) {
     setupResponse(res);
     var empId=0;
-    query_add_employee = "INSERT INTO employees(name) values('"+req.body.empName+"') RETURNING id";
+    query_add_employee = "INSERT INTO employees(name , community_id) values('"+req.body.empName+"',"+req.body.community+") RETURNING id";
     client.query(query_add_employee, function(err, result) {
         if(err) {
             console.log(err);
@@ -75,23 +75,16 @@ app.post("/addEmployee", function(req, res) {
 
 
 ////////////////////////////Add Employee Skills///////////////////////////////////////////////
-app.post("/addEmpSkill", function(req, res) {
+app.post("/addAnalyticsEmpSkill", function(req, res) {
     setupResponse(res);
-    query_add_skill = "INSERT INTO analytics_emp_skill_reference (\
-            emp_id, core_competency_id, tool_capability_id, category_id, \
-            skill_id, experience_id, level_id, certification_id, learning_interest_id) VALUES "
+    query_add_skill = "INSERT INTO skill_survey (\
+            emp_id, core_competency, tool_capability_id, category, \
+            skill, experience_id, level_id, certification_id, learning_interest,community_id) VALUES "
     len = req.body.skill.length;
     for(i = 0; i < len; i++){
-        skill_id = i + 1;
-        if(req.body.level[i] == ""){
-            level_id = null;
-        }
-        else{
-            level_id = req.body.level[i];
-        }
-        query_add_skill = query_add_skill + "(" + req.body.empId + "," +req.body.core_competency[i] + "\
-        ," +req.body.tool_capability[i] + "," + req.body.category[i] + "," + skill_id + "," + req.body.experience[i] + "\
-        ," + level_id + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + "), "
+        query_add_skill = query_add_skill + "(" + req.body.empId + ",'" +req.body.core_competency[i] + "'\
+        ," +req.body.tool_capability[i] + ",'" + req.body.category[i] + "','" + req.body.skill[i] + "'," + req.body.experience[i] + "\
+        ,'" + req.body.level[i] + "'," + req.body.certification[i] + ",'" + req.body.learning_interest[i] + "',1), "
     }
     client.query(query_add_skill.substring(0, query_add_skill.length - 2) + ";", function(err, result) {
         if(err) {
@@ -111,7 +104,7 @@ app.post("/addTransformationEmpSkill", function(req, res) {
     setupResponse(res);
     query_add_skill = "INSERT INTO skill_survey (\
             emp_id, core_competency, tool_capability_id, category, \
-            skill, experience_id, level, certification_id, learning_interest,community_id) VALUES "
+            skill, experience_id, level_id, certification_id, learning_interest,community_id) VALUES "
     len = req.body.skill.length;
     for(i = 0; i < len; i++){
         query_add_skill = query_add_skill + "(" + req.body.empId + ",'" +req.body.core_competency[i] + "'\
