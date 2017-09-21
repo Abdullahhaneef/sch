@@ -5,7 +5,7 @@
   function showCommunityAnalytics() {
     var user = document.getElementById("user").value
     if (user != "") {
-       addEmployee();
+       addEmployeeAnalytics();
       //window.open(SERVER_URI + '/analytics','_self');
     }else{
       jQuery.notify("Enter user name first", "error"); 
@@ -22,27 +22,43 @@
     }
   }  
 
-  function addEmployee(){
+  function addEmployeeAnalytics(){
     var empName  = document.getElementById("user").value;
     var community = 1;
-    var settings = {
-      "async": true,
-      "crossDomain": true,
-      "url": SERVER_URI+"/addEmployee",
-      "method": "POST",
-      "headers": {
-        "content-type": "application/x-www-form-urlencoded",
-        "cache-control": "no-cache",
-      },
-      "data": {
-        empName , community
-      }
+
+      swal({
+      title: empName,
+      text: "Check spelling of your name and proceed",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Save'
+      }).then(function () {
+        var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": SERVER_URI+"/addEmployee",
+          "method": "POST",
+          "headers": {
+            "content-type": "application/x-www-form-urlencoded",
+            "cache-control": "no-cache",
+          },
+          "data": {
+            empName , community
+          }
+        }
+        $.ajax(settings).done(function (response) {      
+            setEmpId(response);
+            window.open(SERVER_URI + '/analytics','_self');
+        });
+        swal(
+          'Saved!',
+          'Employee created.',
+          'success'
+        )
+      })
     }
-    $.ajax(settings).done(function (response) {      
-        setEmpId(response);
-        window.open(SERVER_URI + '/analytics','_self');
-    }); 
-  }
 
   function addEmployeeTransformation(){
     var empName  = document.getElementById("user").value;
@@ -71,7 +87,7 @@
     localStorage.setItem("empId",empId);
   }
 
-  function addEmpSkill(){
+  function addAnalyticsEmpSkill(){
     isEmpty = false;
     empId = localStorage.getItem("empId");
     var core_competency=[];
@@ -229,15 +245,36 @@
         }
         else if (rowValue.find("Select")[0].value == 'N/A'){
           experience[index] = 3; 
-        }else if (rowValue.find("Select")[0].value == ''){
-          isEmpty = true 
         }
 
 /////////////////////////Level///////////////////////////////////////////
 
         level[index] = rowValue.find("Select")[1].value;
-        if (rowValue.find("Select")[1].value == ''){
-          isEmpty = true 
+        if(rowValue.find("Select")[1].value == '1 - Introductory'){
+          level[index] = 1;  
+        }
+        else if(rowValue.find("Select")[1].value == '2 - Basic'){
+          level[index] = 2;  
+        }
+        else if(rowValue.find("Select")[1].value == '3 - Proficient'){
+          level[index] = 3;  
+        }
+        else if(rowValue.find("Select")[1].value == '4 - Advanced'){
+          level[index] = 4;  
+        }
+        else if(rowValue.find("Select")[1].value == '5 - Mastery'){
+          level[index] = 5;  
+        }
+        else{
+          level[index] = null;  
+        }
+
+/////////////////////////Restriction check///////////////////////////////////////////        
+        if (rowValue.find("Select")[0].value != 'N/A' && rowValue.find("Select")[1].value == ''){
+          var id = "#" +  $(myRows[i]).attr('id');
+          jQuery(id).find('font')[0].color = 'red';
+          jQuery(rowValue.find("Select")[1]).notify("Error");
+          isEmpty = true;
         }
 /////////////////////////Certification//////////////////////////////////////
 
@@ -246,16 +283,12 @@
         }
         else if (rowValue.find("Select")[2].value == 'NO'){
           certification[index] = 2; 
-        }else if (rowValue.find("Select")[2].value == ''){
-          isEmpty = true 
         }
 
 /////////////////////////Learning Interest//////////////////////////////////////
 
         learning_interest[index] = rowValue.find("Select")[3].value;
-        if (rowValue.find("Select")[3].value == ''){
-          isEmpty = true 
-        }
+
 //////////////////index increasing for values in array////////////////////
 
         index = index + 1;
@@ -265,28 +298,43 @@
 //////////////////////post request//////////////////////////////
     
     if (isEmpty) {
-      jQuery.notify("Fill the empty field", "error");
-    }else{
-      var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": SERVER_URI+"/addAnalyticsEmpSkill",
-        "method": "POST",
-        "headers": {
-          "content-type": "application/x-www-form-urlencoded",
-          "cache-control": "no-cache",
-        },
-        "data": {
-          empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
+      jQuery.notify("Correctly Fill the highlighted fields", "error");
+    }
+    else{
+      swal({
+      title: 'Are you sure?',
+      text: "Check the values, you won't be able to revert this.",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, save'
+      }).then(function () {
+        var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": SERVER_URI+"/addAnalyticsEmpSkill",
+          "method": "POST",
+          "headers": {
+            "content-type": "application/x-www-form-urlencoded",
+            "cache-control": "no-cache",
+          },
+          "data": {
+            empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
+          }
         }
-      }
-      $.ajax(settings).done(function (response) {
-          window.open(SERVER_URI + '/human_resources','_self');   
-          jQuery.notify("Employee Added Successfully.", "success");
-      });
+        $.ajax(settings).done(function (response) {
+            window.open(SERVER_URI + '/human_resources','_self');   
+            jQuery.notify("Employee Added Successfully.", "success");
+        });
+        swal(
+          'Saved!',
+          'Request has been saved.',
+          'success'
+        )
+      })
     }
   }
-
 //////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////Transformation Form///////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////
