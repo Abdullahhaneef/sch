@@ -249,7 +249,6 @@
 
 /////////////////////////Level///////////////////////////////////////////
 
-        level[index] = rowValue.find("Select")[1].value;
         if(rowValue.find("Select")[1].value == '1 - Introductory'){
           level[index] = 1;  
         }
@@ -287,16 +286,25 @@
 
 /////////////////////////Learning Interest//////////////////////////////////////
 
-        learning_interest[index] = rowValue.find("Select")[3].value;
+        if(rowValue.find("Select")[3].value == '0 - Avoid'){
+          learning_interest[index] = 0;  
+        }
+        else if(rowValue.find("Select")[3].value == '1 - Develop'){
+          learning_interest[index] = 1;  
+        }
+        else if(rowValue.find("Select")[3].value == '2 - Engage'){
+          learning_interest[index] = 2;  
+        }
+        else if(rowValue.find("Select")[3].value == '3 - Accelerate'){
+          learning_interest[index] = 3;  
+        }
 
 //////////////////index increasing for values in array////////////////////
 
         index = index + 1;
       }
     }
-
 //////////////////////post request//////////////////////////////
-    
     if (isEmpty) {
       jQuery.notify("Correctly Fill the highlighted fields", "error");
     }
