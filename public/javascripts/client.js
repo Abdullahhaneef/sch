@@ -63,24 +63,40 @@
   function addEmployeeTransformation(){
     var empName  = document.getElementById("user").value;
     var community = 2;
-    var settings = {
-      "async": true,
-      "crossDomain": true,
-      "url": SERVER_URI+"/addEmployee",
-      "method": "POST",
-      "headers": {
-        "content-type": "application/x-www-form-urlencoded",
-        "cache-control": "no-cache",
-      },
-      "data": {
-        empName , community
-      }
+
+      swal({
+      title: empName,
+      text: "Check spelling of your name and proceed",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Save'
+      }).then(function () {
+        var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": SERVER_URI+"/addEmployee",
+          "method": "POST",
+          "headers": {
+            "content-type": "application/x-www-form-urlencoded",
+            "cache-control": "no-cache",
+          },
+          "data": {
+            empName , community
+          }
+        }
+        $.ajax(settings).done(function (response) {      
+            setEmpId(response);
+            window.open(SERVER_URI + '/transformation','_self');
+        });
+        swal(
+          'Saved!',
+          'Employee created.',
+          'success'
+        )
+      })
     }
-    $.ajax(settings).done(function (response) {      
-        setEmpId(response);
-        window.open(SERVER_URI + '/transformation','_self');
-    }); 
-  }
 
   function setEmpId(response){
     empId = response.empId;
