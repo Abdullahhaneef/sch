@@ -286,7 +286,7 @@
 
 /////////////////////////Restriction check///////////////////////////////////////////        
         if (rowValue.find("Select")[0].value != 'N/A' && rowValue.find("Select")[1].value == ''){
-          var id = "#" +  $(myRows[i]).attr('id');
+          var id = '[id="'+$(myRows[i]).attr('id');+'"]';
           jQuery(id).find('font')[0].color = 'red';
           jQuery(rowValue.find("Select")[1]).notify("Error");
           isEmpty = true;
@@ -523,7 +523,7 @@ function addTransformationEmpSkill(){
 
 /////////////////////////Restriction check///////////////////////////////////////////        
         if (rowValue.find("Select")[0].value != 'N/A' && rowValue.find("Select")[1].value == ''){
-          var id = "#" +  $(myRows[i]).attr('id');
+          var id = '[id="'+$(myRows[i]).attr('id');+'"]';
           jQuery(id).find('font')[0].color = 'red';
           jQuery(rowValue.find("Select")[1]).notify("Error");
           isEmpty = true;
