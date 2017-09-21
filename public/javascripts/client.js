@@ -332,8 +332,7 @@
           }
         }
         $.ajax(settings).done(function (response) {
-            window.open(SERVER_URI + '/human_resources','_self');   
-            jQuery.notify("Employee Added Successfully.", "success");
+            window.open(SERVER_URI + '/human_resources','_self');
         });
         swal(
           'Saved!',
@@ -459,13 +458,15 @@ function addTransformationEmpSkill(){
         if ($(myRows[i]).attr('id').split("_")[2] == 'gen'){
           category[index] = 'General (DIGITAL ENABLEMENT)';
         }
-/////////////////////////////skill///////////////////////////////////////////        
+/////////////////////////////skill///////////////////////////////////////////
+
         if ($(myRows[i]).attr('id').split("_")[3] == 'other1' || $(myRows[i]).attr('id').split("_")[3] == 'other2' || $(myRows[i]).attr('id').split("_")[3] == 'other3'){
           skill[index] = $(myRows[i]).find('td').find("input")[0].value;
         }
         else{
           skill[index] = $(myRows[i]).attr('id').split("_")[3]
         }
+
 /////////////////////////////////////////////////////////////////////
 
 ////////////////////values from form////////////////////////////////
@@ -482,30 +483,35 @@ function addTransformationEmpSkill(){
         }
         else if (rowValue.find("Select")[0].value == 'N/A'){
           experience[index] = 3; 
-        }else if (rowValue.find("Select")[0].value == ''){
-          isEmpty = true 
         }
-
 /////////////////////////Level///////////////////////////////////////////
 
-        if(rowValue.find("Select")[1].value == '0 - No Experience'){
-          level[index] = 6;  
+        if(rowValue.find("Select")[1].value == '1 - Introductory'){
+          level[index] = 1;  
         }
-        else if(rowValue.find("Select")[1].value == '1 - Competent'){
-          level[index] = 7;  
+        else if(rowValue.find("Select")[1].value == '2 - Basic'){
+          level[index] = 2;  
         }
-        else if(rowValue.find("Select")[1].value == '2 - Proficient'){
-          level[index] = 8;  
+        else if(rowValue.find("Select")[1].value == '3 - Proficient'){
+          level[index] = 3;  
         }
-        else if(rowValue.find("Select")[1].value == '3 - Advanced'){
-          level[index] = 9;  
+        else if(rowValue.find("Select")[1].value == '4 - Advanced'){
+          level[index] = 4;  
         }
-        else if(rowValue.find("Select")[1].value == '4 - Mastery'){
-          level[index] = 10;  
-        }else if (rowValue.find("Select")[1].value == ''){
-          isEmpty = true 
+        else if(rowValue.find("Select")[1].value == '5 - Mastery'){
+          level[index] = 5;  
+        }
+        else{
+          level[index] = null;  
         }
 
+/////////////////////////Restriction check///////////////////////////////////////////        
+        if (rowValue.find("Select")[0].value != 'N/A' && rowValue.find("Select")[1].value == ''){
+          var id = "#" +  $(myRows[i]).attr('id');
+          jQuery(id).find('font')[0].color = 'red';
+          jQuery(rowValue.find("Select")[1]).notify("Error");
+          isEmpty = true;
+        }
 /////////////////////////Certification//////////////////////////////////////
 
         if (rowValue.find("Select")[2].value == 'YES'){
@@ -513,16 +519,22 @@ function addTransformationEmpSkill(){
         }
         else if (rowValue.find("Select")[2].value == 'NO'){
           certification[index] = 2; 
-        }else if (rowValue.find("Select")[2].value == ''){
-          isEmpty = true 
         }
 
 /////////////////////////Learning Interest//////////////////////////////////////
-
-        learning_interest[index] = rowValue.find("Select")[3].value;
-        if (rowValue.find("Select")[3].value == ''){
-          isEmpty = true 
+        if(rowValue.find("Select")[3].value == '0 - Avoid'){
+          learning_interest[index] = 0;  
         }
+        else if(rowValue.find("Select")[3].value == '1 - Develop'){
+          learning_interest[index] = 1;  
+        }
+        else if(rowValue.find("Select")[3].value == '2 - Engage'){
+          learning_interest[index] = 2;  
+        }
+        else if(rowValue.find("Select")[3].value == '3 - Accelerate'){
+          learning_interest[index] = 3;  
+        }
+
 //////////////////index increasing for values in array////////////////////
 
         index = index + 1;
@@ -531,28 +543,41 @@ function addTransformationEmpSkill(){
 
 //////////////////////post request//////////////////////////////
   if (isEmpty) {
-    jQuery.notify("Fill the empty field", "error");
+    jQuery.notify("Correctly Fill the highlighted fields", "error");
   }else{
-    var settings = {
-        "async": true,
-        "crossDomain": true,
-        "url": SERVER_URI+"/addTransformationEmpSkill",
-        "method": "POST",
-        "headers": {
-          "content-type": "application/x-www-form-urlencoded",
-          "cache-control": "no-cache",
-        },
-        "data": {
-          empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
+    swal({
+      title: 'Are you sure?',
+      text: "Check the values, you won't be able to revert this.",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, save'
+      }).then(function () {
+      var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": SERVER_URI+"/addTransformationEmpSkill",
+          "method": "POST",
+          "headers": {
+            "content-type": "application/x-www-form-urlencoded",
+            "cache-control": "no-cache",
+          },
+          "data": {
+            empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
+          }
         }
-      }
-      $.ajax(settings).done(function (response) {
-          window.open(SERVER_URI + '/human_resources','_self');   
-          jQuery.notify("Employee Added Successfully.", "success");
-      });
+        $.ajax(settings).done(function (response) {
+            window.open(SERVER_URI + '/human_resources','_self');
+        });
+        swal(
+          'Saved!',
+          'Request has been saved.',
+          'success'
+        )
+      })
     }
   }
-
 ////////////////////////////////////////////////////////////////////////
 
 ////////////////////////////Human Element Survey////////////////////////////
