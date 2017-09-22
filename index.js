@@ -111,7 +111,6 @@ app.post("/addTransformationEmpSkill", function(req, res) {
         ," +req.body.tool_capability[i] + ",'" + req.body.category[i] + "','" + req.body.skill[i] + "'," + req.body.experience[i] + "\
         ," + req.body.level[i] + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + ",2), "
     }
-    console.log(query_add_skill.substring(0, query_add_skill.length - 2) + ";");
     client.query(query_add_skill.substring(0, query_add_skill.length - 2) + ";", function(err, result) {
         if(err) {
             console.log(err);
