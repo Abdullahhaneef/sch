@@ -12,7 +12,7 @@ var dt = dateTime.create();
 var formatted = dt.format('m-d-Y');
 var client;
 
-var conString = "postgres://ahaneef:123456@localhost:5432/revel_ashes"
+var conString = "postgres://ahaneef:123456@localhost:5432/revel_db"
 
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}));
 
@@ -79,12 +79,12 @@ app.post("/addAnalyticsEmpSkill", function(req, res) {
     setupResponse(res);
     query_add_skill = "INSERT INTO skill_survey (\
             emp_id, core_competency, tool_capability_id, category, \
-            skill, experience_id, level_id, certification_id, learning_interest,community_id) VALUES "
+            skill, experience_id, level_id, certification_id, learning_interest_id,community_id) VALUES "
     len = req.body.skill.length;
     for(i = 0; i < len; i++){
         query_add_skill = query_add_skill + "(" + req.body.empId + ",'" +req.body.core_competency[i] + "'\
         ," +req.body.tool_capability[i] + ",'" + req.body.category[i] + "','" + req.body.skill[i] + "'," + req.body.experience[i] + "\
-        ,'" + req.body.level[i] + "'," + req.body.certification[i] + ",'" + req.body.learning_interest[i] + "',1), "
+        ," + req.body.level[i] + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + ",1), "
     }
     client.query(query_add_skill.substring(0, query_add_skill.length - 2) + ";", function(err, result) {
         if(err) {
@@ -104,12 +104,12 @@ app.post("/addTransformationEmpSkill", function(req, res) {
     setupResponse(res);
     query_add_skill = "INSERT INTO skill_survey (\
             emp_id, core_competency, tool_capability_id, category, \
-            skill, experience_id, level_id, certification_id, learning_interest,community_id) VALUES "
+            skill, experience_id, level_id, certification_id, learning_interest_id,community_id) VALUES "
     len = req.body.skill.length;
     for(i = 0; i < len; i++){
         query_add_skill = query_add_skill + "(" + req.body.empId + ",'" +req.body.core_competency[i] + "'\
         ," +req.body.tool_capability[i] + ",'" + req.body.category[i] + "','" + req.body.skill[i] + "'," + req.body.experience[i] + "\
-        ,'" + req.body.level[i] + "'," + req.body.certification[i] + ",'" + req.body.learning_interest[i] + "',2), "
+        ," + req.body.level[i] + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + ",2), "
     }
     console.log(query_add_skill.substring(0, query_add_skill.length - 2) + ";");
     client.query(query_add_skill.substring(0, query_add_skill.length - 2) + ";", function(err, result) {
@@ -155,13 +155,12 @@ app.post("/addHumanElement", function(req, res) {
         }
     }
     setupResponse(res);
-    query_add_human = "INSERT INTO human_element_survey (emp_id, category, dimension, value) VALUES "
+    query_add_human = "INSERT INTO human_element_survey (emp_id, category, dimension, value, community_id) VALUES "
     len = category.length;
     for(i = 0; i < len; i++){
         var val = req.body.value[i].replace(/'/g, "''");
-        query_add_human=query_add_human+"("+req.body.empId+",'"+category[i]+"','"+dimension[i]+"','"+val+"'), ";
+        query_add_human=query_add_human+"("+req.body.empId+",'"+category[i]+"','"+dimension[i]+"','"+val+"',"+req.body.community_id+" ), ";
     }
-    console.log(query_add_human.substring(0, query_add_human.length - 2) + ";");
     client.query(query_add_human.substring(0, query_add_human.length - 2) + ";", function(err, result) {
         if(err) {
             console.log(err);

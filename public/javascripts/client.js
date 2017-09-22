@@ -49,7 +49,7 @@
           }
         }
         $.ajax(settings).done(function (response) {      
-            setEmpId(response);
+            setEmpId(response,1);
             window.open(SERVER_URI + '/analytics','_self');
         });
         swal(
@@ -87,7 +87,7 @@
           }
         }
         $.ajax(settings).done(function (response) {      
-            setEmpId(response);
+            setEmpId(response, 2);
             window.open(SERVER_URI + '/transformation','_self');
         });
         swal(
@@ -98,14 +98,17 @@
       })
     }
 
-  function setEmpId(response){
+  function setEmpId(response, community_id){
     empId = response.empId;
-    localStorage.setItem("empId",empId);
+    var obj = {"empId": empId, "community_id": community_id}
+    localStorage.setItem('obj',JSON.stringify(obj));
   }
 
   function addAnalyticsEmpSkill(){
+    var obj = localStorage.getItem('obj');
+    var objResult = JSON.parse(obj);
+    empId = objResult.empId;
     isEmpty = false;
-    empId = localStorage.getItem("empId");
     var core_competency=[];
     var tool_capability = [];
     var category = [];
@@ -281,14 +284,26 @@
           level[index] = 5;  
         }
         else{
-          level[index] = null;  
+          level[index] = 'null';
         }
 
 /////////////////////////Restriction check///////////////////////////////////////////        
         if (rowValue.find("Select")[0].value != 'N/A' && rowValue.find("Select")[1].value == ''){
           var id = '[id="'+$(myRows[i]).attr('id');+'"]';
           jQuery(id).find('font')[0].color = 'red';
-          jQuery(rowValue.find("Select")[1]).notify("Error");
+          jQuery(rowValue.find("Select")[1]).notify("Experience without Level???");
+          isEmpty = true;
+        }
+        if (rowValue.find("Select")[0].value == 'N/A' && rowValue.find("Select")[1].value != ''){
+          var id = '[id="'+$(myRows[i]).attr('id');+'"]';
+          jQuery(id).find('font')[0].color = 'red';
+          jQuery(rowValue.find("Select")[1]).notify("Level without Experience???");
+          isEmpty = true;
+        }
+        if (rowValue.find("Select")[1].value == '' &&  rowValue.find("Select")[2].value == 'YES'){
+          var id = '[id="'+$(myRows[i]).attr('id');+'"]';
+          jQuery(id).find('font')[0].color = 'red';
+          jQuery(rowValue.find("Select")[2]).notify("Certification without Level???");
           isEmpty = true;
         }
 /////////////////////////Certification//////////////////////////////////////
@@ -364,7 +379,9 @@
 
 function addTransformationEmpSkill(){
     isEmpty = false;
-    empId = localStorage.getItem("empId");
+    var obj = localStorage.getItem('obj');
+    var objResult = JSON.parse(obj);
+    empId = objResult.empId;
     var core_competency=[];
     var tool_capability = [];
     var category = [];
@@ -394,7 +411,7 @@ function addTransformationEmpSkill(){
           core_competency[index] = 'PROGRAM MANAGEMENT';
         }
         else if($(myRows[i]).attr('id').split("_")[0] == 'prm'){
-          core_competency[index] = 'PRODUCT MANAGEMENT ';
+          core_competency[index] = 'PRODUCT MANAGEMENT';
         }
         else if($(myRows[i]).attr('id').split("_")[0] == 'de'){
           core_competency[index] = 'DIGITAL ENABLEMENT';          
@@ -420,59 +437,62 @@ function addTransformationEmpSkill(){
         if ($(myRows[i]).attr('id').split("_")[2] == 'ccfl'){
           category[index] = 'Core Consulting, Finance, Leadership';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'fe'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'fe'){
           category[index] = 'Functional Experience';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'ive'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'ive'){
           category[index] = 'Industry Vertical Experience';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'edu'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'edu'){
           category[index] = 'Education';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'general'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'general'){
           category[index] = 'General (PROGRAM MANAGEMENT)';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'ee'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'ee'){
           category[index] = 'Execution Experience ';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'pms'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'pms'){
           category[index] = 'Project Management Suites';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'cert'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'cert'){
           category[index] = 'Certifications (PROGRAM MANAGEMENT)';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'gt'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'gt'){
           category[index] = 'General Tools';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'c'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'c'){
           category[index] = 'Certifications (PRODUCT MANAGEMENT)';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'gud'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'gud'){
           category[index] = 'General / UX Design';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'se'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'se'){
           category[index] = 'Strategy & Execution';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'mt'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'mt'){
           category[index] = 'MarTech';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'ec'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'ec'){
           category[index] = 'e-Commerce';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'crm'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'crm'){
           category[index] = 'CRM';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'erp'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'erp'){
           category[index] = 'ERP';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'cloud'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'cloud'){
           category[index] = 'Cloud';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'mobile'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'mb'){
           category[index] = 'Mobile';
         }
-        if ($(myRows[i]).attr('id').split("_")[2] == 'gen'){
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'gen'){
           category[index] = 'General (DIGITAL ENABLEMENT)';
+        }
+        else if ($(myRows[i]).attr('id').split("_")[2] == 'deo'){
+          category[index] = 'DIGITAL ENGAGEMENT & OPERATIONS';
         }
 /////////////////////////////skill///////////////////////////////////////////
 
@@ -518,7 +538,7 @@ function addTransformationEmpSkill(){
           level[index] = 5;  
         }
         else{
-          level[index] = null;  
+          level[index] = 'null';  
         }
 
 /////////////////////////Restriction check///////////////////////////////////////////        
@@ -526,6 +546,18 @@ function addTransformationEmpSkill(){
           var id = '[id="'+$(myRows[i]).attr('id');+'"]';
           jQuery(id).find('font')[0].color = 'red';
           jQuery(rowValue.find("Select")[1]).notify("Error");
+          isEmpty = true;
+        }
+        if (rowValue.find("Select")[0].value == 'N/A' && rowValue.find("Select")[1].value != ''){
+          var id = '[id="'+$(myRows[i]).attr('id');+'"]';
+          jQuery(id).find('font')[0].color = 'red';
+          jQuery(rowValue.find("Select")[1]).notify("Level without Experience???");
+          isEmpty = true;
+        }
+        if (rowValue.find("Select")[1].value == '' &&  rowValue.find("Select")[2].value == 'YES'){
+          var id = '[id="'+$(myRows[i]).attr('id');+'"]';
+          jQuery(id).find('font')[0].color = 'red';
+          jQuery(rowValue.find("Select")[2]).notify("Certification without Level???");
           isEmpty = true;
         }
 /////////////////////////Certification//////////////////////////////////////
@@ -600,34 +632,36 @@ function addTransformationEmpSkill(){
 
 ///////////////////////////////////////////////////////////////////////////
 function addHumanElement(){
-  var name=[];
-  var value=[];
-  empId = localStorage.getItem("empId");
-  var len = document.getElementById('mainPage').children[1].length
-    for (var i = 0; i< len - 1; i++) {
-      name[i] =  document.getElementById('mainPage').children[1][i].id;
-      value[i] =  document.getElementById('mainPage').children[1][i].value;
-    }
-    for (var j = 0; j < 3; j++) {
-      value[j] = value[j]/100;
-    }
-  //////////////////////post request//////////////////////////////
+    var obj = localStorage.getItem('obj');
+    var objResult = JSON.parse(obj);
+    empId = objResult.empId;
+    var community_id = objResult.community_id;
+    var name=[];
+    var value=[];
+    var len = document.getElementById('mainPage').children[1].length
+      for (var i = 0; i< len - 1; i++) {
+        name[i] =  document.getElementById('mainPage').children[1][i].id;
+        value[i] =  document.getElementById('mainPage').children[1][i].value;
+      }
+      for (var j = 0; j < 3; j++) {
+        value[j] = value[j]/100;
+      }
+    //////////////////////post request//////////////////////////////
 
-  var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": SERVER_URI+"/addHumanElement",
-    "method": "POST",
-    "headers": {
-      "content-type": "application/x-www-form-urlencoded",
-      "cache-control": "no-cache",
-    },
-    "data": {
-      empId, name , value
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": SERVER_URI+"/addHumanElement",
+      "method": "POST",
+      "headers": {
+        "content-type": "application/x-www-form-urlencoded",
+        "cache-control": "no-cache",
+      },
+      "data": {
+        empId, name , value, community_id
+      }
     }
-  }
-  $.ajax(settings).done(function (response) {
-      window.open(SERVER_URI,'_self');   
-      jQuery.notify("Employee Added Successfully.", "success");
-  });
+    $.ajax(settings).done(function (response) {
+      window.open(SERVER_URI,'_self');
+    });
 }
