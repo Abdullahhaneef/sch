@@ -781,23 +781,71 @@ function updateEmployee(empId,emp){
 //////////////////////////////Show skills Update////////////////////////////////////////////////
 
 function showSkills(empId,emp){
-  //var obj = {"empId":empId};
-  console.log(empId);
-  setEmpId({"empId":empId},1);
-  jQuery('#add_button').hide();
-  jQuery('#update_button').show();
-  var analyticsWindow = window.open(SERVER_URI + '/analytics_update','_self');
-  $(document).ready(function(){
-  alert('Done');
-  });
-/*  analyticsWindow.addEventListener('load', analyticsWindow.load, true); 
-  function load(){
-    console.log("in function");
+  if(jQuery(emp).children()[2].innerText == 'Analytics'){
+    setEmpId({"empId":empId},1);
     jQuery('#add_button').hide();
     jQuery('#update_button').show();
+    window.open(SERVER_URI + '/analytics_update','_self');    
+  }
+  else if(jQuery(emp).children()[2].innerText == 'Transformation'){
+    setEmpId({"empId":empId},2);
+    jQuery('#add_button').hide();
+    jQuery('#update_button').show();
+    window.open(SERVER_URI + '/transformation_update','_self');    
+  }
+}
+
+function check(){
+  if($(location).attr("href") == SERVER_URI+'/analytics_update'){
+    jQuery('#analytics_add_button').hide();
+    jQuery('#analytics_update_button').show();
     var obj = localStorage.getItem('obj');
     var objResult = JSON.parse(obj);
     empId = objResult.empId;
-    console.log("empId : " +empId);
-  };*/
+  }
+  else if($(location).attr("href") == SERVER_URI+'/transformation_update'){
+    jQuery('#transformation_add_button').hide();
+    jQuery('#transformation_update_button').show();
+    var obj = localStorage.getItem('obj');
+    var objResult = JSON.parse(obj);
+    empId = objResult.empId;
+  }
+}
+
+function getAnalyticsSkills(){
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": SERVER_URI+"/get_analytics_skills",
+    "method": "GET",
+    "headers": {
+      "cache-control": "no-cache"
+    }
+  }
+  $.ajax(settings).done(function (response) {
+    renderEmployees(response);
+  });
+}
+
+function getTransformationSkills(){
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": SERVER_URI+"/get_analytics_skills",
+    "method": "GET",
+    "headers": {
+      "cache-control": "no-cache"
+    }
+  }
+  $.ajax(settings).done(function (response) {
+    renderEmployees(response);
+  });
+}
+
+function updateTransformationEmpSkill(){
+
+}
+
+function updateAnalyticsEmpSkill(){
+
 }

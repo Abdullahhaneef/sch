@@ -49,6 +49,10 @@ router.get('/transformation',function(req, res){
   res.sendFile(path + 'transformation.html');
 });
 
+router.get('/transformation_update',function(req, res){
+  res.sendFile(path + 'transformation.html');
+});
+
 router.get('/human_resources',function(req, res){
   res.sendFile(path + 'human_resources.html');
 });

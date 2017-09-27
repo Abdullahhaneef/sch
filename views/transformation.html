@@ -50,8 +50,7 @@
     }
   </style>
 </head>    
-<body>
-  <body>
+<body onload="check()">
   <div class="block-center">
     <p>REVEL<br> Transformation Skills Survey</p>
 </div>
@@ -10541,8 +10540,11 @@
 </table>
 <div class="container">
   <div class="row">
-    <div id="button">
+    <div id="transformation_add_button">
       <button onclick="addTransformationEmpSkill()" style="margin-bottom: 20px; margin-top: 20px;">Submit</button>
+    </div>
+    <div id="transformation_update_button" hidden>
+      <button onclick="updateTransformationEmpSkill()" style="margin-bottom: 20px; margin-top: 20px;">Update</button>
     </div>
   </div>
 </div>
