@@ -6,7 +6,6 @@
     var user = document.getElementById("user").value
     if (user != "") {
        addEmployeeAnalytics();
-      //window.open(SERVER_URI + '/analytics','_self');
     }else{
       jQuery.notify("Enter user name first", "error"); 
     }
@@ -16,7 +15,6 @@
     var user = document.getElementById("user").value
     if (user != "") {
           addEmployeeTransformation();
-          // window.open(SERVER_URI + '/transformation','_self');
     }else{
       jQuery.notify("Enter user name first", "error"); 
     }
@@ -664,4 +662,117 @@ function addHumanElement(){
     $.ajax(settings).done(function (response) {
       window.open(SERVER_URI,'_self');
     });
+}
+//////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////Admin Capability///////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
+
+///////////////////////////Get Employees//////////////////////////////////////////
+
+function getEmployees(){
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": SERVER_URI+"/get_employees",
+    "method": "GET",
+    "headers": {
+      "cache-control": "no-cache"
+    }
+  }
+  console.log("abc2");
+  $.ajax(settings).done(function (response) {
+    renderEmployees(response);
+  });
+}
+
+function renderEmployees(response){
+  var is_active;
+  jQuery("#employees_table_body").empty();
+  if (response['employees']){
+    for (i=0; i < response['employees'].length;i++){
+      if (response["employees"][i]["is_active"]){
+        is_active = "checked";
+      }
+      else{
+        is_active = "";
+      }
+      jQuery("#employees_table_body").append('<tr>\
+                            <td> '+response['employees'][i]["id"]+' </td>\
+                            <td> <input name="name" type="Text" value = "'+response["employees"][i]["name"]+'"></td>\
+                            <td> '+response['employees'][i]["community"]+' </td>\
+                            <td> <input name="is_active" type="checkbox" '+is_active+' > </td>\
+                            <td> <span id = "updateRecord" title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="updateRecord('+parseInt(response["employees"][i]["id"])+',jQuery(this).parent().parent(),'+parseInt(i)+')">Update</span> </td>\
+                            <td> <span title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="showSkills('+parseInt(i)+')">Update Skills</span> </td>\
+                            <td> <span title="delete this record" class="glyphicon glyphicon-trash text-danger" style="cursor:pointer" onclick="delEmployee('+parseInt(response['employees'][i]["id"])+')"></span> </td>\
+                        </tr>');
+    }
+    jQuery('#employees_table').DataTable({
+          "lengthChange": false,
+          "ordering": false,
+          "searching": false,
+          "autoWidth": false,
+          "pageLength": 25,
+          "retrieve": true
+    });
+  }
+}
+
+/////////////////////////////////Delete Employee//////////////////////////////////////
+function delEmployee(empId){
+  var obj = {"empId" : empId};
+  swal({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then(function () {
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": SERVER_URI+"/delete_employee",
+        "method": "POST",
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": "no-cache"
+        },
+        "processData": false,
+        "data": JSON.stringify(obj)
+      }
+      $.ajax(settings).done(function (response) {
+          emp_table.destroy(false);     
+          getEmployee();
+      });
+      swal(
+        'Deleted!',
+        'Employee has been deleted.',
+        'success'
+      )
+  })
+}
+
+///////////////////////////////Update Employee//////////////////////////////////////////////
+function updateEmployee(empid,emp){
+  var obj = {
+              "empid":empid,
+              "name" : jQuery(emp).children().find("input")[0].value, 
+              "is_active":jQuery(emp).children().find("input")[1].checked
+            }
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": SERVER_URI+"/update_employee",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "cache-control": "no-cache"
+    },
+    "processData": false,
+    "data": JSON.stringify(obj)
+  }
+  $.ajax(settings).done(function (response) {
+      //jQuery(jQuery('#updateRecord'+response['updateIndex'])).notify("Successfully Updated Employee","success");
+  });
 }

@@ -43,12 +43,14 @@ router.get('/analytics',function(req, res){
 
 router.get('/transformation',function(req, res){
   res.sendFile(path + 'transformation.html');
-  //res.sendFile(path + 'human_resources.html');
 });
 
 router.get('/human_resources',function(req, res){
-  //res.sendFile(path + 'transformation.html');
   res.sendFile(path + 'human_resources.html');
+});
+
+router.get('/admin_capability',function(req, res){
+  res.sendFile(path + 'admin_capability.html');
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -169,6 +171,75 @@ app.post("/addHumanElement", function(req, res) {
         }
         res.end(JSON.stringify({"status":"success"}));
     });
+});
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////Admin Capability/////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////Get Employees////////////////////////////////////////////////
+
+app.get("/get_employees", function(req, res) {
+    setupResponse(res);
+    var employees;
+    query_get_employee = "SELECT employees.id, employees.name as Name, community.name as Community, employees.is_active FROM employees\
+                LEFT JOIN community ON community_id = community.id ORDER BY employees.id";
+    client.query(query_get_employee, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            for (i=0; i<result.rows.length; i++){
+                employees = result.rows;
+            }
+            client.end();
+            res.end(JSON.stringify({"status":"success", "employees":employees}));
+        }
+    });
+});
+
+///////////////////////////////Delete Employee////////////////////////////////////////////////////
+app.post("/delete_employee", jsonParser, function(req, res) {
+    setupResponse(res);
+    var query_delete_skill = "DELETE FROM skill_survey WHERE emp_id  = "+req.body['empId'];                
+    client.query(query_delete_skill, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            var query_delete_employee = "DELETE FROM employees WHERE id  = "+req.body['empId'];
+            client.query(query_delete_employee, function(err, result) {
+                if(err) {
+                    console.log(err)
+                }
+                else{
+                    console.log("Successfully Delete");
+                    client.end();
+                    res.end(JSON.stringify({"status":"success","empid":req.body['empid']}));
+                }
+            });
+        }
+    });   
+});
+
+///////////////////////////////Update Employee/////////////////////////////////////////////////////
+
+app.post("/update_employee", jsonParser, function(req, res) {
+    setupResponse(res);
+
+    var update_emp = "UPDATE employees SET name = '"+req.body['name']+"',is_active = '"+req.body['is_active']+"' WHERE id = "+req.body['empid'];
+    client.query(update_emp, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            client.end();
+            console.log("successful updated")
+        }
+
+        res.end(JSON.stringify({"status":"success"}));
+    });   
 });
 
 
