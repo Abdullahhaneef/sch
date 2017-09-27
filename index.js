@@ -229,7 +229,6 @@ app.post("/delete_employee", jsonParser, function(req, res) {
 ///////////////////////////////Update Employee/////////////////////////////////////////////////////
 
 app.post("/update_employee", jsonParser, function(req, res) {
-    console.log(req.body);
     setupResponse(res);
     var update_emp = "UPDATE employees SET name = '"+req.body['name']+"',is_active = '"+req.body['is_active']+"' WHERE id = "+req.body['empId'];
     client.query(update_emp, function(err, result) {
@@ -241,6 +240,36 @@ app.post("/update_employee", jsonParser, function(req, res) {
             console.log("successful updated")
         }
         res.end(JSON.stringify({"status":"success"}));
+    });   
+});
+
+//////////////////////////////Get Analytics Skills////////////////////////////////////////////////////
+app.post("/get_skills", jsonParser, function(req, res) {
+    console.log(req.body);
+    setupResponse(res);
+    var skills;
+    //var query_get_skills = "SELECT * FROM skill_survey WHERE emp_id = "+req.body['empId'];
+    var query_get_skills ="Select skill_survey.skill, experience.name as experience,level.name as level, \
+                certification.value as certification,learning_interest.name as learning_interest\
+                from skill_survey\
+                Left join experience on experience.id = experience_id\
+                Left join level on level.id =level_id\
+                Left join certification on certification.id =certification_id\
+                left join learning_interest on learning_interest.id = learning_interest_id\
+                WHERE skill_survey.emp_id = "+req.body['empId']+"\
+                order by skill_survey.id;"
+    client.query(query_get_skills, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            for (i=0; i<result.rows.length; i++){
+                skills = result.rows;
+            }
+            console.log(skills);
+            client.end();
+        }
+        res.end(JSON.stringify({"status":"success" , "skills":skills}));
     });   
 });
 

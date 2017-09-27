@@ -802,6 +802,8 @@ function check(){
     var obj = localStorage.getItem('obj');
     var objResult = JSON.parse(obj);
     empId = objResult.empId;
+    console.log("111")
+    getAnalyticsSkills(empId);
   }
   else if($(location).attr("href") == SERVER_URI+'/transformation_update'){
     jQuery('#transformation_add_button').hide();
@@ -812,33 +814,43 @@ function check(){
   }
 }
 
-function getAnalyticsSkills(){
+function getAnalyticsSkills(empId){
+  console.log("222");
+  console.log(empId);
+  var obj = {"empId":empId};
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": SERVER_URI+"/get_analytics_skills",
-    "method": "GET",
+    "url": SERVER_URI+"/get_skills",
+    "method": "POST",
     "headers": {
+      "content-type": "application/json",
       "cache-control": "no-cache"
-    }
+    },
+    "processData": false,
+    "data": JSON.stringify(obj)
   }
   $.ajax(settings).done(function (response) {
-    renderEmployees(response);
+    console.log(response['skills']);
   });
 }
 
 function getTransformationSkills(){
+  var obj={};
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": SERVER_URI+"/get_analytics_skills",
-    "method": "GET",
+    "url": SERVER_URI+"/update_employee",
+    "method": "POST",
     "headers": {
+      "content-type": "application/json",
       "cache-control": "no-cache"
-    }
+    },
+    "processData": false,
+    "data": JSON.stringify(obj)
   }
   $.ajax(settings).done(function (response) {
-    renderEmployees(response);
+    
   });
 }
 
