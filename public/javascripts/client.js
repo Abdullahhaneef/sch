@@ -701,12 +701,12 @@ function renderEmployees(response){
                             <td> <input name="name" type="Text" value = "'+response["employees"][i]["name"]+'"></td>\
                             <td> '+response['employees'][i]["community"]+' </td>\
                             <td> <input name="is_active" type="checkbox" '+is_active+' > </td>\
-                            <td> <span id = "updateRecord" title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="updateRecord('+parseInt(response["employees"][i]["id"])+',jQuery(this).parent().parent(),'+parseInt(i)+')">Update</span> </td>\
-                            <td> <span title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="showSkills('+parseInt(i)+')">Update Skills</span> </td>\
+                            <td> <span id = "updateRecord" title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="updateEmployee('+parseInt(response["employees"][i]["id"])+',jQuery(this).parent().parent())">Update</span> </td>\
+                            <td> <span title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="showSkills('+parseInt(response["employees"][i]["id"])+',jQuery(this).parent().parent())">Update Skills</span> </td>\
                             <td> <span title="delete this record" class="glyphicon glyphicon-trash text-danger" style="cursor:pointer" onclick="delEmployee('+parseInt(response['employees'][i]["id"])+')"></span> </td>\
                         </tr>');
     }
-    jQuery('#employees_table').DataTable({
+    emp_table = jQuery('#employees_table').DataTable({
           "lengthChange": false,
           "ordering": false,
           "searching": false,
@@ -743,7 +743,7 @@ function delEmployee(empId){
       }
       $.ajax(settings).done(function (response) {
           emp_table.destroy(false);     
-          getEmployee();
+          getEmployees();
       });
       swal(
         'Deleted!',
@@ -754,9 +754,10 @@ function delEmployee(empId){
 }
 
 ///////////////////////////////Update Employee//////////////////////////////////////////////
-function updateEmployee(empid,emp){
+function updateEmployee(empId,emp){
+  console.log(empId);
   var obj = {
-              "empid":empid,
+              "empId":empId,
               "name" : jQuery(emp).children().find("input")[0].value, 
               "is_active":jQuery(emp).children().find("input")[1].checked
             }
@@ -773,6 +774,30 @@ function updateEmployee(empid,emp){
     "data": JSON.stringify(obj)
   }
   $.ajax(settings).done(function (response) {
-      //jQuery(jQuery('#updateRecord'+response['updateIndex'])).notify("Successfully Updated Employee","success");
+    jQuery.notify("Successfully Updated Employee","success");
   });
+}
+
+//////////////////////////////Show skills Update////////////////////////////////////////////////
+
+function showSkills(empId,emp){
+  //var obj = {"empId":empId};
+  console.log(empId);
+  setEmpId({"empId":empId},1);
+  jQuery('#add_button').hide();
+  jQuery('#update_button').show();
+  var analyticsWindow = window.open(SERVER_URI + '/analytics_update','_self');
+  $(document).ready(function(){
+  alert('Done');
+  });
+/*  analyticsWindow.addEventListener('load', analyticsWindow.load, true); 
+  function load(){
+    console.log("in function");
+    jQuery('#add_button').hide();
+    jQuery('#update_button').show();
+    var obj = localStorage.getItem('obj');
+    var objResult = JSON.parse(obj);
+    empId = objResult.empId;
+    console.log("empId : " +empId);
+  };*/
 }
