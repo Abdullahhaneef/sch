@@ -836,11 +836,11 @@ function getAnalyticsSkills(empId){
 }
 
 function getTransformationSkills(){
-  var obj={};
+  var obj = {"empId":empId};
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": SERVER_URI+"/update_employee",
+    "url": SERVER_URI+"/get_skills",
     "method": "POST",
     "headers": {
       "content-type": "application/json",
@@ -850,7 +850,7 @@ function getTransformationSkills(){
     "data": JSON.stringify(obj)
   }
   $.ajax(settings).done(function (response) {
-    
+    console.log(response['skills']);
   });
 }
 
