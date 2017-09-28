@@ -880,8 +880,13 @@ function getAnalyticsSkills(empId){
         console.log("undefined");
       }
       else{
+        if(response['skills'][index]['level'] == null){
+          $(myRows[i]).find('td').find("Select")[1].value = '';
+        }
+        else{
+          $(myRows[i]).find('td').find("Select")[1].value = response['skills'][index]['level'];
+        }
         $(myRows[i]).find('td').find("Select")[0].value = response['skills'][index]['experience'];
-        $(myRows[i]).find('td').find("Select")[1].value = response['skills'][index]['level'];
         $(myRows[i]).find('td').find("Select")[2].value = response['skills'][index]['certification'];
         $(myRows[i]).find('td').find("Select")[3].value = response['skills'][index]['learning_interest'];
         index = index + 1;
