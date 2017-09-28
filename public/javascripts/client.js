@@ -814,11 +814,11 @@ function check(){
         console.log($(this).parent().parent().parent().attr('id'))
         updatedRowId = $(this).parent().parent().parent().attr('id')
         if (!(updatedAnalyticsIds.indexOf(updatedRowId) > -1)) {
-          updatedAnalyticsIds[updatedAnalyticsIds.length] = $(this).parent().parent().parent().attr('id')
-          updatedAnalyticsExp[updatedAnalyticsExp.length] = $("#"+updatedRowId).find('td').find('Select')[0].value
-          updatedAnalyticsLvl[updatedAnalyticsLvl.length] = $("#"+updatedRowId).find('td').find('Select')[1].value
-          updatedAnalyticsCer[updatedAnalyticsCer.length] = $("#"+updatedRowId).find('td').find('Select')[2].value
-          updatedAnalyticsInt[updatedAnalyticsInt.length] = $("#"+updatedRowId).find('td').find('Select')[3].value          
+          updatedAnalyticsIds[updatedAnalyticsIds.length] = $(this).parent().parent().parent().attr('id').split("_")[3]
+          updatedAnalyticsExp[updatedAnalyticsExp.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value
+          updatedAnalyticsLvl[updatedAnalyticsLvl.length] = $('[id="'+updatedRowId+'"]').find('Select')[1].value
+          updatedAnalyticsCer[updatedAnalyticsCer.length] = $('[id="'+updatedRowId+'"]').find('Select')[2].value
+          updatedAnalyticsInt[updatedAnalyticsInt.length] = $('[id="'+updatedRowId+'"]').find('Select')[3].value          
           console.log(updatedAnalyticsIds);
         }
       });
@@ -837,11 +837,11 @@ function check(){
         updatedRowId = $(this).parent().parent().parent().attr('id')
         if (!(updatedTransformationIds.indexOf(updatedRowId) > -1)) {
           $("#"+updatedRowId).find('td').find('Select')[0]
-          updatedTransformationIds[updatedTransformationIds.length] = $(this).parent().parent().parent().attr('id')
-          updatedTransformationExp[updatedTransformationExp.length] = $("#"+updatedRowId).find('td').find('Select')[0].value
-          updatedTransformationLvl[updatedTransformationLvl.length] = $("#"+updatedRowId).find('td').find('Select')[1].value
-          updatedTransformationCer[updatedTransformationCer.length] = $("#"+updatedRowId).find('td').find('Select')[2].value
-          updatedTransformationInt[updatedTransformationInt.length] = $("#"+updatedRowId).find('td').find('Select')[3].value 
+          updatedTransformationIds[updatedTransformationIds.length] = $(this).parent().parent().parent().attr('id').split("_")[3]
+          updatedTransformationExp[updatedTransformationExp.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value
+          updatedTransformationLvl[updatedTransformationLvl.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[1].value
+          updatedTransformationCer[updatedTransformationCer.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[2].value
+          updatedTransformationInt[updatedTransformationInt.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[3].value 
           console.log(updatedTransformationIds);
         }
       });
@@ -926,6 +926,7 @@ function updateAnalyticsEmpSkill(){
     var obj = localStorage.getItem('obj');
     var objResult = JSON.parse(obj);
     empId = objResult.empId;
+    convertAnalyticsNameIntoId();
     var settings = {
       "async": true,
       "crossDomain": true,
@@ -936,11 +937,67 @@ function updateAnalyticsEmpSkill(){
         "cache-control": "no-cache"
       },
       "data": {
-        updatedAnalyticsIds, updatedAnalyticsExp, updatedAnalyticsLvl, updatedAnalyticsCer, updatedAnalyticsInt
+        empId ,updatedAnalyticsIds, updatedAnalyticsExp, updatedAnalyticsLvl, updatedAnalyticsCer, updatedAnalyticsInt
       }
     }
     $.ajax(settings).done(function (response) {
       jQuery.notify("Successfully Updated Employee","success");
     });
   }
+}
+
+function convertAnalyticsNameIntoId(){
+  for(var index=0; index<updatedAnalyticsIds.length; index++){
+////////////////////Experience////////////////////////////////////////        
+    if (updatedAnalyticsExp[index] == 'PROJECT EXPERIENCE'){
+      updatedAnalyticsExp[index] = 1;
+    }
+    else if (updatedAnalyticsExp[index] == 'GENERAL EDUCATION'){
+      updatedAnalyticsExp[index] = 2; 
+    }
+    else if (updatedAnalyticsExp[index] == 'N/A'){
+      updatedAnalyticsExp[index] = 3; 
+    }
+/////////////////////////Level///////////////////////////////////////////
+
+    if(updatedAnalyticsLvl[index] == '1 - INTRODUTUCTORY'){
+      updatedAnalyticsLvl[index] = 1;  
+    }
+    else if(updatedAnalyticsLvl[index] == '2 - BASIC'){
+      updatedAnalyticsLvl[index] = 2;  
+    }
+    else if(updatedAnalyticsLvl[index] == '3 - PROFICIENT'){
+      updatedAnalyticsLvl[index] = 3;  
+    }
+    else if(updatedAnalyticsLvl[index] == '4 - ADVANCED'){
+      updatedAnalyticsLvl[index] = 4;  
+    }
+    else if(updatedAnalyticsLvl[index] == '5 - MASTERY'){
+      updatedAnalyticsLvl[index] = 5;  
+    }
+    else if(updatedAnalyticsLvl[index] == ""){
+      updatedAnalyticsLvl[index] = 'null';  
+    }
+/////////////////////////Certification//////////////////////////////////////
+    if (updatedAnalyticsCer[index] == 'YES'){
+      updatedAnalyticsCer[index] = 1;
+    }
+    else if (updatedAnalyticsCer[index] == 'NO'){
+      updatedAnalyticsCer[index] = 2; 
+    }
+/////////////////////////Learning Interest//////////////////////////////////////
+    if(updatedAnalyticsInt[index] == '0 - AVOID'){
+      updatedAnalyticsInt[index] = 0;  
+    }
+    else if(updatedAnalyticsInt[index] == '1 - DEVELOP'){
+      updatedAnalyticsInt[index] = 1;  
+    }
+    else if(updatedAnalyticsInt[index] == '2 - ENGAGE'){
+      updatedAnalyticsInt[index] = 2;  
+    }
+    else if(updatedAnalyticsInt[index] == '3 - ACCELERATE'){
+      updatedAnalyticsExp[index] = 3;  
+    }    
+  }
+  console.log(updatedAnalyticsExp)
 }
