@@ -254,10 +254,10 @@
         var rowValue = $(myRows[i]).find('td');
 
 ////////////////////Experience////////////////////////////////////////        
-        if (rowValue.find("Select")[0].value == 'Project Experience'){
+        if (rowValue.find("Select")[0].value == 'PROJECT EXPERIENCE'){
           experience[index] = 1;
         }
-        else if (rowValue.find("Select")[0].value == 'General Education'){
+        else if (rowValue.find("Select")[0].value == 'GENERAL EDUCATION'){
           experience[index] = 2; 
         }
         else if (rowValue.find("Select")[0].value == 'N/A'){
@@ -266,19 +266,19 @@
 
 /////////////////////////Level///////////////////////////////////////////
 
-        if(rowValue.find("Select")[1].value == '1 - Introductory'){
+        if(rowValue.find("Select")[1].value == '1 - INTRODUTUCTORY'){
           level[index] = 1;  
         }
-        else if(rowValue.find("Select")[1].value == '2 - Basic'){
+        else if(rowValue.find("Select")[1].value == '2 - BASIC'){
           level[index] = 2;  
         }
-        else if(rowValue.find("Select")[1].value == '3 - Proficient'){
+        else if(rowValue.find("Select")[1].value == '3 - PROFICIENT'){
           level[index] = 3;  
         }
-        else if(rowValue.find("Select")[1].value == '4 - Advanced'){
+        else if(rowValue.find("Select")[1].value == '4 - ADVANCED'){
           level[index] = 4;  
         }
-        else if(rowValue.find("Select")[1].value == '5 - Mastery'){
+        else if(rowValue.find("Select")[1].value == '5 - MASTERY'){
           level[index] = 5;  
         }
         else{
@@ -315,16 +315,16 @@
 
 /////////////////////////Learning Interest//////////////////////////////////////
 
-        if(rowValue.find("Select")[3].value == '0 - Avoid'){
+        if(rowValue.find("Select")[3].value == '0 - AVOID'){
           learning_interest[index] = 0;  
         }
-        else if(rowValue.find("Select")[3].value == '1 - Develop'){
+        else if(rowValue.find("Select")[3].value == '1 - DEVELOP'){
           learning_interest[index] = 1;  
         }
-        else if(rowValue.find("Select")[3].value == '2 - Engage'){
+        else if(rowValue.find("Select")[3].value == '2 - ENGAGE'){
           learning_interest[index] = 2;  
         }
-        else if(rowValue.find("Select")[3].value == '3 - Accelerate'){
+        else if(rowValue.find("Select")[3].value == '3 - ACCELERATE'){
           learning_interest[index] = 3;  
         }
 
@@ -509,10 +509,10 @@ function addTransformationEmpSkill(){
         var rowValue = $(myRows[i]).find('td');
 
 ////////////////////Experience////////////////////////////////////////        
-        if (rowValue.find("Select")[0].value == 'Project Experience'){
+        if (rowValue.find("Select")[0].value == 'PROJECT EXPERIENCE'){
           experience[index] = 1;
         }
-        else if (rowValue.find("Select")[0].value == 'General Education'){
+        else if (rowValue.find("Select")[0].value == 'GENERAL EDUCATION'){
           experience[index] = 2; 
         }
         else if (rowValue.find("Select")[0].value == 'N/A'){
@@ -520,19 +520,19 @@ function addTransformationEmpSkill(){
         }
 /////////////////////////Level///////////////////////////////////////////
 
-        if(rowValue.find("Select")[1].value == '1 - Introductory'){
+        if(rowValue.find("Select")[1].value == '1 - INTRODUTUCTORY'){
           level[index] = 1;  
         }
-        else if(rowValue.find("Select")[1].value == '2 - Basic'){
+        else if(rowValue.find("Select")[1].value == '2 - BASIC'){
           level[index] = 2;  
         }
-        else if(rowValue.find("Select")[1].value == '3 - Proficient'){
+        else if(rowValue.find("Select")[1].value == '3 - PROFICIENT'){
           level[index] = 3;  
         }
-        else if(rowValue.find("Select")[1].value == '4 - Advanced'){
+        else if(rowValue.find("Select")[1].value == '4 - ADVANCED'){
           level[index] = 4;  
         }
-        else if(rowValue.find("Select")[1].value == '5 - Mastery'){
+        else if(rowValue.find("Select")[1].value == '5 - MASTERY'){
           level[index] = 5;  
         }
         else{
@@ -568,16 +568,16 @@ function addTransformationEmpSkill(){
         }
 
 /////////////////////////Learning Interest//////////////////////////////////////
-        if(rowValue.find("Select")[3].value == '0 - Avoid'){
+        if(rowValue.find("Select")[3].value == '0 - AVOID'){
           learning_interest[index] = 0;  
         }
-        else if(rowValue.find("Select")[3].value == '1 - Develop'){
+        else if(rowValue.find("Select")[3].value == '1 - DEVELOP'){
           learning_interest[index] = 1;  
         }
-        else if(rowValue.find("Select")[3].value == '2 - Engage'){
+        else if(rowValue.find("Select")[3].value == '2 - ENGAGE'){
           learning_interest[index] = 2;  
         }
-        else if(rowValue.find("Select")[3].value == '3 - Accelerate'){
+        else if(rowValue.find("Select")[3].value == '3 - ACCELERATE'){
           learning_interest[index] = 3;  
         }
 
@@ -832,6 +832,21 @@ function getAnalyticsSkills(empId){
   }
   $.ajax(settings).done(function (response) {
     console.log(response['skills']);
+    var index = 0;
+    var myRows = $('table#surveyTable').find('tr');
+    var len = myRows.length;
+    for (var i = 0; i < len; i++) {
+      if($(myRows[i]).find('td').find("Select")[0] == undefined){
+        console.log("undefined");
+      }
+      else{
+        $(myRows[i]).find('td').find("Select")[0].value = response['skills'][index]['experience'];
+        $(myRows[i]).find('td').find("Select")[1].value = response['skills'][index]['level'];
+        $(myRows[i]).find('td').find("Select")[2].value = response['skills'][index]['certification'];
+        $(myRows[i]).find('td').find("Select")[3].value = response['skills'][index]['learning_interest'];
+        index = index + 1;
+      }
+    }
   });
 }
 
