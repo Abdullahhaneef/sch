@@ -781,13 +781,13 @@ function updateEmployee(empId,emp){
 //////////////////////////////Show skills Update////////////////////////////////////////////////
 
 function showSkills(empId,emp){
-  if(jQuery(emp).children()[2].innerText == 'Analytics'){
+  if(jQuery(emp).children()[2].innerText == 'ANALYTICS'){
     setEmpId({"empId":empId},1);
     jQuery('#add_button').hide();
     jQuery('#update_button').show();
     window.open(SERVER_URI + '/analytics_update','_self');    
   }
-  else if(jQuery(emp).children()[2].innerText == 'Transformation'){
+  else if(jQuery(emp).children()[2].innerText == 'TRANSFORMATION'){
     setEmpId({"empId":empId},2);
     jQuery('#add_button').hide();
     jQuery('#update_button').show();
@@ -802,7 +802,6 @@ function check(){
     var obj = localStorage.getItem('obj');
     var objResult = JSON.parse(obj);
     empId = objResult.empId;
-    console.log("111")
     getAnalyticsSkills(empId);
   }
   else if($(location).attr("href") == SERVER_URI+'/transformation_update'){
