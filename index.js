@@ -37,10 +37,6 @@ router.get('/',function(req, res){
   res.sendFile(path + 'index.html');
 });
 
-router.get('/*',function(req, res){
-  res.sendFile(path + 'index.html');
-});
-
 router.get('/analytics',function(req, res){
   res.sendFile(path + 'analytics.html');
 });
@@ -246,6 +242,32 @@ app.post("/update_employee", jsonParser, function(req, res) {
         res.end(JSON.stringify({"status":"success"}));
     });   
 });
+
+///////////////////////////////Update Analytic Skills/////////////////////////////////////////////////////
+
+app.post("/update_analytics_skills", jsonParser, function(req, res) {
+    setupResponse(res);
+    // console.log(req.body['empId'])
+    console.log(req.body['updatedAnalyticsIds'][1])
+    console.log(req.body['updatedAnalyticsExp'][1])
+    console.log(req.body['updatedAnalyticsLvl'][1])
+    console.log(req.body['updatedAnalyticsCer'][1])
+    console.log(req.body['updatedAnalyticsInt'][1])
+
+    // var update_emp = "UPDATE employees SET name = '"+req.body['name']+"',is_active = '"+req.body['is_active']+"' WHERE id = "+req.body['empId'];
+    // client.query(update_emp, function(err, result) {
+    //     if(err) {
+    //         console.log(err)
+    //     }
+    //     else {
+    //         client.end();
+    //         console.log("successful updated")
+    //     }
+    //     res.end(JSON.stringify({"status":"success"}));
+    // });   
+    res.end(JSON.stringify({"status":"success"}));
+});
+
 
 //////////////////////////////Get Analytics Skills////////////////////////////////////////////////////
 app.post("/get_skills", jsonParser, function(req, res) {
