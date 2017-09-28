@@ -12,7 +12,7 @@ var dt = dateTime.create();
 var formatted = dt.format('m-d-Y');
 var client;
 
-var conString = "postgres://ahaneef:123456@localhost:5432/revel_db"
+var conString = "postgres://postgres@localhost:5432/revel_db"
 
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}));
 
@@ -34,6 +34,10 @@ app.use('/',router);
 app.use(express.static('public'));
   
 router.get('/',function(req, res){
+  res.sendFile(path + 'index.html');
+});
+
+router.get('/*',function(req, res){
   res.sendFile(path + 'index.html');
 });
 
