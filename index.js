@@ -37,10 +37,6 @@ router.get('/',function(req, res){
   res.sendFile(path + 'index.html');
 });
 
-router.get('/*',function(req, res){
-  res.sendFile(path + 'index.html');
-});
-
 router.get('/analytics',function(req, res){
   res.sendFile(path + 'analytics.html');
 });
