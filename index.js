@@ -45,6 +45,10 @@ router.get('/analytics_update',function(req, res){
   res.sendFile(path + 'analytics.html');
 });
 
+router.get('/human_element_update',function(req, res){
+  res.sendFile(path + 'human_resources.html');
+});
+
 router.get('/transformation',function(req, res){
   res.sendFile(path + 'transformation.html');
 });
@@ -274,8 +278,38 @@ app.post("/update_analytics_skills", jsonParser, function(req, res) {
     });   
 });
 
+app.post("/update_transformation_skills", jsonParser, function(req, res) {
+    setupResponse(res);
+     var update_transformation_skills = "";
+    // console.log(req.body['empId'])
+    console.log(req.body)
+    console.log(req.body['updatedTransformationIds'][0])
+    console.log(req.body['updatedTransformationExp'][0])
+    console.log(req.body['updatedTransformationLvl'][0])
+    console.log(req.body['updatedTransformationCer'][0])
+    console.log(req.body['updatedTransformationInt'][0])
+    for (var index = 0; index<req.body['updatedTransformationIds'].length; index++){
+        update_transformation_skills = update_transformation_skills+"UPDATE skill_survey SET experience_id = '"+req.body['updatedTransformationExp'][index]+"', \
+        level_id = "+req.body['updatedTransformationLvl'][index]+", \
+        certification_id = "+req.body['updatedTransformationCer'][index]+",  \
+        learning_interest_id = "+req.body['updatedTransformationInt'][index]+" \
+        WHERE emp_id = "+req.body['empId']+" \
+        AND skill = '"+req.body['updatedTransformationIds'][index]+"';"
+    } 
+    client.query(update_transformation_skills, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            client.end();
+            console.log("successful updated")
+        }
+        res.end(JSON.stringify({"status":"success"}));
+    });   
+});
 
-//////////////////////////////Get Analytics Skills////////////////////////////////////////////////////
+
+//////////////////////////////Get Analytics and Transformation Skills////////////////////////////////////////////////////
 app.post("/get_skills", jsonParser, function(req, res) {
     console.log(req.body);
     setupResponse(res);
@@ -302,6 +336,27 @@ app.post("/get_skills", jsonParser, function(req, res) {
             client.end();
         }
         res.end(JSON.stringify({"status":"success" , "skills":skills}));
+    });   
+});
+
+//////////////////////////////Get Human Elements////////////////////////////////////////////////////
+app.post("/get_human_elements", jsonParser, function(req, res) {
+    console.log(req.body);
+    setupResponse(res);
+    var human_element;
+    var query_get_human_elements ="Select value FROM human_element_survey WHERE emp_id = "+req.body['empId']+" ORDER by id;"
+    client.query(query_get_human_elements, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            for (i=0; i<result.rows.length; i++){
+                human_element = result.rows;
+            }
+            console.log(human_element);
+            client.end();
+        }
+        res.end(JSON.stringify({"status":"success" , "human_element":human_element}));
     });   
 });
 

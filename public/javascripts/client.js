@@ -14,7 +14,7 @@
   console.log(JSON.parse(localStorage.getItem('obj')).empId);
   console.log(window.location.href)
   var userId = JSON.parse(localStorage.getItem('obj')).empId
-  if (userId == 0 && window.location.href != SERVER_URI+"/") {
+  if (userId == 0 && window.location.href != SERVER_URI+"/" && window.location.href != SERVER_URI+"/admin_capability") {
     window.open(SERVER_URI,'_self');
   }
 
@@ -404,7 +404,7 @@ function addTransformationEmpSkill(){
     var certification = [];
     var learning_interest = [];
     var index = 0;
-    var myRows = $('table#transformationTable').find('tr');
+    var myRows = $('table#surveyTable').find('tr');
     var len = myRows.length;
     for (var i = 0; i < len; i++) {
       if($(myRows[i]).find('td').find("Select")[0] == undefined){
@@ -690,7 +690,6 @@ function getEmployees(){
       "cache-control": "no-cache"
     }
   }
-  console.log("abc2");
   $.ajax(settings).done(function (response) {
     renderEmployees(response);
   });
@@ -714,6 +713,7 @@ function renderEmployees(response){
                             <td> <input name="is_active" type="checkbox" '+is_active+' > </td>\
                             <td> <span id = "updateRecord" title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="updateEmployee('+parseInt(response["employees"][i]["id"])+',jQuery(this).parent().parent())">Update</span> </td>\
                             <td> <span title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="showSkills('+parseInt(response["employees"][i]["id"])+',jQuery(this).parent().parent())">Update Skills</span> </td>\
+                            <td> <span title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="showHumanElement('+parseInt(response["employees"][i]["id"])+',jQuery(this).parent().parent())">Update Human Elements</span> </td>\
                             <td> <span title="delete this record" class="glyphicon glyphicon-trash text-danger" style="cursor:pointer" onclick="delEmployee('+parseInt(response['employees'][i]["id"])+')"></span> </td>\
                         </tr>');
     }
@@ -792,6 +792,7 @@ function updateEmployee(empId,emp){
 //////////////////////////////Show skills Update////////////////////////////////////////////////
 
 function showSkills(empId,emp){
+  console.log(jQuery(emp).children()[2].innerText)
   if(jQuery(emp).children()[2].innerText == 'ANALYTICS'){
     setEmpId({"empId":empId},1);
     jQuery('#add_button').hide();
@@ -828,7 +829,7 @@ function check(){
     var obj = localStorage.getItem('obj');
     var objResult = JSON.parse(obj);
     empId = objResult.empId;
-    getAnalyticsSkills(empId);
+    getSkills(empId);
   }
   else if($(location).attr("href") == SERVER_URI+'/transformation_update'){
     $( document ).ready(function() {
@@ -851,11 +852,18 @@ function check(){
     var obj = localStorage.getItem('obj');
     var objResult = JSON.parse(obj);
     empId = objResult.empId;
+    getSkills(empId);
+  }else if($(location).attr("href") == SERVER_URI+'/human_element_update'){
+    jQuery('#human_add_button').hide();
+    jQuery('#human_update_button').show();
+    var obj = localStorage.getItem('obj');
+    var objResult = JSON.parse(obj);
+    empId = objResult.empId;
+    getHumanElementData(empId);    
   }
 }
 
-function getAnalyticsSkills(empId){
-  console.log("222");
+function getSkills(empId){
   console.log(empId);
   var obj = {"empId":empId};
   var settings = {
@@ -871,7 +879,6 @@ function getAnalyticsSkills(empId){
     "data": JSON.stringify(obj)
   }
   $.ajax(settings).done(function (response) {
-    console.log(response['skills']);
     var index = 0;
     var myRows = $('table#surveyTable').find('tr');
     var len = myRows.length;
@@ -892,15 +899,46 @@ function getAnalyticsSkills(empId){
         index = index + 1;
       }
     }
+    if (response['skills'][30]['skill'] != ''){
+     $($($('table#surveyTable').find('tr')[36]).find('td')[0]).find('input')[0].value = response['skills'][30]['skill']
+    }else if (response['skills'][31]['skill']['skill'] != ''){
+     $($($('table#surveyTable').find('tr')[37]).find('td')[0]).find('input')[0].value = response['skills'][31]['skill']
+    } else if (response['skills'][32]['skill'] != ''){
+     $($($('table#surveyTable').find('tr')[38]).find('td')[0]).find('input')[0].value = response['skills'][32]['skill']
+    }else if (response['skills'][49]['skill'] != ''){
+     $($($('table#surveyTable').find('tr')[61]).find('td')[0]).find('input')[0].value = response['skills'][49]['skill']
+    }else if (response['skills'][55]['skill'] != ''){
+     $($($('table#surveyTable').find('tr')[69]).find('td')[0]).find('input')[0].value = response['skills'][55]['skill'] 
+    }else if (response['skills'][56]['skill'] != ''){
+     $($($('table#surveyTable').find('tr')[70]).find('td')[0]).find('input')[0].value = response['skills'][56]['skill']
+    }else if (response['skills'][61]['skill'] != ''){
+     $($($('table#surveyTable').find('tr')[79]).find('td')[0]).find('input')[0].value = response['skills'][61]['skill'] 
+    }else if (response['skills'][68]['skill'] != ''){
+     $($($('table#surveyTable').find('tr')[87]).find('td')[0]).find('input')[0].value = response['skills'][68]['skill'] 
+    }else if (response['skills'][69]['skill'] != ''){
+     $($($('table#surveyTable').find('tr')[88]).find('td')[0]).find('input')[0].value = response['skills'][69]['skill'] 
+    }else if (response['skills'][94]['skill'] != ''){
+     $($($('table#surveyTable').find('tr')[120]).find('td')[0]).find('input')[0].value = response['skills'][94]['skill'] 
+    }else if (response['skills'][95]['skill'] != ''){
+     $($($('table#surveyTable').find('tr')[121]).find('td')[0]).find('input')[0].value = response['skills'][95]['skill'] 
+    }else if (response['skills'][96]['skill'] != ''){
+     $($($('table#surveyTable').find('tr')[122]).find('td')[0]).find('input')[0].value = response['skills'][96]['skill'] 
+    }else if (response['skills'][101]['skill'] != ''){
+     $($($('table#surveyTable').find('tr')[128]).find('td')[0]).find('input')[0].value = response['skills'][101]['skill'] 
+    }else if (response['skills'][102]['skill'] != ''){
+     $($($('table#surveyTable').find('tr')[129]).find('td')[0]).find('input')[0].value = response['skills'][102]['skill'] 
+    }else if (response['skills'][103]['skill'] != ''){
+     $($($('table#surveyTable').find('tr')[130]).find('td')[0]).find('input')[0].value = response['skills'][103]['skill'] 
+    }
   });
 }
 
-function getTransformationSkills(){
+function getHumanElementData(empId) {
   var obj = {"empId":empId};
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": SERVER_URI+"/get_skills",
+    "url": SERVER_URI+"/get_human_elements",
     "method": "POST",
     "headers": {
       "content-type": "application/json",
@@ -910,12 +948,38 @@ function getTransformationSkills(){
     "data": JSON.stringify(obj)
   }
   $.ajax(settings).done(function (response) {
-    console.log(response['skills']);
-  });
+    for(var index=0; index<response['human_element'].length; index++){
+      console.log(response['human_element'][index])
+    }
+  });  
 }
 
 function updateTransformationEmpSkill(){
-
+    if (updatedTransformationIds.length == 0) {
+    window.open(SERVER_URI,'_self');
+  }else{
+    console.log(updatedTransformationIds)
+    var obj = localStorage.getItem('obj');
+    var objResult = JSON.parse(obj);
+    empId = objResult.empId;
+    convertTransformationNameIntoId();
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": SERVER_URI+"/update_transformation_skills",
+      "method": "POST",
+      "headers": {
+        "content-type": "application/x-www-form-urlencoded",
+        "cache-control": "no-cache"
+      },
+      "data": {
+        empId ,updatedTransformationIds, updatedTransformationExp, updatedTransformationLvl, updatedTransformationCer, updatedTransformationInt
+      }
+    }
+    $.ajax(settings).done(function (response) {
+      jQuery.notify("Successfully Updated Employee","success");
+    });
+  }
 }
 
 function updateAnalyticsEmpSkill(){
@@ -1000,4 +1064,66 @@ function convertAnalyticsNameIntoId(){
     }    
   }
   console.log(updatedAnalyticsExp)
+}
+
+function convertTransformationNameIntoId(){
+  for(var index=0; index<updatedTransformationIds.length; index++){
+////////////////////Experience////////////////////////////////////////        
+    if (updatedTransformationExp[index] == 'PROJECT EXPERIENCE'){
+      updatedTransformationExp[index] = 1;
+    }
+    else if (updatedTransformationExp[index] == 'GENERAL EDUCATION'){
+      updatedTransformationExp[index] = 2; 
+    }
+    else if (updatedTransformationExp[index] == 'N/A'){
+      updatedTransformationExp[index] = 3; 
+    }
+/////////////////////////Level///////////////////////////////////////////
+
+    if(updatedTransformationLvl[index] == '1 - INTRODUTUCTORY'){
+      updatedTransformationLvl[index] = 1;  
+    }
+    else if(updatedTransformationLvl[index] == '2 - BASIC'){
+      updatedTransformationLvl[index] = 2;  
+    }
+    else if(updatedTransformationLvl[index] == '3 - PROFICIENT'){
+      updatedTransformationLvl[index] = 3;  
+    }
+    else if(updatedTransformationLvl[index] == '4 - ADVANCED'){
+      updatedTransformationLvl[index] = 4;  
+    }
+    else if(updatedTransformationLvl[index] == '5 - MASTERY'){
+      updatedTransformationLvl[index] = 5;  
+    }
+    else if(updatedTransformationLvl[index] == ""){
+      updatedTransformationLvl[index] = 'null';  
+    }
+/////////////////////////Certification//////////////////////////////////////
+    if (updatedTransformationCer[index] == 'YES'){
+      updatedTransformationCer[index] = 1;
+    }
+    else if (updatedTransformationCer[index] == 'NO'){
+      updatedTransformationCer[index] = 2; 
+    }
+/////////////////////////Learning Interest//////////////////////////////////////
+    if(updatedTransformationInt[index] == '0 - AVOID'){
+      updatedTransformationInt[index] = 0;  
+    }
+    else if(updatedTransformationInt[index] == '1 - DEVELOP'){
+      updatedTransformationInt[index] = 1;  
+    }
+    else if(updatedTransformationInt[index] == '2 - ENGAGE'){
+      updatedTransformationInt[index] = 2;  
+    }
+    else if(updatedTransformationInt[index] == '3 - ACCELERATE'){
+      updatedTransformationInt[index] = 3;  
+    }    
+  }
+  console.log(updatedTransformationLvl)
+}
+
+/////////////////////////update Human Element Form///////////////////////////////////////////
+function showHumanElement(empId,emp) {
+  setEmpId({"empId":empId},1);
+  window.open(SERVER_URI + '/human_element_update','_self');
 }

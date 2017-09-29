@@ -129,7 +129,7 @@ p{
 
 </style>
 
-<body>
+<body onload="check()">
   <div id = "mainPage">
       <div class="block-center">
           <p>REVEL<br> Human Element Survey</p>
@@ -597,7 +597,12 @@ p{
                 <option>9th</option>
               </select>
               <br /><br /><br />
-              <button onclick="addHumanElement(); return false;" style="margin-bottom: 55px;">Submit</button>
+              <div id="human_add_button">
+                <button onclick="addHumanElement(); return false;" style="margin-bottom: 55px;">Submit</button>
+              </div>
+              <div id="human_update_button" hidden>
+                <button onclick="updateHumanElement(); return false;" style="margin-bottom: 55px;">Update</button>
+              </div>
             </div>
         </div>
       </div>
