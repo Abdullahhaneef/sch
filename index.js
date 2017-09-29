@@ -243,6 +243,38 @@ app.post("/update_employee", jsonParser, function(req, res) {
     });   
 });
 
+///////////////////////////////Update Analytic Skills/////////////////////////////////////////////////////
+
+app.post("/update_analytics_skills", jsonParser, function(req, res) {
+    setupResponse(res);
+     var update_analytic_skills = "";
+    // console.log(req.body['empId'])
+    console.log(req.body['updatedAnalyticsIds'][0])
+    console.log(req.body['updatedAnalyticsExp'][0])
+    console.log(req.body['updatedAnalyticsLvl'][0])
+    console.log(req.body['updatedAnalyticsCer'][0])
+    console.log(req.body['updatedAnalyticsInt'][0])
+    for (var index = 0; index<req.body['updatedAnalyticsIds'].length; index++){
+        update_analytic_skills = update_analytic_skills+"UPDATE skill_survey SET experience_id = '"+req.body['updatedAnalyticsExp'][index]+"', \
+        level_id = "+req.body['updatedAnalyticsLvl'][index]+", \
+        certification_id = "+req.body['updatedAnalyticsCer'][index]+",  \
+        learning_interest_id = "+req.body['updatedAnalyticsInt'][index]+" \
+        WHERE emp_id = "+req.body['empId']+" \
+        AND skill = '"+req.body['updatedAnalyticsIds'][index]+"';"
+    } 
+    client.query(update_analytic_skills, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            client.end();
+            console.log("successful updated")
+        }
+        res.end(JSON.stringify({"status":"success"}));
+    });   
+});
+
+
 //////////////////////////////Get Analytics Skills////////////////////////////////////////////////////
 app.post("/get_skills", jsonParser, function(req, res) {
     console.log(req.body);
