@@ -10,6 +10,8 @@
   var updatedTransformationLvl = [];
   var updatedTransformationCer = [];
   var updatedTransformationInt = [];
+  var humanElementId = [];
+  var humanElementValue = [];
 
   console.log(JSON.parse(localStorage.getItem('obj')).empId);
   console.log(window.location.href)
@@ -814,7 +816,14 @@ function check(){
       $('[class="select form-control"]').change(function() {
         console.log($(this).parent().parent().parent().attr('id'))
         updatedRowId = $(this).parent().parent().parent().attr('id')
-        if (!(updatedAnalyticsIds.indexOf(updatedRowId) > -1)) {
+        if (updatedAnalyticsIds.indexOf(updatedRowId) > -1) {
+          var index = updatedAnalyticsIds.indexOf(updatedRowId);
+          updatedAnalyticsExp[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value
+          updatedAnalyticsLvl[index] = $('[id="'+updatedRowId+'"]').find('Select')[1].value
+          updatedAnalyticsCer[index] = $('[id="'+updatedRowId+'"]').find('Select')[2].value
+          updatedAnalyticsInt[index] = $('[id="'+updatedRowId+'"]').find('Select')[3].value           
+          console.log(updatedAnalyticsIds);
+        }else{
           updatedAnalyticsIds[updatedAnalyticsIds.length] = $(this).parent().parent().parent().attr('id').split("_")[3]
           updatedAnalyticsExp[updatedAnalyticsExp.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value
           updatedAnalyticsLvl[updatedAnalyticsLvl.length] = $('[id="'+updatedRowId+'"]').find('Select')[1].value
@@ -834,9 +843,16 @@ function check(){
   else if($(location).attr("href") == SERVER_URI+'/transformation_update'){
     $( document ).ready(function() {
       $('[class="select form-control"]').change(function() {
-        console.log($(this).parent().parent().parent().attr('id'))
+        // console.log($(this).parent().parent().parent().attr('id'))
         updatedRowId = $(this).parent().parent().parent().attr('id')
-        if (!(updatedTransformationIds.indexOf(updatedRowId) > -1)) {
+        if (updatedTransformationIds.indexOf(updatedRowId) > -1) {
+          var index = updatedTransformationIds.indexOf(updatedRowId);
+          updatedTransformationExp[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value
+          updatedTransformationLvl[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[1].value
+          updatedTransformationCer[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[2].value
+          updatedTransformationInt[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[3].value          
+          console.log(updatedTransformationIds);
+        }else {
           $("#"+updatedRowId).find('td').find('Select')[0]
           updatedTransformationIds[updatedTransformationIds.length] = $(this).parent().parent().parent().attr('id').split("_")[3]
           updatedTransformationExp[updatedTransformationExp.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value
@@ -854,6 +870,24 @@ function check(){
     empId = objResult.empId;
     getSkills(empId);
   }else if($(location).attr("href") == SERVER_URI+'/human_element_update'){
+    $( document ).ready(function() {
+      $('.form-control').change(function() {
+        var id = $(this).attr('id')
+        var dim = $(this).attr('id')
+        if (id.split("_")[1] != undefined) {
+          dim = id.split("_")[1]
+        }
+        if (humanElementId.indexOf(dim) > -1){
+          var index  = humanElementId.indexOf(dim)
+          humanElementValue[index] = document.getElementById(id).value
+          console.log(humanElementValue)
+        }else{
+          humanElementId[humanElementId.length] = dim
+          humanElementValue[humanElementValue.length] = document.getElementById(id).value
+          console.log(humanElementValue)
+        }
+      });
+    });
     jQuery('#human_add_button').hide();
     jQuery('#human_update_button').show();
     var obj = localStorage.getItem('obj');
@@ -948,9 +982,14 @@ function getHumanElementData(empId) {
     "data": JSON.stringify(obj)
   }
   $.ajax(settings).done(function (response) {
-    for(var index=0; index<response['human_element'].length; index++){
-      console.log(response['human_element'][index])
-    }
+    var len = document.getElementById('mainPage').children[1].length
+    for (var index = 0; index< len - 2; index++) {
+      if ((document.getElementById('mainPage').children[1][index].id).startsWith("habit")) {
+        $('[id="'+(document.getElementById('mainPage').children[1][index].id)+'"]').slider('setValue',response['human_element'][index]['value']);  
+      }else{
+        document.getElementById('mainPage').children[1][index].value = response['human_element'][index]['value'];
+      }
+    }    
   });  
 }
 
@@ -1126,4 +1165,31 @@ function convertTransformationNameIntoId(){
 function showHumanElement(empId,emp) {
   setEmpId({"empId":empId},1);
   window.open(SERVER_URI + '/human_element_update','_self');
+}
+
+function updateHumanElement() {
+  if (humanElementId.length == 0) {
+    window.open(SERVER_URI,'_self');
+  }else{
+    console.log(humanElementId)
+    var obj = localStorage.getItem('obj');
+    var objResult = JSON.parse(obj);
+    empId = objResult.empId;
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": SERVER_URI+"/update_human_element",
+      "method": "POST",
+      "headers": {
+        "content-type": "application/x-www-form-urlencoded",
+        "cache-control": "no-cache"
+      },
+      "data": {
+        empId ,humanElementId, humanElementValue
+      }
+    }
+    $.ajax(settings).done(function (response) {
+      jQuery.notify("Successfully Updated Employee","success");
+    });
+  }
 }

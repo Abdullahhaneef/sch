@@ -344,7 +344,7 @@ app.post("/get_human_elements", jsonParser, function(req, res) {
     console.log(req.body);
     setupResponse(res);
     var human_element;
-    var query_get_human_elements ="Select value FROM human_element_survey WHERE emp_id = "+req.body['empId']+" ORDER by id;"
+    var query_get_human_elements ="Select dimension as dimension, value as value FROM human_element_survey WHERE emp_id = "+req.body['empId']+" ORDER by id;"
     client.query(query_get_human_elements, function(err, result) {
         if(err) {
             console.log(err)
@@ -360,6 +360,29 @@ app.post("/get_human_elements", jsonParser, function(req, res) {
     });   
 });
 
+//////////////////////////update Human Element form////////////////////////////////////////////////
+app.post("/update_human_element", jsonParser, function(req, res) {
+    setupResponse(res);
+    var update_human_elements = "";
+    console.log(req.body)
+    for (var index = 0; index<req.body['humanElementId'].length; index++){
+        update_human_elements = update_human_elements+"UPDATE human_element_survey SET value = '"+req.body['humanElementValue'][index]+"' \
+        WHERE emp_id = "+req.body['empId']+" \
+        AND dimension = '"+req.body['humanElementId'][index]+"';"
+    } 
+    console.log(update_human_elements)
+    client.query(update_human_elements, function(err, result) {
+        if(err) {
+            console.log(err)
+            res.end(JSON.stringify({"status":"failed"}));
+        }
+        else {
+            client.end();
+            console.log("successful updated")
+            res.end(JSON.stringify({"status":"success"}));
+        }
+    });   
+});
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 app.use('*',function(req, res){
