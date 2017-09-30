@@ -283,7 +283,7 @@
 
 /////////////////////////Level///////////////////////////////////////////
 
-        if(rowValue.find("Select")[1].value == '1 - INTRODUTUCTORY'){
+        if(rowValue.find("Select")[1].value == '1 - INTRODUCTORY'){
           level[index] = 1;  
         }
         else if(rowValue.find("Select")[1].value == '2 - BASIC'){
@@ -537,7 +537,7 @@ function addTransformationEmpSkill(){
         }
 /////////////////////////Level///////////////////////////////////////////
 
-        if(rowValue.find("Select")[1].value == '1 - INTRODUTUCTORY'){
+        if(rowValue.find("Select")[1].value == '1 - INTRODUCTORY'){
           level[index] = 1;  
         }
         else if(rowValue.find("Select")[1].value == '2 - BASIC'){
@@ -814,10 +814,11 @@ function check(){
   if($(location).attr("href") == SERVER_URI+'/analytics_update'){
     $( document ).ready(function() {
       $('[class="select form-control"]').change(function() {
-        console.log($(this).parent().parent().parent().attr('id'))
+        // console.log($(this).parent().parent().parent().attr('id'))
         updatedRowId = $(this).parent().parent().parent().attr('id')
-        if (updatedAnalyticsIds.indexOf(updatedRowId) > -1) {
-          var index = updatedAnalyticsIds.indexOf(updatedRowId);
+        var skill = updatedRowId.split("_")[3]
+        if (updatedAnalyticsIds.indexOf(skill) > -1) {
+          var index = updatedAnalyticsIds.indexOf(skill);
           updatedAnalyticsExp[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value
           updatedAnalyticsLvl[index] = $('[id="'+updatedRowId+'"]').find('Select')[1].value
           updatedAnalyticsCer[index] = $('[id="'+updatedRowId+'"]').find('Select')[2].value
@@ -838,22 +839,24 @@ function check(){
     var obj = localStorage.getItem('obj');
     var objResult = JSON.parse(obj);
     empId = objResult.empId;
-    getSkills(empId);
+    getSkills(empId,"analytics");
   }
   else if($(location).attr("href") == SERVER_URI+'/transformation_update'){
     $( document ).ready(function() {
       $('[class="select form-control"]').change(function() {
-        // console.log($(this).parent().parent().parent().attr('id'))
         updatedRowId = $(this).parent().parent().parent().attr('id')
-        if (updatedTransformationIds.indexOf(updatedRowId) > -1) {
-          var index = updatedTransformationIds.indexOf(updatedRowId);
+        var skill = updatedRowId.split("_")[3]
+        console.log(updatedTransformationIds.indexOf(skill) > -1)
+        if (updatedTransformationIds.indexOf(skill) > -1) {
+          console.log("hello")
+          var index = updatedTransformationIds.indexOf(skill);
           updatedTransformationExp[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value
           updatedTransformationLvl[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[1].value
           updatedTransformationCer[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[2].value
           updatedTransformationInt[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[3].value          
           console.log(updatedTransformationIds);
         }else {
-          $("#"+updatedRowId).find('td').find('Select')[0]
+          // $("#"+updatedRowId).find('td').find('Select')[0]
           updatedTransformationIds[updatedTransformationIds.length] = $(this).parent().parent().parent().attr('id').split("_")[3]
           updatedTransformationExp[updatedTransformationExp.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value
           updatedTransformationLvl[updatedTransformationLvl.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[1].value
@@ -868,7 +871,7 @@ function check(){
     var obj = localStorage.getItem('obj');
     var objResult = JSON.parse(obj);
     empId = objResult.empId;
-    getSkills(empId);
+    getSkills(empId,"transformation");
   }else if($(location).attr("href") == SERVER_URI+'/human_element_update'){
     $( document ).ready(function() {
       $('.form-control').change(function() {
@@ -897,7 +900,7 @@ function check(){
   }
 }
 
-function getSkills(empId){
+function getSkills(empId,form){
   console.log(empId);
   var obj = {"empId":empId};
   var settings = {
@@ -933,36 +936,38 @@ function getSkills(empId){
         index = index + 1;
       }
     }
-    if (response['skills'][30]['skill'] != ''){
-     $($($('table#surveyTable').find('tr')[36]).find('td')[0]).find('input')[0].value = response['skills'][30]['skill']
-    }else if (response['skills'][31]['skill']['skill'] != ''){
-     $($($('table#surveyTable').find('tr')[37]).find('td')[0]).find('input')[0].value = response['skills'][31]['skill']
-    } else if (response['skills'][32]['skill'] != ''){
-     $($($('table#surveyTable').find('tr')[38]).find('td')[0]).find('input')[0].value = response['skills'][32]['skill']
-    }else if (response['skills'][49]['skill'] != ''){
-     $($($('table#surveyTable').find('tr')[61]).find('td')[0]).find('input')[0].value = response['skills'][49]['skill']
-    }else if (response['skills'][55]['skill'] != ''){
-     $($($('table#surveyTable').find('tr')[69]).find('td')[0]).find('input')[0].value = response['skills'][55]['skill'] 
-    }else if (response['skills'][56]['skill'] != ''){
-     $($($('table#surveyTable').find('tr')[70]).find('td')[0]).find('input')[0].value = response['skills'][56]['skill']
-    }else if (response['skills'][61]['skill'] != ''){
-     $($($('table#surveyTable').find('tr')[79]).find('td')[0]).find('input')[0].value = response['skills'][61]['skill'] 
-    }else if (response['skills'][68]['skill'] != ''){
-     $($($('table#surveyTable').find('tr')[87]).find('td')[0]).find('input')[0].value = response['skills'][68]['skill'] 
-    }else if (response['skills'][69]['skill'] != ''){
-     $($($('table#surveyTable').find('tr')[88]).find('td')[0]).find('input')[0].value = response['skills'][69]['skill'] 
-    }else if (response['skills'][94]['skill'] != ''){
-     $($($('table#surveyTable').find('tr')[120]).find('td')[0]).find('input')[0].value = response['skills'][94]['skill'] 
-    }else if (response['skills'][95]['skill'] != ''){
-     $($($('table#surveyTable').find('tr')[121]).find('td')[0]).find('input')[0].value = response['skills'][95]['skill'] 
-    }else if (response['skills'][96]['skill'] != ''){
-     $($($('table#surveyTable').find('tr')[122]).find('td')[0]).find('input')[0].value = response['skills'][96]['skill'] 
-    }else if (response['skills'][101]['skill'] != ''){
-     $($($('table#surveyTable').find('tr')[128]).find('td')[0]).find('input')[0].value = response['skills'][101]['skill'] 
-    }else if (response['skills'][102]['skill'] != ''){
-     $($($('table#surveyTable').find('tr')[129]).find('td')[0]).find('input')[0].value = response['skills'][102]['skill'] 
-    }else if (response['skills'][103]['skill'] != ''){
-     $($($('table#surveyTable').find('tr')[130]).find('td')[0]).find('input')[0].value = response['skills'][103]['skill'] 
+    if (form == "transformation") {
+      if (response['skills'][30]['skill'] != ''){
+       $($($('table#surveyTable').find('tr')[36]).find('td')[0]).find('input')[0].value = response['skills'][30]['skill']
+      }else if (response['skills'][31]['skill']['skill'] != ''){
+       $($($('table#surveyTable').find('tr')[37]).find('td')[0]).find('input')[0].value = response['skills'][31]['skill']
+      } else if (response['skills'][32]['skill'] != ''){
+       $($($('table#surveyTable').find('tr')[38]).find('td')[0]).find('input')[0].value = response['skills'][32]['skill']
+      }else if (response['skills'][49]['skill'] != ''){
+       $($($('table#surveyTable').find('tr')[61]).find('td')[0]).find('input')[0].value = response['skills'][49]['skill']
+      }else if (response['skills'][55]['skill'] != ''){
+       $($($('table#surveyTable').find('tr')[69]).find('td')[0]).find('input')[0].value = response['skills'][55]['skill'] 
+      }else if (response['skills'][56]['skill'] != ''){
+       $($($('table#surveyTable').find('tr')[70]).find('td')[0]).find('input')[0].value = response['skills'][56]['skill']
+      }else if (response['skills'][61]['skill'] != ''){
+       $($($('table#surveyTable').find('tr')[79]).find('td')[0]).find('input')[0].value = response['skills'][61]['skill'] 
+      }else if (response['skills'][68]['skill'] != ''){
+       $($($('table#surveyTable').find('tr')[87]).find('td')[0]).find('input')[0].value = response['skills'][68]['skill'] 
+      }else if (response['skills'][69]['skill'] != ''){
+       $($($('table#surveyTable').find('tr')[88]).find('td')[0]).find('input')[0].value = response['skills'][69]['skill'] 
+      }else if (response['skills'][94]['skill'] != ''){
+       $($($('table#surveyTable').find('tr')[120]).find('td')[0]).find('input')[0].value = response['skills'][94]['skill'] 
+      }else if (response['skills'][95]['skill'] != ''){
+       $($($('table#surveyTable').find('tr')[121]).find('td')[0]).find('input')[0].value = response['skills'][95]['skill'] 
+      }else if (response['skills'][96]['skill'] != ''){
+       $($($('table#surveyTable').find('tr')[122]).find('td')[0]).find('input')[0].value = response['skills'][96]['skill'] 
+      }else if (response['skills'][101]['skill'] != ''){
+       $($($('table#surveyTable').find('tr')[128]).find('td')[0]).find('input')[0].value = response['skills'][101]['skill'] 
+      }else if (response['skills'][102]['skill'] != ''){
+       $($($('table#surveyTable').find('tr')[129]).find('td')[0]).find('input')[0].value = response['skills'][102]['skill'] 
+      }else if (response['skills'][103]['skill'] != ''){
+       $($($('table#surveyTable').find('tr')[130]).find('td')[0]).find('input')[0].value = response['skills'][103]['skill'] 
+      }
     }
   });
 }
@@ -1062,8 +1067,7 @@ function convertAnalyticsNameIntoId(){
       updatedAnalyticsExp[index] = 3; 
     }
 /////////////////////////Level///////////////////////////////////////////
-
-    if(updatedAnalyticsLvl[index] == '1 - INTRODUTUCTORY'){
+    if(updatedAnalyticsLvl[index] == '1 - INTRODUCTORY'){
       updatedAnalyticsLvl[index] = 1;  
     }
     else if(updatedAnalyticsLvl[index] == '2 - BASIC'){
@@ -1119,7 +1123,7 @@ function convertTransformationNameIntoId(){
     }
 /////////////////////////Level///////////////////////////////////////////
 
-    if(updatedTransformationLvl[index] == '1 - INTRODUTUCTORY'){
+    if(updatedTransformationLvl[index] == '1 - INTRODUCTORY'){
       updatedTransformationLvl[index] = 1;  
     }
     else if(updatedTransformationLvl[index] == '2 - BASIC'){
