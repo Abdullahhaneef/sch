@@ -12,7 +12,7 @@ var dt = dateTime.create();
 var formatted = dt.format('m-d-Y');
 var client;
 
-var conString = "postgres://postgres@localhost:5432/revel_db"
+var conString = "postgres://postgres@localhost:5433/revel_db"
 
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}));
 
@@ -170,8 +170,11 @@ app.post("/addHumanElement", function(req, res) {
     setupResponse(res);
     query_add_human = "INSERT INTO human_element_survey (emp_id, category, dimension, value, community_id) VALUES "
     len = category.length;
-    for(i = 0; i < len; i++){
+    for(i = 0; i < len-1; i++){
         var val = req.body.value[i].replace(/'/g, "''");
+        if (category[i] == 'My Motivations'){
+            val = val.substring(0, val.length -2);
+        }
         query_add_human=query_add_human+"("+req.body.empId+",'"+category[i]+"','"+dimension[i]+"','"+val+"',"+req.body.community_id+" ), ";
     }
     client.query(query_add_human.substring(0, query_add_human.length - 2) + ";", function(err, result) {
@@ -252,12 +255,6 @@ app.post("/update_employee", jsonParser, function(req, res) {
 app.post("/update_analytics_skills", jsonParser, function(req, res) {
     setupResponse(res);
      var update_analytic_skills = "";
-    // console.log(req.body['empId'])
-    console.log(req.body['updatedAnalyticsIds'][0])
-    console.log(req.body['updatedAnalyticsExp'][0])
-    console.log(req.body['updatedAnalyticsLvl'][0])
-    console.log(req.body['updatedAnalyticsCer'][0])
-    console.log(req.body['updatedAnalyticsInt'][0])
     for (var index = 0; index<req.body['updatedAnalyticsIds'].length; index++){
         update_analytic_skills = update_analytic_skills+"UPDATE skill_survey SET experience_id = '"+req.body['updatedAnalyticsExp'][index]+"', \
         level_id = "+req.body['updatedAnalyticsLvl'][index]+", \
@@ -281,13 +278,6 @@ app.post("/update_analytics_skills", jsonParser, function(req, res) {
 app.post("/update_transformation_skills", jsonParser, function(req, res) {
     setupResponse(res);
      var update_transformation_skills = "";
-    // console.log(req.body['empId'])
-    console.log(req.body)
-    console.log(req.body['updatedTransformationIds'][0])
-    console.log(req.body['updatedTransformationExp'][0])
-    console.log(req.body['updatedTransformationLvl'][0])
-    console.log(req.body['updatedTransformationCer'][0])
-    console.log(req.body['updatedTransformationInt'][0])
     for (var index = 0; index<req.body['updatedTransformationIds'].length; index++){
         update_transformation_skills = update_transformation_skills+"UPDATE skill_survey SET experience_id = '"+req.body['updatedTransformationExp'][index]+"', \
         level_id = "+req.body['updatedTransformationLvl'][index]+", \
@@ -311,10 +301,8 @@ app.post("/update_transformation_skills", jsonParser, function(req, res) {
 
 //////////////////////////////Get Analytics and Transformation Skills////////////////////////////////////////////////////
 app.post("/get_skills", jsonParser, function(req, res) {
-    console.log(req.body);
     setupResponse(res);
     var skills;
-    //var query_get_skills = "SELECT * FROM skill_survey WHERE emp_id = "+req.body['empId'];
     var query_get_skills ="Select skill_survey.skill, experience.name as experience,level.name as level, \
                 certification.value as certification,learning_interest.name as learning_interest\
                 from skill_survey\
@@ -332,7 +320,6 @@ app.post("/get_skills", jsonParser, function(req, res) {
             for (i=0; i<result.rows.length; i++){
                 skills = result.rows;
             }
-            console.log(skills);
             client.end();
         }
         res.end(JSON.stringify({"status":"success" , "skills":skills}));
@@ -341,10 +328,9 @@ app.post("/get_skills", jsonParser, function(req, res) {
 
 //////////////////////////////Get Human Elements////////////////////////////////////////////////////
 app.post("/get_human_elements", jsonParser, function(req, res) {
-    console.log(req.body);
     setupResponse(res);
     var human_element;
-    var query_get_human_elements ="Select dimension as dimension, value as value FROM human_element_survey WHERE emp_id = "+req.body['empId']+" ORDER by id;"
+    var query_get_human_elements ="Select category, dimension as dimension, value as value FROM human_element_survey WHERE emp_id = "+req.body['empId']+" ORDER by id;"
     client.query(query_get_human_elements, function(err, result) {
         if(err) {
             console.log(err)
@@ -353,7 +339,6 @@ app.post("/get_human_elements", jsonParser, function(req, res) {
             for (i=0; i<result.rows.length; i++){
                 human_element = result.rows;
             }
-            console.log(human_element);
             client.end();
         }
         res.end(JSON.stringify({"status":"success" , "human_element":human_element}));
@@ -364,13 +349,21 @@ app.post("/get_human_elements", jsonParser, function(req, res) {
 app.post("/update_human_element", jsonParser, function(req, res) {
     setupResponse(res);
     var update_human_elements = "";
-    console.log(req.body)
     for (var index = 0; index<req.body['humanElementId'].length; index++){
-        update_human_elements = update_human_elements+"UPDATE human_element_survey SET value = '"+req.body['humanElementValue'][index]+"' \
-        WHERE emp_id = "+req.body['empId']+" \
-        AND dimension = '"+req.body['humanElementId'][index]+"';"
-    } 
-    console.log(update_human_elements)
+        if (req.body['humanElementValue'][index] == '1st' || req.body['humanElementValue'][index] == '2nd' || req.body['humanElementValue'][index] == '3rd'
+         || req.body['humanElementValue'][index] == '4th' || req.body['humanElementValue'][index] == '5th' || req.body['humanElementValue'][index] == '6th' 
+         || req.body['humanElementValue'][index] == '7th' || req.body['humanElementValue'][index] == '8th' || req.body['humanElementValue'][index] == '9th' 
+         || req.body['humanElementValue'][index] == '10th'){
+            update_human_elements = update_human_elements+"UPDATE human_element_survey SET value = '"+req.body['humanElementValue'][index].substring(0, req.body['humanElementValue'][index].length - 2)+"' \
+            WHERE emp_id = "+req.body['empId']+" \
+            AND dimension = '"+req.body['humanElementId'][index]+"';";
+        }
+        else{
+            update_human_elements = update_human_elements+"UPDATE human_element_survey SET value = '"+req.body['humanElementValue'][index]+"' \
+            WHERE emp_id = "+req.body['empId']+" \
+            AND dimension = '"+req.body['humanElementId'][index]+"';"
+        }
+    }
     client.query(update_human_elements, function(err, result) {
         if(err) {
             console.log(err)
