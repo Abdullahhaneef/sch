@@ -2,6 +2,7 @@ var express = require('express'),
     http = require('http'),
     request = require('request');
 
+
 var app = express();
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
@@ -11,8 +12,9 @@ var dateTime = require('node-datetime');
 var dt = dateTime.create();
 var formatted = dt.format('m-d-Y');
 var client;
+var sqlinjection = require('sql-injection');
 
-var conString = "postgres://postgres@localhost:5433/revel_db"
+var conString = "postgres://postgres@localhost:5432/revel_db"
 
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit:50000}));
 
@@ -23,10 +25,7 @@ var setupResponse = function(res) {
     client.connect();
 };
 
-// var express = require('express');
-// var app = express();
 var router = express.Router();
-  
 var path = __dirname + '/views/';
 var javascript_path = __dirname + '/javascripts/';
 

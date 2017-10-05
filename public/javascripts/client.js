@@ -13,7 +13,7 @@
   var humanElementId = [];
   var humanElementValue = [];
   var userId = JSON.parse(localStorage.getItem('obj')).empId
-  if (userId == 0 && window.location.href != SERVER_URI+"/" && window.location.href != SERVER_URI+"/admin_capability") {
+  if ((userId == 0 || JSON.parse(localStorage.getItem('obj')) == null)&& window.location.href != SERVER_URI+"/" && window.location.href != SERVER_URI+"/admin_capability") {
     window.open(SERVER_URI,'_self');
   }
 
