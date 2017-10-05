@@ -2,7 +2,7 @@ var express = require('express'),
     http = require('http'),
     request = require('request');
 
-
+var escape = require('pg-escape');
 var app = express();
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
@@ -32,6 +32,7 @@ var javascript_path = __dirname + '/javascripts/';
 app.use('/',router);
 app.use(express.static('public'));
   
+/*app.use(sqlinjection);*/
 router.get('/',function(req, res){
   res.sendFile(path + 'index.html');
 });
@@ -72,7 +73,7 @@ router.get('/admin_capability',function(req, res){
 app.post("/addEmployee", function(req, res) {
     setupResponse(res);
     var empId=0;
-    query_add_employee = "INSERT INTO employees(name , community_id) values('"+req.body.empName+"',"+req.body.community+") RETURNING id";
+    query_add_employee = escape('INSERT INTO %s VALUES(%s) RETURNING id','employees(name , community_id)', ["'"+req.body.empName+"',"+req.body.community]);
     client.query(query_add_employee, function(err, result) {
         if(err) {
             console.log(err);
@@ -80,7 +81,6 @@ app.post("/addEmployee", function(req, res) {
         else {
             empId = result.rows[0].id;
             client.end();
-            
         }
         res.end(JSON.stringify({"status":"success", "empId":empId}));
     });
@@ -236,7 +236,7 @@ app.post("/delete_employee", jsonParser, function(req, res) {
 
 app.post("/update_employee", jsonParser, function(req, res) {
     setupResponse(res);
-    var update_emp = "UPDATE employees SET name = '"+req.body['name']+"',is_active = '"+req.body['is_active']+"' WHERE id = "+req.body['empId'];
+    var update_emp = escape("UPDATE %s SET %s WHERE %s", "employees" , "name =  '"+req.body['name']+"',is_active = '"+req.body['is_active']+"'","id = "+req.body['empId']);
     client.query(update_emp, function(err, result) {
         if(err) {
             console.log(err)
