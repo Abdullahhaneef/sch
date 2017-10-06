@@ -1,4 +1,4 @@
-  var SERVER_URI = "http://localhost:3000";
+  var SERVER_URI = "http://localhost:9000";
   var empId;
   var updatedAnalyticsIds = [];
   var updatedAnalyticsExp = [];
@@ -12,9 +12,8 @@
   var updatedTransformationInt = [];
   var humanElementId = [];
   var humanElementValue = [];
-  var userId = JSON.parse(localStorage.getItem('obj')).empId
-  if ((userId == 0 || JSON.parse(localStorage.getItem('obj')) == null)&& window.location.href != SERVER_URI+"/" && window.location.href != SERVER_URI+"/admin_capability") {
-    window.open(SERVER_URI,'_self');
+  if ((JSON.parse(localStorage.getItem('obj')) == null || JSON.parse(localStorage.getItem('obj')).empId == 0) && window.location.href != SERVER_URI+"/index" && window.location.href != SERVER_URI+"/admin_capability") {
+    window.open(SERVER_URI + '/index','_self');
   }
 
   function showCommunityAnalytics() {
@@ -670,7 +669,7 @@ function addHumanElement(){
     }
     $.ajax(settings).done(function (response) {
       setEmpId({"empId":0},0)
-      window.open(SERVER_URI,'_self');
+      window.open(SERVER_URI + '/logout','_self');
     });
 }
 //////////////////////////////////////////////////////////////////////////////////

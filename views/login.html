@@ -1,0 +1,130 @@
+<html>
+    <head>
+        <title>Login Here</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    </head>
+
+    <style>.bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form{font-family: Arial, Helvetica, sans-serif; color: black}.bootstrap-iso form button, .bootstrap-iso form button:hover{color: white !important;} .asteriskField{color: red;}</style>
+
+        <style type="text/css">
+            body {
+              /*background-color:#fff;*/
+              background-color:#36a1d5;
+              -webkit-font-smoothing: antialiased;
+              font: normal 14px sans-serif;
+          }
+
+        .block{
+            background: #36a1d5; /* Old browsers */
+            background: -moz-linear-gradient(top, #36a1d5 0%, #3073b4 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(top, #36a1d5 0%,#3073b4 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to bottom, #36a1d5 0%,#3073b4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#36a1d5', endColorstr='#3073b4',GradientType=0 );
+            padding: 10px 20px 30px 20px;
+        }
+        .block-center {
+            max-width: 420px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .button {
+          display: inline-block;
+          border: none;
+          color: #333;
+          text-decoration: none;
+          background-color: #fdfdfd;
+          padding: 15px 25px;
+          font-size: 15px;
+          font-weight: 400;
+          letter-spacing: 2px;
+          -webkit-border-radius: 2px;
+          border-radius: 2px;
+          text-align: center;
+          position: relative;
+          outline: none;
+          -webkit-transition: background-color .1s ease;
+          -o-transition: background-color .1s ease;
+          transition: background-color .1s ease;
+          border-bottom: 4px solid #ccc;
+      }
+
+      .button::after {
+        -webkit-transition: background-color .2s ease;
+        -o-transition: background-color .2s ease;
+        transition: background-color .2s ease;
+        position: absolute;
+        content: '';
+        height: 4px;
+        bottom: 0;
+        width: 100%;
+        background-color: #434343;
+        opacity: .28;
+        -webkit-border-bottom-left-radius: 2px;
+        border-bottom-left-radius: 2px;
+        -webkit-border-bottom-right-radius: 2px;
+        border-bottom-right-radius: 2px;
+        left: 0; 
+        border-bottom: 4px solid #ccc;
+      }
+
+        .button:focus, .button:hover {
+            text-decoration: none;
+            color: #fff; 
+            border-bottom: 4px solid #10215F;
+        }
+
+        .button:hover {
+            background-color: #015383;
+            border-bottom: 4px solid #10215F; 
+        }
+
+        .button:hover::after {
+          opacity: .22; 
+      }
+
+      .button:active {
+        background-color: #f8bf50;
+    }
+
+    .button:active::after {
+      opacity: .32; 
+    }
+
+    p{
+        font-size: 30px;
+        text-align: center;
+        color: white;
+        margin: 24px 0;
+        font-family: "Roboto",arial,sans-serif;
+    }
+    .wrapper {
+        text-align: center;
+    }
+
+    </style>
+    <body class="container">
+        <div class="block-center">
+            <div class="block-center">
+                <p>REVEL<br> Talent Optimization</p>
+            </div>
+        </div>
+        <div class="container row block-center">
+            <div class="jumbotron col-sm-4 pull-center block-center">
+                <form action="/login" method="post">
+                    <div class="block-center">
+                        <label class="block-center">Username:</label>
+                        <input class="block-center" type="text" name="username" style="font-size: x-large;"/>
+                    </div>
+                    <div class="block-center">
+                        <label class="block-center" style="margin-top: 30px;">Password:</label>
+                        <input class="block-center" type="password" name="password" style="font-size: x-large;" />
+                    </div>
+                    <div>
+                        <input class="btn btn-primary block-center" style="margin-top: 50px;" type="submit" value="Log In"/>
+                    </div>
+                </form>                  
+            </div>          
+        </div>
+    </body>
+</html>
