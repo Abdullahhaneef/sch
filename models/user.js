@@ -2,7 +2,7 @@ var Sequelize = require('sequelize');
 var bcrypt = require('bcrypt');
 
 // create a sequelize instance with our local postgres database information.
-var sequelize = new Sequelize('postgres://postgres@localhost:5432/auth-system');
+var sequelize = new Sequelize('postgres://postgres@localhost:5432/revel_db');
 
 // setup User model and its fields.
 var User = sequelize.define('users', {
@@ -29,7 +29,7 @@ var User = sequelize.define('users', {
     }    
 });
 User.prototype.validPassword = function(password) {
-  return bcrypt.compareSync(password,this.password)  
+    return bcrypt.compareSync(password,this.password)  
 }
 // create all the defined tables in the specified database.
 sequelize.sync()

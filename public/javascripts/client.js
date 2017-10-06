@@ -1,4 +1,4 @@
-  var SERVER_URI = "http://localhost:9000";
+  var SERVER_URI = "http://localhost:8090";
   var empId;
   var updatedAnalyticsIds = [];
   var updatedAnalyticsExp = [];
@@ -654,6 +654,15 @@ function addHumanElement(){
         value[j] = value[j]/100;
       }
     //////////////////////post request//////////////////////////////
+    swal({
+    title: 'Are you sure?',
+    text: "Check the values, you won't be able to revert this. Once Successfully saved it would redirect to login page.",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, save'
+    }).then(function () {
     var settings = {
       "async": true,
       "crossDomain": true,
@@ -671,7 +680,14 @@ function addHumanElement(){
       setEmpId({"empId":0},0)
       window.open(SERVER_URI + '/logout','_self');
     });
+    swal(
+      'Saved!',
+      'Request has been saved.',
+      'success'
+      )
+    })
 }
+
 //////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////Admin Capability///////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////

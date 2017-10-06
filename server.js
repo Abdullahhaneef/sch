@@ -21,7 +21,7 @@ var javascript_path = __dirname + '/javascripts/';
 var app = express();
 
 // set our application port
-app.set('port', 9000);
+app.set('port', 8090);
 
 // set morgan to log info about our requests for development use.
 app.use(morgan('dev'));
