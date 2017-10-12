@@ -18,24 +18,39 @@
 
   function showCommunityAnalytics() {
     var user = document.getElementById("user").value
+    var email = document.getElementById("email").value
     if (user != "") {
-       addEmployeeAnalytics();
-    }else{
+      if (email != ""){
+        addEmployeeAnalytics();
+      }
+      else{
+        jQuery.notify("Enter Email first", "error");  
+      }
+    }
+    else{
       jQuery.notify("Enter user name first", "error"); 
     }
   }
 
   function showCommunityTransformation() {
     var user = document.getElementById("user").value
+    var email = document.getElementById("email").value
     if (user != "") {
-          addEmployeeTransformation();
-    }else{
+      if (email != ""){
+        addEmployeeTransformation();
+      }
+      else{
+        jQuery.notify("Enter Email first", "error");  
+      }      
+    }
+    else{
       jQuery.notify("Enter user name first", "error"); 
     }
-  }  
+  }
 
   function addEmployeeAnalytics(){
     var empName  = document.getElementById("user").value;
+    var email = document.getElementById("email").value
     var community = 1;
 
       swal({
@@ -57,18 +72,52 @@
             "cache-control": "no-cache",
           },
           "data": {
-            empName , community
+            empName ,email , community
           }
         }
         $.ajax(settings).done(function (response) {      
-            setEmpId(response,1);
-            window.open(SERVER_URI + '/analytics','_self');
+            if(response.status == 'employee_exist'){
+              var exist_id = response.empId.id;
+              console.log(exist_id);
+/*              swal(
+                'hahaha',
+                'Employee exists.',
+                'success'
+              )*/
+              swal({
+              title: "Employee Exist",
+              text: "Do you want to update skills information?",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, Update'
+              }).then(function () {
+                var settings = {
+                  "async": true,
+                  "crossDomain": true,
+                  "url": SERVER_URI+"/del_skills",
+                  "method": "POST",
+                  "headers": {
+                    "content-type": "application/x-www-form-urlencoded",
+                    "cache-control": "no-cache",
+                  },
+                  "data": {
+                    exist_id
+                  }
+                }
+                $.ajax(settings).done(function (response) {      
+                    setEmpId({"empId": exist_id}, 1);
+                    window.open(SERVER_URI + '/analytics','_self');
+                });
+              })
+            }
+            else{
+              console.log(response);
+              setEmpId(response,1);
+              window.open(SERVER_URI + '/analytics','_self');
+            }
         });
-        swal(
-          'Saved!',
-          'Employee created.',
-          'success'
-        )
       })
     }
 

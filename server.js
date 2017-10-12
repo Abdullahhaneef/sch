@@ -193,17 +193,31 @@ app.get('/logout', (req, res) => {
 app.post("/addEmployee", function(req, res) {
     setupResponse(res);
     var empId=0;
-    query_add_employee = escape('INSERT INTO %s VALUES(%s) RETURNING id','employees(name , community_id)', ["'"+req.body.empName+"',"+req.body.community]);
-    client.query(query_add_employee, function(err, result) {
+    query_check_email = escape("SELECT %s FROM %s WHERE %s","id","employees", "email = '"+req.body.email+"'");
+    query_add_employee = escape('INSERT INTO %s VALUES(%s) RETURNING id','employees(name , community_id , email)', ["'"+req.body.empName+"',"+req.body.community+","+"'"+req.body.email+"'"]);
+    client.query(query_check_email, function(err, result) {
         if(err) {
             console.log(err);
         }
         else {
-            empId = result.rows[0].id;
-            client.end();
+            id = result.rows[0];
+            if(id == undefined){
+                client.query(query_add_employee, function(err, result) {
+                    if(err) {
+                        console.log(err);
+                    }
+                    else {
+                        empId = result.rows[0].id;
+                        client.end();
+                        res.end(JSON.stringify({"status":"success", "empId":empId}));
+                    }
+                })                
+            }
+            else{
+                res.end(JSON.stringify({"status":"employee_exist", "empId":id}));
+            }
         }
-        res.end(JSON.stringify({"status":"success", "empId":empId}));
-    });
+    });    
 });
 
 
@@ -340,6 +354,25 @@ app.post("/delete_employee", jsonParser, function(req, res) {
     var query_delete_skill = "DELETE FROM skill_survey WHERE emp_id  = "+req.body['empId']+"; \
                             DELETE FROM human_element_survey WHERE emp_id = "+req.body['empId']+"; \
                             DELETE FROM employees WHERE id  = "+req.body['empId']+";";                              
+    client.query(query_delete_skill, function(err, result) {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            console.log("Successfully Delete");
+            client.end();
+            res.end(JSON.stringify({"status":"success","empId":req.body['empId']}));
+        }
+    });
+});
+////////////////////////////////////delete skills only///////////////////////////////////
+
+app.post("/del_skills", jsonParser, function(req, res) {
+    setupResponse(res);
+    var query_delete_skill = escape("DELETE FROM %s WHERE %s; \
+                            DELETE FROM %s WHERE %s;"
+                            , "skill_survey" , "emp_id  = "+req.body['exist_id']
+                            ,"human_element_survey", "emp_id  = "+req.body['exist_id']);
     client.query(query_delete_skill, function(err, result) {
         if(err) {
             console.log(err);
