@@ -246,12 +246,12 @@ app.post("/addAnalyticsEmpSkill", function(req, res) {
     }
     query_add_skill = query_add_skill.substring(0, query_add_skill.length - 2) + "; INSERT INTO skill_survey_history (\
             emp_id, core_competency, tool_capability_id, category, \
-            skill,experience_id,level_id,certification_id,learning_interest_id,community_id,created_date,updated_date) VALUES ";
+            skill,experience_id,level_id,certification_id,learning_interest_id,community_id,created_date) VALUES ";
 
     for(i = 0; i < len; i++){
         query_add_skill = query_add_skill + "(" + req.body.empId + ",'" +req.body.core_competency[i] + "'\
         ," +req.body.tool_capability[i] + ",'" + req.body.category[i] + "','" + req.body.skill[i] + "'," + req.body.experience[i] + "\
-        ," + req.body.level[i] + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + ",1,'"+date+"','"+date+"'), "
+        ," + req.body.level[i] + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + ",1,'"+date+"'), "
     }
     client.query(query_add_skill.substring(0, query_add_skill.length - 2) + ";", function(err, result) {
         if(err) {
@@ -291,12 +291,12 @@ app.post("/addTransformationEmpSkill", function(req, res) {
     }
     query_add_skill = query_add_skill.substring(0, query_add_skill.length - 2) + "; INSERT INTO skill_survey_history (\
             emp_id, core_competency, tool_capability_id, category, \
-            skill,experience_id,level_id,certification_id,learning_interest_id,community_id,created_date,updated_date) VALUES ";
+            skill,experience_id,level_id,certification_id,learning_interest_id,community_id,created_date) VALUES ";
 
     for(i = 0; i < len; i++){
         query_add_skill = query_add_skill + "(" + req.body.empId + ",'" +req.body.core_competency[i] + "'\
         ," +req.body.tool_capability[i] + ",'" + req.body.category[i] + "','" + req.body.skill[i] + "'," + req.body.experience[i] + "\
-        ," + req.body.level[i] + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + ",2,'"+date+"','"+date+"'), "
+        ," + req.body.level[i] + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + ",2,'"+date+"'), "
     }    
     client.query(query_add_skill.substring(0, query_add_skill.length - 2) + ";", function(err, result) {
         if(err) {
@@ -362,13 +362,13 @@ app.post("/addHumanElement", function(req, res) {
         query_add_human=query_add_human+"("+req.body.empId+",'"+category[i]+"','"+dimension[i]+"','"+val+"',"+req.body.community_id+" ), ";
     }
     query_add_human = query_add_human.substring(0, query_add_human.length - 2) + "; \
-    INSERT INTO human_element_survey_history (emp_id, category,dimension,value,community_id,created_date,updated_date) VALUES ";
+    INSERT INTO human_element_survey_history (emp_id, category,dimension,value,community_id,created_date) VALUES ";
     for(i = 0; i < len-1; i++){
         var val = req.body.value[i].replace(/'/g, "''");
         if (category[i] == 'My Motivations'){
             val = val.substring(0, val.length -2);
         }
-        query_add_human=query_add_human+"("+req.body.empId+",'"+category[i]+"','"+dimension[i]+"','"+val+"',"+req.body.community_id+",'"+date+"','"+date+"' ), ";
+        query_add_human=query_add_human+"("+req.body.empId+",'"+category[i]+"','"+dimension[i]+"','"+val+"',"+req.body.community_id+",'"+date+"' ), ";
     }
     client.query(query_add_human.substring(0, query_add_human.length - 2) + ";", function(err, result) {
         if(err) {

@@ -1256,7 +1256,7 @@ function showHumanElement(empId,emp) {
 
 function updateHumanElement() {
   if (humanElementId.length == 0) {
-    window.open(SERVER_URI,'_self');
+    window.open(SERVER_URI + '/admin_capability','_self');
   }else{
     var obj = localStorage.getItem('obj');
     var objResult = JSON.parse(obj);
