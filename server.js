@@ -224,14 +224,34 @@ app.post("/addEmployee", function(req, res) {
 ////////////////////////////Add Employee Skills///////////////////////////////////////////////
 app.post("/addAnalyticsEmpSkill", function(req, res) {
     setupResponse(res);
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10){
+        dd='0'+dd;
+    } 
+    if(mm<10){
+        mm='0'+mm;
+    } 
+    var date = yyyy+'-'+mm+'-'+dd;
     query_add_skill = "INSERT INTO skill_survey (\
             emp_id, core_competency, tool_capability_id, category, \
-            skill, experience_id, level_id, certification_id, learning_interest_id,community_id) VALUES "
+            skill, experience_id, level_id, certification_id, learning_interest_id,community_id) VALUES ";
     len = req.body.skill.length;
     for(i = 0; i < len; i++){
         query_add_skill = query_add_skill + "(" + req.body.empId + ",'" +req.body.core_competency[i] + "'\
         ," +req.body.tool_capability[i] + ",'" + req.body.category[i] + "','" + req.body.skill[i] + "'," + req.body.experience[i] + "\
         ," + req.body.level[i] + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + ",1), "
+    }
+    query_add_skill = query_add_skill.substring(0, query_add_skill.length - 2) + "; INSERT INTO skill_survey_history (\
+            emp_id, core_competency, tool_capability_id, category, \
+            skill,experience_id,level_id,certification_id,learning_interest_id,community_id,created_date,updated_date) VALUES ";
+
+    for(i = 0; i < len; i++){
+        query_add_skill = query_add_skill + "(" + req.body.empId + ",'" +req.body.core_competency[i] + "'\
+        ," +req.body.tool_capability[i] + ",'" + req.body.category[i] + "','" + req.body.skill[i] + "'," + req.body.experience[i] + "\
+        ," + req.body.level[i] + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + ",1,'"+date+"','"+date+"'), "
     }
     client.query(query_add_skill.substring(0, query_add_skill.length - 2) + ";", function(err, result) {
         if(err) {
@@ -249,6 +269,17 @@ app.post("/addAnalyticsEmpSkill", function(req, res) {
 ////////////////////////////Add Transformation Skills///////////////////////////////////////////////
 app.post("/addTransformationEmpSkill", function(req, res) {
     setupResponse(res);
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10){
+        dd='0'+dd;
+    } 
+    if(mm<10){
+        mm='0'+mm;
+    } 
+    var date = yyyy+'-'+mm+'-'+dd;    
     query_add_skill = "INSERT INTO skill_survey (\
             emp_id, core_competency, tool_capability_id, category, \
             skill, experience_id, level_id, certification_id, learning_interest_id,community_id) VALUES "
@@ -258,6 +289,15 @@ app.post("/addTransformationEmpSkill", function(req, res) {
         ," +req.body.tool_capability[i] + ",'" + req.body.category[i] + "','" + req.body.skill[i] + "'," + req.body.experience[i] + "\
         ," + req.body.level[i] + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + ",2), "
     }
+    query_add_skill = query_add_skill.substring(0, query_add_skill.length - 2) + "; INSERT INTO skill_survey_history (\
+            emp_id, core_competency, tool_capability_id, category, \
+            skill,experience_id,level_id,certification_id,learning_interest_id,community_id,created_date,updated_date) VALUES ";
+
+    for(i = 0; i < len; i++){
+        query_add_skill = query_add_skill + "(" + req.body.empId + ",'" +req.body.core_competency[i] + "'\
+        ," +req.body.tool_capability[i] + ",'" + req.body.category[i] + "','" + req.body.skill[i] + "'," + req.body.experience[i] + "\
+        ," + req.body.level[i] + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + ",2,'"+date+"','"+date+"'), "
+    }    
     client.query(query_add_skill.substring(0, query_add_skill.length - 2) + ";", function(err, result) {
         if(err) {
             console.log(err);
@@ -276,7 +316,19 @@ app.post("/addTransformationEmpSkill", function(req, res) {
 /////////////////////////////////////////Add Human Element////////////////////////////////////////////////
 
 app.post("/addHumanElement", function(req, res) {
+    setupResponse(res);    
     var query_add_human="";
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10){
+        dd='0'+dd;
+    } 
+    if(mm<10){
+        mm='0'+mm;
+    } 
+    var date = yyyy+'-'+mm+'-'+dd;    
     var category =[];
     var dimension =[];
     for (var i = 0; i<req.body.name.length; i++){
@@ -300,8 +352,7 @@ app.post("/addHumanElement", function(req, res) {
             dimension[i] = req.body.name[i];
         }
     }
-    setupResponse(res);
-    query_add_human = "INSERT INTO human_element_survey (emp_id, category, dimension, value, community_id) VALUES "
+    query_add_human = "INSERT INTO human_element_survey (emp_id, category, dimension, value, community_id) VALUES ";
     len = category.length;
     for(i = 0; i < len-1; i++){
         var val = req.body.value[i].replace(/'/g, "''");
@@ -309,6 +360,15 @@ app.post("/addHumanElement", function(req, res) {
             val = val.substring(0, val.length -2);
         }
         query_add_human=query_add_human+"("+req.body.empId+",'"+category[i]+"','"+dimension[i]+"','"+val+"',"+req.body.community_id+" ), ";
+    }
+    query_add_human = query_add_human.substring(0, query_add_human.length - 2) + "; \
+    INSERT INTO human_element_survey_history (emp_id, category,dimension,value,community_id,created_date,updated_date) VALUES ";
+    for(i = 0; i < len-1; i++){
+        var val = req.body.value[i].replace(/'/g, "''");
+        if (category[i] == 'My Motivations'){
+            val = val.substring(0, val.length -2);
+        }
+        query_add_human=query_add_human+"("+req.body.empId+",'"+category[i]+"','"+dimension[i]+"','"+val+"',"+req.body.community_id+",'"+date+"','"+date+"' ), ";
     }
     client.query(query_add_human.substring(0, query_add_human.length - 2) + ";", function(err, result) {
         if(err) {
@@ -331,7 +391,7 @@ app.post("/addHumanElement", function(req, res) {
 app.get("/get_employees", function(req, res) {
     setupResponse(res);
     var employees;
-    query_get_employee = "SELECT employees.id, employees.name as Name, community.name as Community, employees.is_active\
+    query_get_employee = "SELECT employees.id, employees.name as Name, employees.email, community.name as Community, employees.is_active\
                             FROM employees\
                             LEFT JOIN community ON community_id = community.id ORDER BY employees.id";
     client.query(query_get_employee, function(err, result) {
@@ -389,7 +449,10 @@ app.post("/del_skills", jsonParser, function(req, res) {
 
 app.post("/update_employee", jsonParser, function(req, res) {
     setupResponse(res);
-    var update_emp = escape("UPDATE %s SET %s WHERE %s", "employees" , "name =  '"+req.body['name']+"',is_active = '"+req.body['is_active']+"'","id = "+req.body['empId']);
+    console.log(req.body);
+    var update_emp = escape("UPDATE %s SET %s WHERE %s", "employees" 
+        , "name =  '"+req.body['name']+"', email =  '"+req.body['email']+"' ,is_active = '"+req.body['is_active']+"'"
+        ,"id = "+req.body['empId']);
     client.query(update_emp, function(err, result) {
         if(err) {
             console.log(err)
@@ -426,6 +489,8 @@ app.post("/update_analytics_skills", jsonParser, function(req, res) {
         res.end(JSON.stringify({"status":"success"}));
     });   
 });
+
+////////////////////////////////////////update transformation Skills//////////////////////////////////////////////
 
 app.post("/update_transformation_skills", jsonParser, function(req, res) {
     setupResponse(res);

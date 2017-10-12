@@ -52,8 +52,7 @@
     var empName  = document.getElementById("user").value;
     var email = document.getElementById("email").value
     var community = 1;
-
-      swal({
+    swal({
       title: empName,
       text: "Check spelling of your name and proceed",
       type: 'warning',
@@ -61,30 +60,24 @@
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Save'
-      }).then(function () {
-        var settings = {
-          "async": true,
-          "crossDomain": true,
-          "url": SERVER_URI+"/addEmployee",
-          "method": "POST",
-          "headers": {
-            "content-type": "application/x-www-form-urlencoded",
-            "cache-control": "no-cache",
-          },
-          "data": {
-            empName ,email , community
-          }
+    }).then(function () {
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": SERVER_URI+"/addEmployee",
+        "method": "POST",
+        "headers": {
+          "content-type": "application/x-www-form-urlencoded",
+          "cache-control": "no-cache",
+        },
+        "data": {
+          empName ,email , community
         }
-        $.ajax(settings).done(function (response) {      
-            if(response.status == 'employee_exist'){
-              var exist_id = response.empId.id;
-              console.log(exist_id);
-/*              swal(
-                'hahaha',
-                'Employee exists.',
-                'success'
-              )*/
-              swal({
+      }
+      $.ajax(settings).done(function (response) {      
+          if(response.status == 'employee_exist'){
+            var exist_id = response.empId.id;
+            swal({
               title: "Employee Exist",
               text: "Do you want to update skills information?",
               type: 'warning',
@@ -92,40 +85,39 @@
               confirmButtonColor: '#3085d6',
               cancelButtonColor: '#d33',
               confirmButtonText: 'Yes, Update'
-              }).then(function () {
-                var settings = {
-                  "async": true,
-                  "crossDomain": true,
-                  "url": SERVER_URI+"/del_skills",
-                  "method": "POST",
-                  "headers": {
-                    "content-type": "application/x-www-form-urlencoded",
-                    "cache-control": "no-cache",
-                  },
-                  "data": {
-                    exist_id
-                  }
+            }).then(function () {
+              var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": SERVER_URI+"/del_skills",
+                "method": "POST",
+                "headers": {
+                  "content-type": "application/x-www-form-urlencoded",
+                  "cache-control": "no-cache",
+                },
+                "data": {
+                  exist_id
                 }
-                $.ajax(settings).done(function (response) {      
-                    setEmpId({"empId": exist_id}, 1);
-                    window.open(SERVER_URI + '/analytics','_self');
-                });
-              })
-            }
-            else{
-              console.log(response);
-              setEmpId(response,1);
-              window.open(SERVER_URI + '/analytics','_self');
-            }
-        });
-      })
-    }
+              }
+              $.ajax(settings).done(function (response) {      
+                  setEmpId({"empId": exist_id}, 1);
+                  window.open(SERVER_URI + '/analytics','_self');
+              });
+            })
+          }
+          else{
+            setEmpId(response,1);
+            window.open(SERVER_URI + '/analytics','_self');
+          }
+      });
+    })
+  }
 
   function addEmployeeTransformation(){
     var empName  = document.getElementById("user").value;
+    var email = document.getElementById("email").value
     var community = 2;
-
-      swal({
+    swal({
       title: empName,
       text: "Check spelling of your name and proceed",
       type: 'warning',
@@ -133,31 +125,58 @@
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, Save'
-      }).then(function () {
-        var settings = {
-          "async": true,
-          "crossDomain": true,
-          "url": SERVER_URI+"/addEmployee",
-          "method": "POST",
-          "headers": {
-            "content-type": "application/x-www-form-urlencoded",
-            "cache-control": "no-cache",
-          },
-          "data": {
-            empName , community
-          }
+    }).then(function () {
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": SERVER_URI+"/addEmployee",
+        "method": "POST",
+        "headers": {
+          "content-type": "application/x-www-form-urlencoded",
+          "cache-control": "no-cache",
+        },
+        "data": {
+          empName ,email , community
         }
-        $.ajax(settings).done(function (response) {      
-            setEmpId(response, 2);
+      }
+      $.ajax(settings).done(function (response) {      
+          if(response.status == 'employee_exist'){
+            var exist_id = response.empId.id;
+            swal({
+              title: "Employee Exist",
+              text: "Do you want to update skills information?",
+              type: 'warning',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Yes, Update'
+            }).then(function () {
+              var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": SERVER_URI+"/del_skills",
+                "method": "POST",
+                "headers": {
+                  "content-type": "application/x-www-form-urlencoded",
+                  "cache-control": "no-cache",
+                },
+                "data": {
+                  exist_id
+                }
+              }
+              $.ajax(settings).done(function (response) {      
+                  setEmpId({"empId": exist_id}, 2);
+                  window.open(SERVER_URI + '/transformation','_self');
+              });
+            })
+          }
+          else{
+            setEmpId(response,2);
             window.open(SERVER_URI + '/transformation','_self');
-        });
-        swal(
-          'Saved!',
-          'Employee created.',
-          'success'
-        )
-      })
-    }
+          }
+      });
+    })
+  }
 
   function setEmpId(response, community_id){
     empId = response.empId;
@@ -772,6 +791,7 @@ function renderEmployees(response){
       jQuery("#employees_table_body").append('<tr>\
                             <td> '+response['employees'][i]["id"]+' </td>\
                             <td> <input name="name" type="Text" value = "'+response["employees"][i]["name"]+'"></td>\
+                            <td> <input name="email" type="Text" value = "'+response["employees"][i]["email"]+'"></td>\
                             <td> '+response['employees'][i]["community"]+' </td>\
                             <td> <input name="is_active" type="checkbox" '+is_active+' > </td>\
                             <td> <span id = "updateRecord" title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="updateEmployee('+parseInt(response["employees"][i]["id"])+',jQuery(this).parent().parent())">Update</span> </td>\
@@ -832,7 +852,8 @@ function updateEmployee(empId,emp){
   var obj = {
               "empId":empId,
               "name" : jQuery(emp).children().find("input")[0].value, 
-              "is_active":jQuery(emp).children().find("input")[1].checked
+              "email" : jQuery(emp).children().find("input")[1].value,
+              "is_active":jQuery(emp).children().find("input")[2].checked
             }
   var settings = {
     "async": true,
@@ -854,13 +875,13 @@ function updateEmployee(empId,emp){
 //////////////////////////////Show skills Update////////////////////////////////////////////////
 
 function showSkills(empId,emp){
-  if(jQuery(emp).children()[2].innerText == 'ANALYTICS'){
+  if(jQuery(emp).children()[3].innerText == 'ANALYTICS'){
     setEmpId({"empId":empId},1);
     jQuery('#add_button').hide();
     jQuery('#update_button').show();
     window.open(SERVER_URI + '/analytics_update','_self');    
   }
-  else if(jQuery(emp).children()[2].innerText == 'TRANSFORMATION'){
+  else if(jQuery(emp).children()[3].innerText == 'TRANSFORMATION'){
     setEmpId({"empId":empId},2);
     jQuery('#add_button').hide();
     jQuery('#update_button').show();
@@ -1062,7 +1083,7 @@ function getHumanElementData(empId) {
 
 function updateTransformationEmpSkill(){
     if (updatedTransformationIds.length == 0) {
-    window.open(SERVER_URI,'_self');
+    window.open(SERVER_URI + '/admin_capability','_self');
   }else{
     var obj = localStorage.getItem('obj');
     var objResult = JSON.parse(obj);
@@ -1091,7 +1112,7 @@ function updateTransformationEmpSkill(){
 
 function updateAnalyticsEmpSkill(){
   if (updatedAnalyticsIds.length == 0) {
-    window.open(SERVER_URI,'_self');
+    window.open(SERVER_URI + '/admin_capability','_self');
   }else{
     var obj = localStorage.getItem('obj');
     var objResult = JSON.parse(obj);
