@@ -1,0 +1,432 @@
+id,empId,categ,dimension,value
+2369,117,My Personality,Climber,0.27
+2370,117,My Personality,Dreamer,0.56
+2371,117,My Personality,Purist,0.17
+2372,117,My Satisfaction,Self,4
+2373,117,My Satisfaction,Project,3
+2374,117,My Satisfaction,Client,4
+2375,117,My Satisfaction,Community,3
+2376,117,My Satisfaction,Revel,4
+2377,117,My Satisfaction,Career,4
+2378,117,My Goals,My Goals,"I understand how to create, inspire, run, and launch a new product. I'd like to grow in data strategy, product management, research, and P&L."
+2379,117,My Wins,My Wins,My impact to research and proposals on a few different projects. I enjoy not being at the client site everyday and trying out new projects for the first time.
+2380,117,My Losses,My Losses,My initial customer journeys were missing some attributes or layers to the customer's experience on my first pass. I would look into more emotional insights to showcase next time.
+2381,117,My Personal Brand,My Personal Brand,"Great listener, attentive, and  attention to detail."
+2382,117,My Habits,Chameleon to Peacock,2
+2383,117,My Habits,Gatherer to Hunter,3
+2384,117,My Habits,Ambiguity to Structure,1
+2385,117,My Habits,Introvert to Extrovert,2
+2386,117,My Habits,Morning Lark to Night Owl,2
+2387,117,My Habits,Evolution to Revolution,2
+2388,117,My Habits,Script to Improv,4
+2389,117,My Habits,Think to Do,3
+2390,117,My Habits,Build to Improve,5
+2391,117,My Motivations,Advancement,10th
+2392,117,My Motivations,Autonomy,1st
+2393,117,My Motivations,Work/Life Balance,4th
+2394,117,My Motivations,Influencing,6th
+2395,117,My Motivations,Mastery,7th
+2396,117,My Motivations,Money,8th
+2397,117,My Motivations,Praise,9th
+2398,117,My Motivations,Problem,5th
+2399,117,My Motivations,Purpose,2nd
+2400,117,My Motivations,Relationships,3rd
+2401,118,My Personality,Climber,0.41
+2402,118,My Personality,Dreamer,0.41
+2403,118,My Personality,Purist,0.18
+2404,118,My Satisfaction,Self,4
+2405,118,My Satisfaction,Project,3
+2406,118,My Satisfaction,Client,4
+2407,118,My Satisfaction,Community,3
+2408,118,My Satisfaction,Revel,4
+2409,118,My Satisfaction,Career,4
+2410,118,My Goals,My Goals,"Client-based goals: continue to build and develop trust with direct clients and cross-functional clients by leading with empathy and providing stellar client service.
+Associate-based goals: provide outstanding leadership to associates by leveraging high EQ.  Associate satisfaction is critically important to our org, and I feel I can have a significantly positive impact on that.
+Organization-based goals: get fully immersed into the Transformation community so that I can ID the best spot for me to leverage my skills and provide exceptional value.  Work to develop advanced skills in the areas of business development/proposal development to help grow the community.
+"
+2411,118,My Wins,My Wins,"-Successfully led a high-priority, high-visibility pilot project for client, launching successfully and early.
+-Quickly developed exceptional relationships with a broad group of key stakeholders during management of the pilot."
+2412,118,My Losses,My Losses,"-Lost steam with potential client on new project (SFDC), which could prove to be substantial growth opportunity.  Need to refocus energy on reengaging client."
+2413,118,My Personal Brand,My Personal Brand,"-I thrive on developing/sustaining meaningful and trustful relationships with clients, coworkers, and leadership alike, and have the ability to do so at all levels of organizations.  My balance of high EQ and IQ allow me to connect hearts and minds, with a broad spectrum of experience."
+2414,118,My Habits,Chameleon to Peacock,2
+2415,118,My Habits,Gatherer to Hunter,4
+2416,118,My Habits,Ambiguity to Structure,2
+2417,118,My Habits,Introvert to Extrovert,5
+2418,118,My Habits,Morning Lark to Night Owl,3
+2419,118,My Habits,Evolution to Revolution,2
+2420,118,My Habits,Script to Improv,4
+2421,118,My Habits,Think to Do,4
+2422,118,My Habits,Build to Improve,4
+2423,118,My Motivations,Advancement,5th
+2424,118,My Motivations,Autonomy,6th
+2425,118,My Motivations,Work/Life Balance,3rd
+2426,118,My Motivations,Influencing,8th
+2427,118,My Motivations,Mastery,10th
+2428,118,My Motivations,Money,4th
+2429,118,My Motivations,Praise,9th
+2430,118,My Motivations,Problem,7th
+2431,118,My Motivations,Purpose,1st
+2432,118,My Motivations,Relationships,2nd
+2433,119,My Personality,Climber,0.58
+2434,119,My Personality,Dreamer,0.13
+2435,119,My Personality,Purist,0.27
+2436,119,My Satisfaction,Self,5
+2437,119,My Satisfaction,Project,4
+2438,119,My Satisfaction,Client,4
+2439,119,My Satisfaction,Community,3
+2440,119,My Satisfaction,Revel,4
+2441,119,My Satisfaction,Career,4
+2442,119,My Goals,My Goals,"Continue to learn and build skills. I first strenthened vertically in Finance, and now focusing on breadth of skills horizontally. I still have a strong interest in Finance and Analytics. "
+2443,119,My Wins,My Wins,"I created a dynamic launch timeline calculator and a tactical workback schedule for my client. I built out a brand new SharePoint for my client as a central repository for requirements and process docs, the team's playbook, and calendar.  I explored and documented important processes that my client did not have time to do."
+2444,119,My Losses,My Losses,"The initial workback schedule I created for my client was too detailed, so I have been focusing on simplifying it so that it is more user-friendly for my client to use."
+2445,119,My Personal Brand,My Personal Brand,"I have strong experience in Finance and Cost Accounting, which has made me strong in data analysis, critical thinking, and process improvement. I worked with my cross-functional teams and have a great get-along factor. I am a data junkie and an early adopter of new technology."
+2446,119,My Habits,Chameleon to Peacock,3
+2447,119,My Habits,Gatherer to Hunter,3
+2448,119,My Habits,Ambiguity to Structure,4
+2449,119,My Habits,Introvert to Extrovert,5
+2450,119,My Habits,Morning Lark to Night Owl,5
+2451,119,My Habits,Evolution to Revolution,4
+2452,119,My Habits,Script to Improv,3
+2453,119,My Habits,Think to Do,2
+2454,119,My Habits,Build to Improve,4
+2455,119,My Motivations,Advancement,8th
+2456,119,My Motivations,Autonomy,6th
+2457,119,My Motivations,Work/Life Balance,5th
+2458,119,My Motivations,Influencing,7th
+2459,119,My Motivations,Mastery,1st
+2460,119,My Motivations,Money,9th
+2461,119,My Motivations,Praise,10th
+2462,119,My Motivations,Problem,3rd
+2463,119,My Motivations,Purpose,2nd
+2464,119,My Motivations,Relationships,4th
+2465,120,My Personality,Climber,0.34
+2466,120,My Personality,Dreamer,0.34
+2467,120,My Personality,Purist,0.32
+2468,120,My Satisfaction,Self,3
+2469,120,My Satisfaction,Project,2
+2470,120,My Satisfaction,Client,2
+2471,120,My Satisfaction,Community,3
+2472,120,My Satisfaction,Revel,3
+2473,120,My Satisfaction,Career,4
+2474,120,My Goals,My Goals,"An organization where I leverage a cross-functional level of skills: Client delivery, practice building and BD- emerging accounts "
+2475,120,My Wins,My Wins,Delivering Leadership workshops
+2476,120,My Losses,My Losses,Taking insights and pushing for a COE within an condense and aggressive timeline
+2477,120,My Personal Brand,My Personal Brand,A strong Business Development advocate with the ability to connect the dots and execute projects 
+2478,120,My Habits,Chameleon to Peacock,4
+2479,120,My Habits,Gatherer to Hunter,4
+2480,120,My Habits,Ambiguity to Structure,2
+2481,120,My Habits,Introvert to Extrovert,4
+2482,120,My Habits,Morning Lark to Night Owl,2
+2483,120,My Habits,Evolution to Revolution,4
+2484,120,My Habits,Script to Improv,4
+2485,120,My Habits,Think to Do,3
+2486,120,My Habits,Build to Improve,3
+2487,120,My Motivations,Advancement,2nd
+2488,120,My Motivations,Autonomy,4th
+2489,120,My Motivations,Work/Life Balance,10th
+2490,120,My Motivations,Influencing,7th
+2491,120,My Motivations,Mastery,5th
+2492,120,My Motivations,Money,3rd
+2493,120,My Motivations,Praise,9th
+2494,120,My Motivations,Problem,8th
+2495,120,My Motivations,Purpose,1st
+2496,120,My Motivations,Relationships,6th
+2497,121,My Personality,Climber,0.5
+2498,121,My Personality,Dreamer,0.15
+2499,121,My Personality,Purist,0.34
+2500,121,My Satisfaction,Self,5
+2501,121,My Satisfaction,Project,5
+2502,121,My Satisfaction,Client,5
+2503,121,My Satisfaction,Community,5
+2504,121,My Satisfaction,Revel,5
+2505,121,My Satisfaction,Career,5
+2506,121,My Goals,My Goals,"Continue to grow in my leadership experiences, and focus on strategic roles across retail and high tech.  Success to me is loving what I do, but also being in highly visible/impactful roles while managing large scopes of work and teams."
+2507,121,My Wins,My Wins,"Transitioning to the field to work on the retail strategy project with Samsung.  Additionally, being able to continue and manage the Revel brand.  "
+2508,121,My Losses,My Losses,na
+2509,121,My Personal Brand,My Personal Brand,"I am customer-centric, educated, experienced, and overall excited about what I do.  I get energy from those that surround me, and make it my mission to give energy back to all those whom I interact with - wheather that be through personal experiences or brand development.  Additionally, I believe in the concept of always be learning. "
+2510,121,My Habits,Chameleon to Peacock,5
+2511,121,My Habits,Gatherer to Hunter,5
+2512,121,My Habits,Ambiguity to Structure,3
+2513,121,My Habits,Introvert to Extrovert,5
+2514,121,My Habits,Morning Lark to Night Owl,1
+2515,121,My Habits,Evolution to Revolution,3
+2516,121,My Habits,Script to Improv,3
+2517,121,My Habits,Think to Do,1
+2518,121,My Habits,Build to Improve,1
+2519,121,My Motivations,Advancement,2nd
+2520,121,My Motivations,Autonomy,8th
+2521,121,My Motivations,Work/Life Balance,9th
+2522,121,My Motivations,Influencing,1st
+2523,121,My Motivations,Mastery,7th
+2524,121,My Motivations,Money,3rd
+2525,121,My Motivations,Praise,5th
+2526,121,My Motivations,Problem,10th
+2527,121,My Motivations,Purpose,6th
+2528,121,My Motivations,Relationships,4th
+2529,122,My Personality,Climber,
+2530,122,My Personality,Dreamer,
+2531,122,My Personality,Purist,
+2532,122,My Satisfaction,Self,
+2533,122,My Satisfaction,Project,
+2534,122,My Satisfaction,Client,
+2535,122,My Satisfaction,Community,
+2536,122,My Satisfaction,Revel,
+2537,122,My Satisfaction,Career,
+2538,122,My Goals,My Goals,
+2539,122,My Wins,My Wins,
+2540,122,My Losses,My Losses,
+2541,122,My Personal Brand,My Personal Brand,
+2542,122,My Habits,Chameleon to Peacock,
+2543,122,My Habits,Gatherer to Hunter,
+2544,122,My Habits,Ambiguity to Structure,
+2545,122,My Habits,Introvert to Extrovert,
+2546,122,My Habits,Morning Lark to Night Owl,
+2547,122,My Habits,Evolution to Revolution,
+2548,122,My Habits,Script to Improv,
+2549,122,My Habits,Think to Do,
+2550,122,My Habits,Build to Improve,
+2551,122,My Motivations,Advancement,10th
+2552,122,My Motivations,Autonomy,9th
+2553,122,My Motivations,Work/Life Balance,1st
+2554,122,My Motivations,Influencing,5th
+2555,122,My Motivations,Mastery,7th
+2556,122,My Motivations,Money,6th
+2557,122,My Motivations,Praise,8th
+2558,122,My Motivations,Problem,4th
+2559,122,My Motivations,Purpose,3rd
+2560,122,My Motivations,Relationships,2nd
+2561,123,My Personality,Climber,0.47
+2562,123,My Personality,Dreamer,0.35
+2563,123,My Personality,Purist,0.17
+2564,123,My Satisfaction,Self,4
+2565,123,My Satisfaction,Project,4
+2566,123,My Satisfaction,Client,4
+2567,123,My Satisfaction,Community,4
+2568,123,My Satisfaction,Revel,4
+2569,123,My Satisfaction,Career,4
+2570,123,My Goals,My Goals,"See through Project Aurora implementation, go live and hypercare
+Continue to contribute value add and produce high quality work product for client(s)
+Continue growing in breadth and depth of MS business
+Successful consultant, while maintaining work/life balance
+Continue to network inside Revel and outside"
+2571,123,My Wins,My Wins,"Building leadership decks presented in leadership decision meetings for budgeting and roles/responsibilities decisions
+Client's ‘right hand’ person and go to 
+Established great rapport with Emily and process team 
+Perceived within process team as integral person to collaborate with and leverage
+Developed procurement walking decks and documentation that become standard for other process teams
+
+"
+2572,123,My Losses,My Losses,
+2573,123,My Personal Brand,My Personal Brand,"Extensive management consulting experience ranging from evaluation, design, and implementation of strategic initiatives and business solutions.  Able to guide and evaluate process driven solutions, as opposed to tool-based decisions.  Recognized for high level of client service, development of people, and a dedicated, self-starting, and ambitious attitude.
+"
+2574,123,My Habits,Chameleon to Peacock,2
+2575,123,My Habits,Gatherer to Hunter,3
+2576,123,My Habits,Ambiguity to Structure,3
+2577,123,My Habits,Introvert to Extrovert,2
+2578,123,My Habits,Morning Lark to Night Owl,2
+2579,123,My Habits,Evolution to Revolution,3
+2580,123,My Habits,Script to Improv,4
+2581,123,My Habits,Think to Do,4
+2582,123,My Habits,Build to Improve,3
+2583,123,My Motivations,Advancement,6th
+2584,123,My Motivations,Autonomy,4th
+2585,123,My Motivations,Work/Life Balance,1st
+2586,123,My Motivations,Influencing,8th
+2587,123,My Motivations,Mastery,7th
+2588,123,My Motivations,Money,5th
+2589,123,My Motivations,Praise,10th
+2590,123,My Motivations,Problem,9th
+2591,123,My Motivations,Purpose,3rd
+2592,123,My Motivations,Relationships,2nd
+2593,124,My Personality,Climber,0.33
+2594,124,My Personality,Dreamer,0.33
+2595,124,My Personality,Purist,0.33
+2596,124,My Satisfaction,Self,
+2597,124,My Satisfaction,Project,
+2598,124,My Satisfaction,Client,
+2599,124,My Satisfaction,Community,
+2600,124,My Satisfaction,Revel,
+2601,124,My Satisfaction,Career,
+2602,124,My Goals,My Goals,
+2603,124,My Wins,My Wins,
+2604,124,My Losses,My Losses,
+2605,124,My Personal Brand,My Personal Brand,"Storyteller, Customer Insights and Customer Experience Strategist. I help teams launch new products, plan for the futre and grow their business"
+2606,124,My Habits,Chameleon to Peacock,
+2607,124,My Habits,Gatherer to Hunter,
+2608,124,My Habits,Ambiguity to Structure,
+2609,124,My Habits,Introvert to Extrovert,5
+2610,124,My Habits,Morning Lark to Night Owl,
+2611,124,My Habits,Evolution to Revolution,2
+2612,124,My Habits,Script to Improv,
+2613,124,My Habits,Think to Do,3
+2614,124,My Habits,Build to Improve,1
+2615,124,My Motivations,Advancement,
+2616,124,My Motivations,Autonomy,
+2617,124,My Motivations,Work/Life Balance,
+2618,124,My Motivations,Influencing,
+2619,124,My Motivations,Mastery,
+2620,124,My Motivations,Money,
+2621,124,My Motivations,Praise,
+2622,124,My Motivations,Problem,
+2623,124,My Motivations,Purpose,
+2624,124,My Motivations,Relationships,
+2625,125,My Personality,Climber,0.2
+2626,125,My Personality,Dreamer,0.2
+2627,125,My Personality,Purist,0.6
+2628,125,My Satisfaction,Self,5
+2629,125,My Satisfaction,Project,5
+2630,125,My Satisfaction,Client,5
+2631,125,My Satisfaction,Community,4
+2632,125,My Satisfaction,Revel,4
+2633,125,My Satisfaction,Career,4
+2634,125,My Goals,My Goals,"Continue to broaden my skills as a consultant by leveraging my deep finance experience into new project areas or industries such as my current work on a global SAP deployment at Microsoft, which allows me to utilize my finance skills to bridge technical ERP work with finance requirements and business process improvements.  Going forward, I plan on developing client relationships in regards to developing new business and project opportunities"
+2635,125,My Wins,My Wins,"Crafting of the Technical Accounting Review document for the Aurora Project (SAP Implementation) at Microsoft, which is the foundational basis to seek stakholders approval for all financial process changes, their accounting impact and end-state review.  The Technical Accounting document is the reference book for all Aurora financial process changes and accounting guidance."
+2636,125,My Losses,My Losses,"In an effort to provide financial insight into the technical testing of SAP features, I attempted to work with the testing team to review their test results and provide financial feedback.  It soon appeared to me that the testing work was too granular and technical in the inner workings and configurations of SAP for me to comprehend without the hands-on/formal SAP training.  I had to defer to my SAP teammates to provide the technical insight while I provide the financial assessment on the testing results."
+2637,125,My Personal Brand,My Personal Brand,Data-driven professional; love to simplify and execute with clarity through leadership and teamwork.  Deep experience driving successful business transformation initiatives across borders and functions.
+2638,125,My Habits,Chameleon to Peacock,3
+2639,125,My Habits,Gatherer to Hunter,4
+2640,125,My Habits,Ambiguity to Structure,2
+2641,125,My Habits,Introvert to Extrovert,3
+2642,125,My Habits,Morning Lark to Night Owl,2
+2643,125,My Habits,Evolution to Revolution,2
+2644,125,My Habits,Script to Improv,3
+2645,125,My Habits,Think to Do,4
+2646,125,My Habits,Build to Improve,4
+2647,125,My Motivations,Advancement,5th
+2648,125,My Motivations,Autonomy,7th
+2649,125,My Motivations,Work/Life Balance,4th
+2650,125,My Motivations,Influencing,9th
+2651,125,My Motivations,Mastery,6th
+2652,125,My Motivations,Money,3rd
+2653,125,My Motivations,Praise,10th
+2654,125,My Motivations,Problem,1st
+2655,125,My Motivations,Purpose,8th
+2656,125,My Motivations,Relationships,2nd
+2657,126,My Personality,Climber,0.33
+2658,126,My Personality,Dreamer,0.33
+2659,126,My Personality,Purist,0.34
+2660,126,My Satisfaction,Self,5
+2661,126,My Satisfaction,Project,5
+2662,126,My Satisfaction,Client,5
+2663,126,My Satisfaction,Community,5
+2664,126,My Satisfaction,Revel,5
+2665,126,My Satisfaction,Career,5
+2666,126,My Goals,My Goals,Make high value-add contributions to clients; make a positive different in community.
+2667,126,My Wins,My Wins,Taking ERP project through the various implementation phases and entering into UAT/deployment phase.
+2668,126,My Losses,My Losses,N/A
+2669,126,My Personal Brand,My Personal Brand,Defining and keeping goals/big picture in mind while being appropriately detail-oriented on daily tasks
+2670,126,My Habits,Chameleon to Peacock,3
+2671,126,My Habits,Gatherer to Hunter,3
+2672,126,My Habits,Ambiguity to Structure,5
+2673,126,My Habits,Introvert to Extrovert,3
+2674,126,My Habits,Morning Lark to Night Owl,3
+2675,126,My Habits,Evolution to Revolution,3
+2676,126,My Habits,Script to Improv,3
+2677,126,My Habits,Think to Do,3
+2678,126,My Habits,Build to Improve,3
+2679,126,My Motivations,Advancement,9th
+2680,126,My Motivations,Autonomy,6th
+2681,126,My Motivations,Work/Life Balance,3rd
+2682,126,My Motivations,Influencing,7th
+2683,126,My Motivations,Mastery,5th
+2684,126,My Motivations,Money,8th
+2685,126,My Motivations,Praise,10th
+2686,126,My Motivations,Problem,4th
+2687,126,My Motivations,Purpose,2nd
+2688,126,My Motivations,Relationships,1st
+2689,127,My Personality,Climber,0.58
+2690,127,My Personality,Dreamer,0.24
+2691,127,My Personality,Purist,0.17
+2692,127,My Satisfaction,Self,4
+2693,127,My Satisfaction,Project,
+2694,127,My Satisfaction,Client,
+2695,127,My Satisfaction,Community,3
+2696,127,My Satisfaction,Revel,3
+2697,127,My Satisfaction,Career,4
+2698,127,My Goals,My Goals,"My long term vision of success is to contribute to a team and to have the respect of my colleagues while doing it.  I want to be seen as a person that can and wants to help as well as someone that does what he says he is going to do.  I am actively working on trying to be more patient with people that do not ""get it.""  It can be incredibly frustrating to me to continually explain myself to someone that does not care."
+2699,127,My Wins,My Wins,Completing my 1st Revel client meeting with someone from MS.
+2700,127,My Losses,My Losses,"So far so good, I have not been around for 60 days yet, so I believe most things I have done have been successful.  I am sure that streak will not last."
+2701,127,My Personal Brand,My Personal Brand,"To take a situation, as the right questions to understand and present a longer term solution the client may not be able to see or make sense of."
+2702,127,My Habits,Chameleon to Peacock,3
+2703,127,My Habits,Gatherer to Hunter,3
+2704,127,My Habits,Ambiguity to Structure,3
+2705,127,My Habits,Introvert to Extrovert,3
+2706,127,My Habits,Morning Lark to Night Owl,5
+2707,127,My Habits,Evolution to Revolution,4
+2708,127,My Habits,Script to Improv,4
+2709,127,My Habits,Think to Do,4
+2710,127,My Habits,Build to Improve,3
+2711,127,My Motivations,Advancement,
+2712,127,My Motivations,Autonomy,
+2713,127,My Motivations,Work/Life Balance,
+2714,127,My Motivations,Influencing,
+2715,127,My Motivations,Mastery,
+2716,127,My Motivations,Money,
+2717,127,My Motivations,Praise,
+2718,127,My Motivations,Problem,
+2719,127,My Motivations,Purpose,
+2720,127,My Motivations,Relationships,
+2721,128,My Personality,Climber,0.44
+2722,128,My Personality,Dreamer,0.38
+2723,128,My Personality,Purist,0.17
+2724,128,My Satisfaction,Self,5
+2725,128,My Satisfaction,Project,4
+2726,128,My Satisfaction,Client,4
+2727,128,My Satisfaction,Community,5
+2728,128,My Satisfaction,Revel,4
+2729,128,My Satisfaction,Career,5
+2730,128,My Goals,My Goals,"As technologies improve and the world becomes more connected, the idea of moving from improved user experiences to improved services all up is the space in which I see the most change for consumers. Service-Design, in connected experiences for Tech and Retail environments (SBUX, TMO, Expedia, Nordstrom, MSFT, REI). Grow more in the areas product strategy and future integrated technologies to support consumer needs."
+2731,128,My Wins,My Wins,Working with the Samsung team on retail strategy at the beginning of the project. Coming in a making an immediate impact with up-leveling the work and making it easier on my coworkers to focus on more high level strategic thinking and learn from their work.
+2732,128,My Losses,My Losses,
+2733,128,My Personal Brand,My Personal Brand,"Vision, purpose and strategy for digital and non-digital experiences and the companies who make them. Bridging these systems and experiences at global scale. To change peoples lenses, so they can experience a new vision."
+2734,128,My Habits,Chameleon to Peacock,4
+2735,128,My Habits,Gatherer to Hunter,3
+2736,128,My Habits,Ambiguity to Structure,1
+2737,128,My Habits,Introvert to Extrovert,5
+2738,128,My Habits,Morning Lark to Night Owl,4
+2739,128,My Habits,Evolution to Revolution,4
+2740,128,My Habits,Script to Improv,4
+2741,128,My Habits,Think to Do,2
+2742,128,My Habits,Build to Improve,3
+2743,128,My Motivations,Advancement,5th
+2744,128,My Motivations,Autonomy,9th
+2745,128,My Motivations,Work/Life Balance,8th
+2746,128,My Motivations,Influencing,3rd
+2747,128,My Motivations,Mastery,6th
+2748,128,My Motivations,Money,7th
+2749,128,My Motivations,Praise,10th
+2750,128,My Motivations,Problem,1st
+2751,128,My Motivations,Purpose,2nd
+2752,128,My Motivations,Relationships,4th
+2753,129,My Personality,Climber,0
+2754,129,My Personality,Dreamer,0.5
+2755,129,My Personality,Purist,0.75
+2756,129,My Satisfaction,Self,5
+2757,129,My Satisfaction,Project,1
+2758,129,My Satisfaction,Client,4
+2759,129,My Satisfaction,Community,1
+2760,129,My Satisfaction,Revel,1
+2761,129,My Satisfaction,Career,4
+2762,129,My Goals,My Goals,Long-term vision of success for me is ownership of an investment or something that I've created which directly impacts my compensation.
+2763,129,My Wins,My Wins,Gaining the trust of my client to be to advise on strategy vs. deliver on an existing strategy.
+2764,129,My Losses,My Losses,Not understanding my clients needs creating frustration and time wasted.
+2765,129,My Personal Brand,My Personal Brand,I have the ability to understand complex systems and business needs to be able to provide the best solutions.
+2766,129,My Habits,Chameleon to Peacock,1
+2767,129,My Habits,Gatherer to Hunter,3
+2768,129,My Habits,Ambiguity to Structure,1
+2769,129,My Habits,Introvert to Extrovert,1
+2770,129,My Habits,Morning Lark to Night Owl,1
+2771,129,My Habits,Evolution to Revolution,1
+2772,129,My Habits,Script to Improv,5
+2773,129,My Habits,Think to Do,1
+2774,129,My Habits,Build to Improve,5
+2775,129,My Motivations,Advancement,10th
+2776,129,My Motivations,Autonomy,4th
+2777,129,My Motivations,Work/Life Balance,1st
+2778,129,My Motivations,Influencing,8th
+2779,129,My Motivations,Mastery,5th
+2780,129,My Motivations,Money,2nd
+2781,129,My Motivations,Praise,9th
+2782,129,My Motivations,Problem,3rd
+2783,129,My Motivations,Purpose,7th
+2784,129,My Motivations,Relationships,6th
