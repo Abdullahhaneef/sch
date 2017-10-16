@@ -412,7 +412,9 @@ app.get("/get_employees", function(req, res) {
 app.post("/delete_employee", jsonParser, function(req, res) {
     setupResponse(res);
     var query_delete_skill = "DELETE FROM skill_survey WHERE emp_id  = "+req.body['empId']+"; \
-                            DELETE FROM human_element_survey WHERE emp_id = "+req.body['empId']+"; \
+                            DELETE FROM skill_survey_history WHERE emp_id  = "+req.body['empId']+"; \
+                            DELETE FROM human_element_survey WHERE emp_id  = "+req.body['empId']+"; \
+                            DELETE FROM human_element_survey_history WHERE emp_id = "+req.body['empId']+"; \
                             DELETE FROM employees WHERE id  = "+req.body['empId']+";";                              
     client.query(query_delete_skill, function(err, result) {
         if(err) {
