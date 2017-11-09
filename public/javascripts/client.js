@@ -185,6 +185,17 @@
   }
 
   function addAnalyticsEmpSkill(){
+    var myRows = $('table#surveyTable').find('tr');
+    var len = myRows.length;
+    for (var i = 0; i < len; i++) {
+      if($(myRows[i]).find('td').find("Select")[0] == undefined){
+        console.log("undefined");
+      }
+      else{
+        var id = '[id="'+$(myRows[i]).attr('id');+'"]';
+        jQuery(id).find('font')[0].color = 'black';  
+      }
+    }
     var obj = localStorage.getItem('obj');
     var objResult = JSON.parse(obj);
     empId = objResult.empId;
@@ -457,6 +468,17 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////
 
 function addTransformationEmpSkill(){
+    var myRows = $('table#surveyTable').find('tr');
+    var len = myRows.length;
+    for (var i = 0; i < len; i++) {
+      if($(myRows[i]).find('td').find("Select")[0] == undefined){
+        console.log("undefined");
+      }
+      else{
+        var id = '[id="'+$(myRows[i]).attr('id');+'"]';
+        jQuery(id).find('font')[0].color = 'black';  
+      }
+    }
     isEmpty = false;
     var obj = localStorage.getItem('obj');
     var objResult = JSON.parse(obj);
