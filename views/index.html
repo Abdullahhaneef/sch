@@ -1,10 +1,12 @@
 <html>
 <head>
+    <title>Talent Optimization</title>
     <link rel="stylesheet" href="stylesheets/main.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="stylesheets/sweetalert2.min.css" type="text/css" media="screen"/>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="stylesheets/jquery.dataTables.min.css" type="text/css" media="screen"/>
     <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
+    <link rel="icon" type="image/png" href="images/tab_logo.png">
     <script type="text/javascript" charset="utf-8" src="javascripts/jquery.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="javascripts/client.js"></script>
     <script type="text/javascript" charset="utf-8" src="javascripts/sweetalert2.min.js"></script>
@@ -17,23 +19,18 @@
     <style type="text/css">
         body {
           /*background-color:#fff;*/
-          background-color:#36a1d5;
+          background-color:#081D3E;
           -webkit-font-smoothing: antialiased;
           font: normal 14px sans-serif;
       }
 
     .block{
-        background: #36a1d5; /* Old browsers */
-        background: -moz-linear-gradient(top, #36a1d5 0%, #3073b4 100%); /* FF3.6-15 */
-        background: -webkit-linear-gradient(top, #36a1d5 0%,#3073b4 100%); /* Chrome10-25,Safari5.1-6 */
-        background: linear-gradient(to bottom, #36a1d5 0%,#3073b4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#36a1d5', endColorstr='#3073b4',GradientType=0 );
+        background: #081D3E; /* Old browsers */
+        background: -moz-linear-gradient(top, #081D3E 0%, #3073b4 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #081D3E 0%,#3073b4 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #081D3E 0%,#3073b4 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#081D3E', endColorstr='#3073b4',GradientType=0 );
         padding: 10px 20px 30px 20px;
-    }
-    .block-center {
-        max-width: 420px;
-        margin: 0 auto;
-        width: 100%;
     }
     .block-center {
         max-width: 420px;
@@ -117,38 +114,43 @@ p{
 
 </style>
 
-<body>
+<body class="container">
   <div id = "mainPage">
     <div>
         <div>
               <a href="/logout" style="
                 float: right;
                 padding-right: 50px;
-                color: white;
-                font-weight: bold;">Log Out
+                color: #ED5127;
+                font-weight: bold;
+                margin-top: 2%;">Log Out
               </a>
         </div>
         <div class="block-center">
-            <p>REVEL<br> Talent Optimization</p>
+            <img src="images/logo.png" style="margin-top: 10%; margin-bottom: 10%; margin-left: 11%" />
+            <p  style="color: #ED5127;margin-bottom: 10%">Talent Optimization</p>
             <div class="wrapper">
+              <div class="container row block-center">          
+                <div class="jumbotron col-sm-4 pull-center block-center" style="margin-bottom: 10%">
+                  <div class="form-group">
+                      <label class="block-center" style="text-align: left;">Please Enter Your Name :</label>
+                      <input class="form-control" type="text" style="font-size: x-large;" id="user" required/>
+                  </div>
+                  <div class="form-group">
+                      <label class="block-center" style="text-align: left;">Please Enter Your Email :</label>
+                      <input class="form-control" type="text" style="font-size: x-large;" id="email" required>
+                  </div>
 
-                <div class="form-group">
-                    <label for="user"><h4>Please Enter Your Name :</h4></label>
-                    <input type="text" class="form-control" id="user" required>
+                  <span class="group-btn">    
+                    <a style="max-width:226px; font-weight:bold;" href="#" class="button" id = 'communityAnalyticsButton' onclick="showCommunityAnalytics()">Analytics Community <i class="fa fa-sign-in"></i></a>
+                  </span>
+                  <br>
+                  <br>
+                  <span class="group-btn">    
+                    <a href="#" style="max-width:226px; font-weight:bold;" class="button" id = 'communityTransformationButton' onclick="showCommunityTransformation()"> Transformation Community <i class="fa fa-sign-in"></i></a>
+                  </span>
                 </div>
-                <div class="form-group">
-                    <label for="email"><h4>Please Enter Your Email :</h4></label>
-                    <input type="text" class="form-control" id="email" required>
-                </div>
-
-                <span class="group-btn">    
-                  <a style="max-width:226px;" href="#" class="button" id = 'communityAnalyticsButton' onclick="showCommunityAnalytics()">Analytics Community <i class="fa fa-sign-in"></i></a>
-                </span>
-                <br>
-                <br>
-                <span class="group-btn">    
-                  <a href="#" style="max-width:226px;" class="button" id = 'communityTransformationButton' onclick="showCommunityTransformation()"> Transformation Community <i class="fa fa-sign-in"></i></a>
-                </span>
+              </div>
             </div>
         </div>
     </div>
