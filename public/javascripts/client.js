@@ -1012,57 +1012,69 @@ function getSkills(empId,form){
     "data": JSON.stringify(obj)
   }
   $.ajax(settings).done(function (response) {
-    var index = 0;
-    var myRows = $('table#surveyTable').find('tr');
-    var len = myRows.length;
-    for (var i = 0; i < len; i++) {
-      if($(myRows[i]).find('td').find("Select")[0] == undefined){
-        console.log("undefined");
-      }
-      else{
-        if(response['skills'][index]['level'] == null){
-          $(myRows[i]).find('td').find("Select")[1].value = '';
+    if(response.skills){
+      var index = 0;
+      var myRows = $('table#surveyTable').find('tr');
+      var len = myRows.length;
+      for (var i = 0; i < len; i++) {
+        if($(myRows[i]).find('td').find("Select")[0] == undefined){
+          console.log("undefined");
         }
         else{
-          $(myRows[i]).find('td').find("Select")[1].value = response['skills'][index]['level'];
+          if(response['skills'][index]['level'] == null){
+            $(myRows[i]).find('td').find("Select")[1].value = '';
+          }
+          else{
+            $(myRows[i]).find('td').find("Select")[1].value = response['skills'][index]['level'];
+          }
+          $(myRows[i]).find('td').find("Select")[0].value = response['skills'][index]['experience'];
+          $(myRows[i]).find('td').find("Select")[2].value = response['skills'][index]['certification'];
+          $(myRows[i]).find('td').find("Select")[3].value = response['skills'][index]['learning_interest'];
+          index = index + 1;
         }
-        $(myRows[i]).find('td').find("Select")[0].value = response['skills'][index]['experience'];
-        $(myRows[i]).find('td').find("Select")[2].value = response['skills'][index]['certification'];
-        $(myRows[i]).find('td').find("Select")[3].value = response['skills'][index]['learning_interest'];
-        index = index + 1;
+      }
+      if (form == "transformation") {
+        if (response['skills'][30]['skill'] != ''){
+         $($($('table#surveyTable').find('tr')[36]).find('td')[0]).find('input')[0].value = response['skills'][30]['skill']
+        }else if (response['skills'][31]['skill']['skill'] != ''){
+         $($($('table#surveyTable').find('tr')[37]).find('td')[0]).find('input')[0].value = response['skills'][31]['skill']
+        } else if (response['skills'][32]['skill'] != ''){
+         $($($('table#surveyTable').find('tr')[38]).find('td')[0]).find('input')[0].value = response['skills'][32]['skill']
+        }else if (response['skills'][49]['skill'] != ''){
+         $($($('table#surveyTable').find('tr')[61]).find('td')[0]).find('input')[0].value = response['skills'][49]['skill']
+        }else if (response['skills'][55]['skill'] != ''){
+         $($($('table#surveyTable').find('tr')[69]).find('td')[0]).find('input')[0].value = response['skills'][55]['skill'] 
+        }else if (response['skills'][56]['skill'] != ''){
+         $($($('table#surveyTable').find('tr')[70]).find('td')[0]).find('input')[0].value = response['skills'][56]['skill']
+        }else if (response['skills'][61]['skill'] != ''){
+         $($($('table#surveyTable').find('tr')[79]).find('td')[0]).find('input')[0].value = response['skills'][61]['skill'] 
+        }else if (response['skills'][68]['skill'] != ''){
+         $($($('table#surveyTable').find('tr')[87]).find('td')[0]).find('input')[0].value = response['skills'][68]['skill'] 
+        }else if (response['skills'][69]['skill'] != ''){
+         $($($('table#surveyTable').find('tr')[88]).find('td')[0]).find('input')[0].value = response['skills'][69]['skill'] 
+        }else if (response['skills'][94]['skill'] != ''){
+         $($($('table#surveyTable').find('tr')[120]).find('td')[0]).find('input')[0].value = response['skills'][94]['skill'] 
+        }else if (response['skills'][95]['skill'] != ''){
+         $($($('table#surveyTable').find('tr')[121]).find('td')[0]).find('input')[0].value = response['skills'][95]['skill'] 
+        }else if (response['skills'][96]['skill'] != ''){
+         $($($('table#surveyTable').find('tr')[122]).find('td')[0]).find('input')[0].value = response['skills'][96]['skill'] 
+        }else if (response['skills'][101]['skill'] != ''){
+         $($($('table#surveyTable').find('tr')[128]).find('td')[0]).find('input')[0].value = response['skills'][101]['skill'] 
+        }else if (response['skills'][102]['skill'] != ''){
+         $($($('table#surveyTable').find('tr')[129]).find('td')[0]).find('input')[0].value = response['skills'][102]['skill'] 
+        }else if (response['skills'][103]['skill'] != ''){
+         $($($('table#surveyTable').find('tr')[130]).find('td')[0]).find('input')[0].value = response['skills'][103]['skill'] 
+        }
       }
     }
-    if (form == "transformation") {
-      if (response['skills'][30]['skill'] != ''){
-       $($($('table#surveyTable').find('tr')[36]).find('td')[0]).find('input')[0].value = response['skills'][30]['skill']
-      }else if (response['skills'][31]['skill']['skill'] != ''){
-       $($($('table#surveyTable').find('tr')[37]).find('td')[0]).find('input')[0].value = response['skills'][31]['skill']
-      } else if (response['skills'][32]['skill'] != ''){
-       $($($('table#surveyTable').find('tr')[38]).find('td')[0]).find('input')[0].value = response['skills'][32]['skill']
-      }else if (response['skills'][49]['skill'] != ''){
-       $($($('table#surveyTable').find('tr')[61]).find('td')[0]).find('input')[0].value = response['skills'][49]['skill']
-      }else if (response['skills'][55]['skill'] != ''){
-       $($($('table#surveyTable').find('tr')[69]).find('td')[0]).find('input')[0].value = response['skills'][55]['skill'] 
-      }else if (response['skills'][56]['skill'] != ''){
-       $($($('table#surveyTable').find('tr')[70]).find('td')[0]).find('input')[0].value = response['skills'][56]['skill']
-      }else if (response['skills'][61]['skill'] != ''){
-       $($($('table#surveyTable').find('tr')[79]).find('td')[0]).find('input')[0].value = response['skills'][61]['skill'] 
-      }else if (response['skills'][68]['skill'] != ''){
-       $($($('table#surveyTable').find('tr')[87]).find('td')[0]).find('input')[0].value = response['skills'][68]['skill'] 
-      }else if (response['skills'][69]['skill'] != ''){
-       $($($('table#surveyTable').find('tr')[88]).find('td')[0]).find('input')[0].value = response['skills'][69]['skill'] 
-      }else if (response['skills'][94]['skill'] != ''){
-       $($($('table#surveyTable').find('tr')[120]).find('td')[0]).find('input')[0].value = response['skills'][94]['skill'] 
-      }else if (response['skills'][95]['skill'] != ''){
-       $($($('table#surveyTable').find('tr')[121]).find('td')[0]).find('input')[0].value = response['skills'][95]['skill'] 
-      }else if (response['skills'][96]['skill'] != ''){
-       $($($('table#surveyTable').find('tr')[122]).find('td')[0]).find('input')[0].value = response['skills'][96]['skill'] 
-      }else if (response['skills'][101]['skill'] != ''){
-       $($($('table#surveyTable').find('tr')[128]).find('td')[0]).find('input')[0].value = response['skills'][101]['skill'] 
-      }else if (response['skills'][102]['skill'] != ''){
-       $($($('table#surveyTable').find('tr')[129]).find('td')[0]).find('input')[0].value = response['skills'][102]['skill'] 
-      }else if (response['skills'][103]['skill'] != ''){
-       $($($('table#surveyTable').find('tr')[130]).find('td')[0]).find('input')[0].value = response['skills'][103]['skill'] 
+    else{
+      if(form == 'analytics'){
+        jQuery('#analytics_update_button').hide();
+        jQuery('#analytics_add_button').show();
+      }
+      else if(form == 'transformation'){
+        jQuery('#transformation_update_button').hide();
+        jQuery('#transformation_add_button').show();
       }
     }
   });
@@ -1083,27 +1095,34 @@ function getHumanElementData(empId) {
     "data": JSON.stringify(obj)
   }
   $.ajax(settings).done(function (response) {
-    var len = document.getElementById('mainPage').children[1].length
-    for (var index = 0; index< len - 2; index++) {
-      if ((document.getElementById('mainPage').children[1][index].id).startsWith("habit")) {
-        $('[id="'+(document.getElementById('mainPage').children[1][index].id)+'"]').slider('setValue',response['human_element'][index]['value']);  
-      }else{
-        if (response['human_element'][index].category == 'My Motivations' && response['human_element'][index].value == 1){
-          document.getElementById('mainPage').children[1][index].value = response['human_element'][index]['value'] + 'st';
-        }
-        else if (response['human_element'][index].category == 'My Motivations' && response['human_element'][index].value == 2){
-          document.getElementById('mainPage').children[1][index].value = response['human_element'][index]['value'] + 'nd'; 
-        }
-        else if (response['human_element'][index].category == 'My Motivations' && response['human_element'][index].value == 3){
-          document.getElementById('mainPage').children[1][index].value = response['human_element'][index]['value'] + 'rd'; 
-        }
-        else if (response['human_element'][index].category == 'My Motivations'){
-          document.getElementById('mainPage').children[1][index].value = response['human_element'][index]['value'] + 'th'; 
-        }
-        else{
-          document.getElementById('mainPage').children[1][index].value = response['human_element'][index]['value']  
+    console.log(response.human_element);
+    if (response.human_element){
+      var len = document.getElementById('mainPage').children[1].length
+      for (var index = 0; index< len - 2; index++) {
+        if ((document.getElementById('mainPage').children[1][index].id).startsWith("habit")) {
+          $('[id="'+(document.getElementById('mainPage').children[1][index].id)+'"]').slider('setValue',response['human_element'][index]['value']);  
+        }else{
+          if (response['human_element'][index].category == 'My Motivations' && response['human_element'][index].value == 1){
+            document.getElementById('mainPage').children[1][index].value = response['human_element'][index]['value'] + 'st';
+          }
+          else if (response['human_element'][index].category == 'My Motivations' && response['human_element'][index].value == 2){
+            document.getElementById('mainPage').children[1][index].value = response['human_element'][index]['value'] + 'nd'; 
+          }
+          else if (response['human_element'][index].category == 'My Motivations' && response['human_element'][index].value == 3){
+            document.getElementById('mainPage').children[1][index].value = response['human_element'][index]['value'] + 'rd'; 
+          }
+          else if (response['human_element'][index].category == 'My Motivations'){
+            document.getElementById('mainPage').children[1][index].value = response['human_element'][index]['value'] + 'th'; 
+          }
+          else{
+            document.getElementById('mainPage').children[1][index].value = response['human_element'][index]['value']  
+          }
         }
       }
+    }
+    else{
+      jQuery('#human_update_button').hide();
+      jQuery('#human_add_button').show();
     }
   });  
 }
