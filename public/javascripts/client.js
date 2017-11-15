@@ -1,4 +1,4 @@
-  var SERVER_URI = "http://localhost:8090";
+  var SERVER_URI = "http://192.168.0.124:8090";
   var empId;
   var updatedAnalyticsIds = [];
   var updatedAnalyticsExp = [];
@@ -193,7 +193,7 @@
         console.log("undefined");
       }
       else{
-        var id = '[id="'+$(myRows[i]).attr('id');+'"]';
+        var id = '[id="'+$(myRows[i]).attr('id')+'"]';
         jQuery(id).find('font')[0].color = 'black';
         var rowValue = $(myRows[i]).find('td');
         jQuery(rowValue.find("Select")[0]).notify()  
@@ -382,19 +382,19 @@
 
 /////////////////////////Restriction check///////////////////////////////////////////        
         if (rowValue.find("Select")[0].value != 'N/A' && rowValue.find("Select")[1].value == ''){
-          var id = '[id="'+$(myRows[i]).attr('id');+'"]';
+          var id = '[id="'+$(myRows[i]).attr('id')+'"]';
           jQuery(id).find('font')[0].color = 'red';
           jQuery(rowValue.find("Select")[0]).notify("Experience without Level???",{clickToHide: true,autoHide: false,className: 'error',elementPosition: 'left'});
           isEmpty = true;
         }
         if (rowValue.find("Select")[0].value == 'N/A' && rowValue.find("Select")[1].value != ''){
-          var id = '[id="'+$(myRows[i]).attr('id');+'"]';
+          var id = '[id="'+$(myRows[i]).attr('id')+'"]';
           jQuery(id).find('font')[0].color = 'red';
           jQuery(rowValue.find("Select")[0]).notify("Level without Experience???",{clickToHide: true,autoHide: false,className: 'error',elementPosition: 'left'});
           isEmpty = true;
         }
         if (rowValue.find("Select")[1].value == '' &&  rowValue.find("Select")[2].value == 'YES'){
-          var id = '[id="'+$(myRows[i]).attr('id');+'"]';
+          var id = '[id="'+$(myRows[i]).attr('id')+'"]';
           jQuery(id).find('font')[0].color = 'red';
           jQuery(rowValue.find("Select")[0]).notify("Certification without Level???",{clickToHide: true,autoHide: false,className: 'error',elementPosition: 'left'});
           isEmpty = true;
@@ -478,7 +478,7 @@ function addTransformationEmpSkill(){
         console.log("undefined");
       }
       else{
-        var id = '[id="'+$(myRows[i]).attr('id');+'"]';
+        var id = '[id="'+$(myRows[i]).attr('id')+'"]';
         jQuery(id).find('font')[0].color = 'black';
         var rowValue = $(myRows[i]).find('td');
         jQuery(rowValue.find("Select")[0]).notify()  
@@ -649,19 +649,19 @@ function addTransformationEmpSkill(){
 
 /////////////////////////Restriction check///////////////////////////////////////////        
         if (rowValue.find("Select")[0].value != 'N/A' && rowValue.find("Select")[1].value == ''){
-          var id = '[id="'+$(myRows[i]).attr('id');+'"]';
+          var id = '[id="'+$(myRows[i]).attr('id')+'"]';
           jQuery(id).find('font')[0].color = 'red';
           jQuery(rowValue.find("Select")[0]).notify("Experience without Level???",{clickToHide: true,autoHide: false,className: 'error',elementPosition: 'left'});
           isEmpty = true;
         }
         if (rowValue.find("Select")[0].value == 'N/A' && rowValue.find("Select")[1].value != ''){
-          var id = '[id="'+$(myRows[i]).attr('id');+'"]';
+          var id = '[id="'+$(myRows[i]).attr('id')+'"]';
           jQuery(id).find('font')[0].color = 'red';
           jQuery(rowValue.find("Select")[0]).notify("Level without Experience???",{clickToHide: true,autoHide: false,className: 'error',elementPosition: 'left'});
           isEmpty = true;
         }
         if (rowValue.find("Select")[1].value == '' &&  rowValue.find("Select")[2].value == 'YES'){
-          var id = '[id="'+$(myRows[i]).attr('id');+'"]';
+          var id = '[id="'+$(myRows[i]).attr('id')+'"]';
           jQuery(id).find('font')[0].color = 'red';
           jQuery(rowValue.find("Select")[0]).notify("Certification without Level???",{clickToHide: true,autoHide: false,className: 'error',elementPosition: 'left'});
           isEmpty = true;
