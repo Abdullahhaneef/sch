@@ -1,4 +1,4 @@
-  var SERVER_URI = "http://192.168.0.124:8090";
+  var SERVER_URI = "http://192.168.0.119:8090";
   var empId;
   var updatedAnalyticsIds = [];
   var updatedAnalyticsExp = [];
@@ -16,9 +16,10 @@
     window.open(SERVER_URI + '/index','_self');
   }
 
+
   function showCommunityAnalytics() {
-    var user = document.getElementById("user").value
-    var email = document.getElementById("email").value
+    var user = document.getElementById("user").value;
+    var email = document.getElementById("email").value;
     if (user != "") {
       if (email != ""){
         addEmployeeAnalytics();
@@ -33,8 +34,8 @@
   }
 
   function showCommunityTransformation() {
-    var user = document.getElementById("user").value
-    var email = document.getElementById("email").value
+    var user = document.getElementById("user").value;
+    var email = document.getElementById("email").value;
     if (user != "") {
       if (email != ""){
         addEmployeeTransformation();
@@ -50,7 +51,7 @@
 
   function addEmployeeAnalytics(){
     var empName  = document.getElementById("user").value;
-    var email = document.getElementById("email").value
+    var email = document.getElementById("email").value;
     var community = 1;
     swal({
       title: empName,
@@ -71,9 +72,9 @@
           "cache-control": "no-cache",
         },
         "data": {
-          empName ,email , community
+          "empName":empName ,"email":email , "community":community
         }
-      }
+      };
       $.ajax(settings).done(function (response) {      
           if(response.status == 'employee_exist'){
             var exist_id = response.empId.id;
@@ -96,7 +97,7 @@
                   "cache-control": "no-cache",
                 },
                 "data": {
-                  exist_id
+                 "exist_id": exist_id
                 }
               }
               $.ajax(settings).done(function (response) {      
@@ -115,7 +116,7 @@
 
   function addEmployeeTransformation(){
     var empName  = document.getElementById("user").value;
-    var email = document.getElementById("email").value
+    var email = document.getElementById("email").value;
     var community = 2;
     swal({
       title: empName,
@@ -136,7 +137,7 @@
           "cache-control": "no-cache",
         },
         "data": {
-          empName ,email , community
+          "empName":empName ,"email":email , "community":community
         }
       }
       $.ajax(settings).done(function (response) {      
@@ -161,7 +162,7 @@
                   "cache-control": "no-cache",
                 },
                 "data": {
-                  exist_id
+                 "exist_id": exist_id
                 }
               }
               $.ajax(settings).done(function (response) {      
@@ -180,7 +181,7 @@
 
   function setEmpId(response, community_id){
     empId = response.empId;
-    var obj = {"empId": empId, "community_id": community_id}
+    var obj = {"empId": empId, "community_id": community_id};
     localStorage.setItem('obj',JSON.stringify(obj));
   }
 
@@ -196,7 +197,7 @@
         var id = '[id="'+$(myRows[i]).attr('id')+'"]';
         jQuery(id).find('font')[0].color = 'black';
         var rowValue = $(myRows[i]).find('td');
-        jQuery(rowValue.find("Select")[0]).notify()  
+        jQuery(rowValue.find("Select")[0]).notify();  
       }
     }
     var obj = localStorage.getItem('obj');
@@ -339,7 +340,7 @@
           category[index] = 'Adobe Creative Cloud';
         }
 
-        skill[index] = $(myRows[i]).attr('id').split("_")[3]
+        skill[index] = $(myRows[i]).attr('id').split("_")[3];
 
 /////////////////////////////////////////////////////////////////////
 
@@ -452,7 +453,7 @@
             "cache-control": "no-cache",
           },
           "data": {
-            empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
+            "empId":empId, "core_competency":core_competency, "tool_capability":tool_capability, "category": category, "skill":skill, "experience": experience, "level":level, "certification":certification, "learning_interest": learning_interest
           }
         }
         $.ajax(settings).done(function (response) {
@@ -481,7 +482,7 @@ function addTransformationEmpSkill(){
         var id = '[id="'+$(myRows[i]).attr('id')+'"]';
         jQuery(id).find('font')[0].color = 'black';
         var rowValue = $(myRows[i]).find('td');
-        jQuery(rowValue.find("Select")[0]).notify()  
+        jQuery(rowValue.find("Select")[0]).notify();  
       }
     }
     isEmpty = false;
@@ -606,7 +607,7 @@ function addTransformationEmpSkill(){
           skill[index] = $(myRows[i]).find('td').find("input")[0].value;
         }
         else{
-          skill[index] = $(myRows[i]).attr('id').split("_")[3]
+          skill[index] = $(myRows[i]).attr('id').split("_")[3];
         }
 
 /////////////////////////////////////////////////////////////////////
@@ -714,7 +715,7 @@ function addTransformationEmpSkill(){
             "cache-control": "no-cache",
           },
           "data": {
-            empId, core_competency, tool_capability, category, skill, experience, level, certification, learning_interest
+            "empId":empId, "core_competency":core_competency, "tool_capability":tool_capability, "category": category, "skill":skill, "experience": experience, "level":level, "certification":certification, "learning_interest": learning_interest
           }
         }
         $.ajax(settings).done(function (response) {
@@ -740,7 +741,7 @@ function addHumanElement(){
     var community_id = objResult.community_id;
     var name=[];
     var value=[];
-    var len = document.getElementById('mainPage').children[1].length
+    var len = document.getElementById('mainPage').children[1].length;
       for (var i = 0; i< len - 1; i++) {
         name[i] =  document.getElementById('mainPage').children[1][i].id;
         value[i] =  document.getElementById('mainPage').children[1][i].value;
@@ -768,11 +769,11 @@ function addHumanElement(){
         "cache-control": "no-cache",
       },
       "data": {
-        empId, name , value, community_id
+        "empId": empId, "name": name , "value":value, "community_id":community_id
       }
     }
     $.ajax(settings).done(function (response) {
-      setEmpId({"empId":0},0)
+      setEmpId({"empId":0},0);
       window.open(SERVER_URI + '/logout','_self');
     });
     swal(
@@ -808,6 +809,7 @@ function renderEmployees(response){
   var is_active;
   jQuery("#employees_table_body").empty();
   if (response['employees']){
+    console.log(response['employees']);
     for (i=0; i < response['employees'].length;i++){
       if (response["employees"][i]["is_active"]){
         is_active = "checked";
@@ -881,7 +883,7 @@ function updateEmployee(empId,emp){
               "name" : jQuery(emp).children().find("input")[0].value, 
               "email" : jQuery(emp).children().find("input")[1].value,
               "is_active":jQuery(emp).children().find("input")[2].checked
-            }
+            };
   var settings = {
     "async": true,
     "crossDomain": true,
@@ -893,7 +895,7 @@ function updateEmployee(empId,emp){
     },
     "processData": false,
     "data": JSON.stringify(obj)
-  }
+  };
   $.ajax(settings).done(function (response) {
     jQuery.notify("Successfully Updated Employee","success");
   });
@@ -902,13 +904,13 @@ function updateEmployee(empId,emp){
 //////////////////////////////Show skills Update////////////////////////////////////////////////
 
 function showSkills(empId,emp){
-  if(jQuery(emp).children()[3].innerText == 'ANALYTICS'){
+  if(jQuery(emp).children()[3].innerText == 'ANALYTICS' || jQuery(emp).children()[3].innerText == 'ANALYTICS '){
     setEmpId({"empId":empId},1);
     jQuery('#add_button').hide();
     jQuery('#update_button').show();
     window.open(SERVER_URI + '/analytics_update','_self');    
   }
-  else if(jQuery(emp).children()[3].innerText == 'TRANSFORMATION'){
+  else if(jQuery(emp).children()[3].innerText == 'TRANSFORMATION' || jQuery(emp).children()[3].innerText == 'TRANSFORMATION '){
     setEmpId({"empId":empId},2);
     jQuery('#add_button').hide();
     jQuery('#update_button').show();
@@ -921,20 +923,20 @@ function check(){
   if($(location).attr("href") == SERVER_URI+'/analytics_update'){
     $( document ).ready(function() {
       $('[class="select form-control"]').change(function() {
-        updatedRowId = $(this).parent().parent().parent().attr('id')
-        var skill = updatedRowId.split("_")[3]
+        updatedRowId = $(this).parent().parent().parent().attr('id');
+        var skill = updatedRowId.split("_")[3];
         if (updatedAnalyticsIds.indexOf(skill) > -1) {
           var index = updatedAnalyticsIds.indexOf(skill);
-          updatedAnalyticsExp[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value
-          updatedAnalyticsLvl[index] = $('[id="'+updatedRowId+'"]').find('Select')[1].value
-          updatedAnalyticsCer[index] = $('[id="'+updatedRowId+'"]').find('Select')[2].value
-          updatedAnalyticsInt[index] = $('[id="'+updatedRowId+'"]').find('Select')[3].value           
+          updatedAnalyticsExp[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value;
+          updatedAnalyticsLvl[index] = $('[id="'+updatedRowId+'"]').find('Select')[1].value;
+          updatedAnalyticsCer[index] = $('[id="'+updatedRowId+'"]').find('Select')[2].value;
+          updatedAnalyticsInt[index] = $('[id="'+updatedRowId+'"]').find('Select')[3].value;           
         }else{
-          updatedAnalyticsIds[updatedAnalyticsIds.length] = $(this).parent().parent().parent().attr('id').split("_")[3]
-          updatedAnalyticsExp[updatedAnalyticsExp.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value
-          updatedAnalyticsLvl[updatedAnalyticsLvl.length] = $('[id="'+updatedRowId+'"]').find('Select')[1].value
-          updatedAnalyticsCer[updatedAnalyticsCer.length] = $('[id="'+updatedRowId+'"]').find('Select')[2].value
-          updatedAnalyticsInt[updatedAnalyticsInt.length] = $('[id="'+updatedRowId+'"]').find('Select')[3].value          
+          updatedAnalyticsIds[updatedAnalyticsIds.length] = $(this).parent().parent().parent().attr('id').split("_")[3];
+          updatedAnalyticsExp[updatedAnalyticsExp.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value;
+          updatedAnalyticsLvl[updatedAnalyticsLvl.length] = $('[id="'+updatedRowId+'"]').find('Select')[1].value;
+          updatedAnalyticsCer[updatedAnalyticsCer.length] = $('[id="'+updatedRowId+'"]').find('Select')[2].value;
+          updatedAnalyticsInt[updatedAnalyticsInt.length] = $('[id="'+updatedRowId+'"]').find('Select')[3].value;          
         }
       });
     });
@@ -952,16 +954,16 @@ function check(){
         var skill = updatedRowId.split("_")[3];
         if (updatedTransformationIds.indexOf(skill) > -1) {
           var index = updatedTransformationIds.indexOf(skill);
-          updatedTransformationExp[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value
-          updatedTransformationLvl[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[1].value
-          updatedTransformationCer[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[2].value
-          updatedTransformationInt[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[3].value          
+          updatedTransformationExp[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value;
+          updatedTransformationLvl[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[1].value;
+          updatedTransformationCer[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[2].value;
+          updatedTransformationInt[index] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[3].value;          
         }else {
-          updatedTransformationIds[updatedTransformationIds.length] = $(this).parent().parent().parent().attr('id').split("_")[3]
-          updatedTransformationExp[updatedTransformationExp.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value
-          updatedTransformationLvl[updatedTransformationLvl.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[1].value
-          updatedTransformationCer[updatedTransformationCer.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[2].value
-          updatedTransformationInt[updatedTransformationInt.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[3].value 
+          updatedTransformationIds[updatedTransformationIds.length] = $(this).parent().parent().parent().attr('id').split("_")[3];
+          updatedTransformationExp[updatedTransformationExp.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[0].value;
+          updatedTransformationLvl[updatedTransformationLvl.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[1].value;
+          updatedTransformationCer[updatedTransformationCer.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[2].value;
+          updatedTransformationInt[updatedTransformationInt.length] = $('[id="'+updatedRowId+'"]').find('td').find('Select')[3].value;
         }
       });
     });    
@@ -974,17 +976,17 @@ function check(){
   }else if($(location).attr("href") == SERVER_URI+'/human_element_update'){
     $( document ).ready(function() {
       $('.form-control').change(function() {
-        var id = $(this).attr('id')
-        var dim = $(this).attr('id')
+        var id = $(this).attr('id');
+        var dim = $(this).attr('id');
         if (id.split("_")[1] != undefined) {
-          dim = id.split("_")[1]
+          dim = id.split("_")[1];
         }
         if (humanElementId.indexOf(dim) > -1){
-          var index  = humanElementId.indexOf(dim)
-          humanElementValue[index] = document.getElementById(id).value
+          var index  = humanElementId.indexOf(dim);
+          humanElementValue[index] = document.getElementById(id).value;
         }else{
-          humanElementId[humanElementId.length] = dim
-          humanElementValue[humanElementValue.length] = document.getElementById(id).value
+          humanElementId[humanElementId.length] = dim;
+          humanElementValue[humanElementValue.length] = document.getElementById(id).value;
         }
       });
     });
@@ -1035,35 +1037,35 @@ function getSkills(empId,form){
       }
       if (form == "transformation") {
         if (response['skills'][30]['skill'] != ''){
-         $($($('table#surveyTable').find('tr')[36]).find('td')[0]).find('input')[0].value = response['skills'][30]['skill']
+         $($($('table#surveyTable').find('tr')[36]).find('td')[0]).find('input')[0].value = response['skills'][30]['skill'];
         }else if (response['skills'][31]['skill']['skill'] != ''){
-         $($($('table#surveyTable').find('tr')[37]).find('td')[0]).find('input')[0].value = response['skills'][31]['skill']
+         $($($('table#surveyTable').find('tr')[37]).find('td')[0]).find('input')[0].value = response['skills'][31]['skill'];
         } else if (response['skills'][32]['skill'] != ''){
-         $($($('table#surveyTable').find('tr')[38]).find('td')[0]).find('input')[0].value = response['skills'][32]['skill']
+         $($($('table#surveyTable').find('tr')[38]).find('td')[0]).find('input')[0].value = response['skills'][32]['skill'];
         }else if (response['skills'][49]['skill'] != ''){
-         $($($('table#surveyTable').find('tr')[61]).find('td')[0]).find('input')[0].value = response['skills'][49]['skill']
+         $($($('table#surveyTable').find('tr')[61]).find('td')[0]).find('input')[0].value = response['skills'][49]['skill'];
         }else if (response['skills'][55]['skill'] != ''){
-         $($($('table#surveyTable').find('tr')[69]).find('td')[0]).find('input')[0].value = response['skills'][55]['skill'] 
+         $($($('table#surveyTable').find('tr')[69]).find('td')[0]).find('input')[0].value = response['skills'][55]['skill']; 
         }else if (response['skills'][56]['skill'] != ''){
-         $($($('table#surveyTable').find('tr')[70]).find('td')[0]).find('input')[0].value = response['skills'][56]['skill']
+         $($($('table#surveyTable').find('tr')[70]).find('td')[0]).find('input')[0].value = response['skills'][56]['skill'];
         }else if (response['skills'][61]['skill'] != ''){
-         $($($('table#surveyTable').find('tr')[79]).find('td')[0]).find('input')[0].value = response['skills'][61]['skill'] 
+         $($($('table#surveyTable').find('tr')[79]).find('td')[0]).find('input')[0].value = response['skills'][61]['skill']; 
         }else if (response['skills'][68]['skill'] != ''){
-         $($($('table#surveyTable').find('tr')[87]).find('td')[0]).find('input')[0].value = response['skills'][68]['skill'] 
+         $($($('table#surveyTable').find('tr')[87]).find('td')[0]).find('input')[0].value = response['skills'][68]['skill']; 
         }else if (response['skills'][69]['skill'] != ''){
-         $($($('table#surveyTable').find('tr')[88]).find('td')[0]).find('input')[0].value = response['skills'][69]['skill'] 
+         $($($('table#surveyTable').find('tr')[88]).find('td')[0]).find('input')[0].value = response['skills'][69]['skill']; 
         }else if (response['skills'][94]['skill'] != ''){
-         $($($('table#surveyTable').find('tr')[120]).find('td')[0]).find('input')[0].value = response['skills'][94]['skill'] 
+         $($($('table#surveyTable').find('tr')[120]).find('td')[0]).find('input')[0].value = response['skills'][94]['skill']; 
         }else if (response['skills'][95]['skill'] != ''){
-         $($($('table#surveyTable').find('tr')[121]).find('td')[0]).find('input')[0].value = response['skills'][95]['skill'] 
+         $($($('table#surveyTable').find('tr')[121]).find('td')[0]).find('input')[0].value = response['skills'][95]['skill']; 
         }else if (response['skills'][96]['skill'] != ''){
-         $($($('table#surveyTable').find('tr')[122]).find('td')[0]).find('input')[0].value = response['skills'][96]['skill'] 
+         $($($('table#surveyTable').find('tr')[122]).find('td')[0]).find('input')[0].value = response['skills'][96]['skill']; 
         }else if (response['skills'][101]['skill'] != ''){
-         $($($('table#surveyTable').find('tr')[128]).find('td')[0]).find('input')[0].value = response['skills'][101]['skill'] 
+         $($($('table#surveyTable').find('tr')[128]).find('td')[0]).find('input')[0].value = response['skills'][101]['skill']; 
         }else if (response['skills'][102]['skill'] != ''){
-         $($($('table#surveyTable').find('tr')[129]).find('td')[0]).find('input')[0].value = response['skills'][102]['skill'] 
+         $($($('table#surveyTable').find('tr')[129]).find('td')[0]).find('input')[0].value = response['skills'][102]['skill']; 
         }else if (response['skills'][103]['skill'] != ''){
-         $($($('table#surveyTable').find('tr')[130]).find('td')[0]).find('input')[0].value = response['skills'][103]['skill'] 
+         $($($('table#surveyTable').find('tr')[130]).find('td')[0]).find('input')[0].value = response['skills'][103]['skill']; 
         }
       }
     }
@@ -1097,7 +1099,7 @@ function getHumanElementData(empId) {
   $.ajax(settings).done(function (response) {
     console.log(response.human_element);
     if (response.human_element){
-      var len = document.getElementById('mainPage').children[1].length
+      var len = document.getElementById('mainPage').children[1].length;
       for (var index = 0; index< len - 2; index++) {
         if ((document.getElementById('mainPage').children[1][index].id).startsWith("habit")) {
           $('[id="'+(document.getElementById('mainPage').children[1][index].id)+'"]').slider('setValue',response['human_element'][index]['value']);  
@@ -1115,7 +1117,7 @@ function getHumanElementData(empId) {
             document.getElementById('mainPage').children[1][index].value = response['human_element'][index]['value'] + 'th'; 
           }
           else{
-            document.getElementById('mainPage').children[1][index].value = response['human_element'][index]['value']  
+            document.getElementById('mainPage').children[1][index].value = response['human_element'][index]['value'] ; 
           }
         }
       }
@@ -1145,7 +1147,7 @@ function updateTransformationEmpSkill(){
         "cache-control": "no-cache"
       },
       "data": {
-        empId ,updatedTransformationIds, updatedTransformationExp, updatedTransformationLvl, updatedTransformationCer, updatedTransformationInt
+       "empId": empId ,"updatedTransformationIds":updatedTransformationIds, "updatedTransformationExp":updatedTransformationExp, "updatedTransformationLvl":updatedTransformationLvl, "updatedTransformationCer":updatedTransformationCer, "updatedTransformationInt":updatedTransformationInt
       }
     }
     $.ajax(settings).done(function (response) {
@@ -1174,7 +1176,7 @@ function updateAnalyticsEmpSkill(){
         "cache-control": "no-cache"
       },
       "data": {
-        empId ,updatedAnalyticsIds, updatedAnalyticsExp, updatedAnalyticsLvl, updatedAnalyticsCer, updatedAnalyticsInt
+        "empId":empId , "updatedAnalyticsIds":updatedAnalyticsIds, "updatedAnalyticsExp":updatedAnalyticsExp, "updatedAnalyticsLvl":updatedAnalyticsLvl, "updatedAnalyticsCer":updatedAnalyticsCer, "updatedAnalyticsInt":updatedAnalyticsInt
       }
     }
     $.ajax(settings).done(function (response) {
@@ -1317,12 +1319,12 @@ function updateHumanElement() {
         "cache-control": "no-cache"
       },
       "data": {
-        empId ,humanElementId, humanElementValue
+        "empId":empId , "humanElementId":humanElementId, "humanElementValue":humanElementValue
       }
     }
     $.ajax(settings).done(function (response) {
       jQuery.notify("Successfully Updated Employee","success");
-      setEmpId({"empId":0},0)
+      setEmpId({"empId":0},0);
       window.open(SERVER_URI + '/admin_capability','_self');
     });
   }
