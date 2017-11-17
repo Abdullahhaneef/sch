@@ -1,4 +1,4 @@
-  var SERVER_URI = "http://192.168.0.119:8090";
+  var SERVER_URI = "http://localhost:8090";
   var empId;
   var updatedAnalyticsIds = [];
   var updatedAnalyticsExp = [];
@@ -75,37 +75,68 @@
           "empName":empName ,"email":email , "community":community
         }
       };
-      $.ajax(settings).done(function (response) {      
+      $.ajax(settings).done(function (response) {
           if(response.status == 'employee_exist'){
             var exist_id = response.empId.id;
             swal({
-              title: "Employee Exist",
-              text: "Do you want to update skills information?",
-              type: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Yes, Update'
-            }).then(function () {
-              var settings = {
-                "async": true,
-                "crossDomain": true,
-                "url": SERVER_URI+"/del_skills",
-                "method": "POST",
-                "headers": {
-                  "content-type": "application/x-www-form-urlencoded",
-                  "cache-control": "no-cache",
-                },
-                "data": {
-                 "exist_id": exist_id
-                }
-              }
-              $.ajax(settings).done(function (response) {      
-                  setEmpId({"empId": exist_id}, 1);
-                  window.open(SERVER_URI + '/analytics','_self');
+                title: "Employee Exist",
+                text: "Do you want to update skills information?",
+                type: 'warning',
+                html: "Do you want to update skills information?"+
+                    "<br>" +
+                    '<button type="button" role="button" tabindex="0" class="SwalBtn1 customConfirmSwalBtn">' + 'Update Analytics and Human Element Survey' + '</button>' +
+                    '<button type="button" role="button" tabindex="0" class="SwalBtn2 customConfirmSwalBtn">' + 'Updated Human Element Survey' + '</button>' +
+                    '<button type="button" role="button" tabindex="0" class="SwalBtn3 customCancelSwalBtn">' + 'Cancel' + '</button>',
+                showCancelButton: false,
+                showConfirmButton: false
               });
-            })
-          }
+              $(document).on('click', '.SwalBtn1', function() {
+                var settings = {
+                  "async": true,
+                  "crossDomain": true,
+                  "url": SERVER_URI+"/del_skills",
+                  "method": "POST",
+                  "headers": {
+                    "content-type": "application/x-www-form-urlencoded",
+                    "cache-control": "no-cache",
+                  },
+                  "data": {
+                   "exist_id": exist_id
+                  }
+                }
+                $.ajax(settings).done(function (response) {      
+                    setEmpId({"empId": exist_id}, 1);
+                    window.open(SERVER_URI + '/analytics','_self');
+                });
+                swal.clickConfirm();
+              });
+              $(document).on('click', '.SwalBtn2', function() {
+                  var settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": SERVER_URI+"/del_human_skills",
+                    "method": "POST",
+                    "headers": {
+                      "content-type": "application/x-www-form-urlencoded",
+                      "cache-control": "no-cache",
+                    },
+                    "data": {
+                     "exist_id": exist_id
+                  }
+                }
+                $.ajax(settings).done(function (response) {      
+                    setEmpId({"empId": exist_id}, 1);
+                    window.open(SERVER_URI + '/human_resources','_self');
+                });
+                swal.clickConfirm();
+                  swal.clickConfirm();
+              });
+
+              $(document).on('click', '.SwalBtn3', function() {
+                  swal.clickCancel();
+              });
+
+            }
           else{
             setEmpId(response,1);
             window.open(SERVER_URI + '/analytics','_self');
@@ -144,32 +175,62 @@
           if(response.status == 'employee_exist'){
             var exist_id = response.empId.id;
             swal({
-              title: "Employee Exist",
-              text: "Do you want to update skills information?",
-              type: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Yes, Update'
-            }).then(function () {
-              var settings = {
-                "async": true,
-                "crossDomain": true,
-                "url": SERVER_URI+"/del_skills",
-                "method": "POST",
-                "headers": {
-                  "content-type": "application/x-www-form-urlencoded",
-                  "cache-control": "no-cache",
-                },
-                "data": {
-                 "exist_id": exist_id
-                }
-              }
-              $.ajax(settings).done(function (response) {      
-                  setEmpId({"empId": exist_id}, 2);
-                  window.open(SERVER_URI + '/transformation','_self');
+                title: "Employee Exist",
+                text: "Do you want to update skills information?",
+                type: 'warning',
+                html: "Do you want to update skills information?"+
+                    "<br>" +
+                    '<button type="button" role="button" tabindex="0" class="SwalBtn1 customConfirmSwalBtn">' + 'Update Transformation and Human Element Survey' + '</button>' +
+                    '<button type="button" role="button" tabindex="0" class="SwalBtn2 customConfirmSwalBtn">' + 'Updated Human Element Survey' + '</button>' +
+                    '<button type="button" role="button" tabindex="0" class="SwalBtn3 customCancelSwalBtn">' + 'Cancel' + '</button>',
+                showCancelButton: false,
+                showConfirmButton: false
               });
-            })
+              $(document).on('click', '.SwalBtn1', function() {
+                var settings = {
+                  "async": true,
+                  "crossDomain": true,
+                  "url": SERVER_URI+"/del_skills",
+                  "method": "POST",
+                  "headers": {
+                    "content-type": "application/x-www-form-urlencoded",
+                    "cache-control": "no-cache",
+                  },
+                  "data": {
+                   "exist_id": exist_id
+                  }
+                }
+                $.ajax(settings).done(function (response) {      
+                    setEmpId({"empId": exist_id}, 2);
+                    window.open(SERVER_URI + '/transformation','_self');
+                });
+                swal.clickConfirm();
+              });
+              $(document).on('click', '.SwalBtn2', function() {
+                  var settings = {
+                    "async": true,
+                    "crossDomain": true,
+                    "url": SERVER_URI+"/del_human_skills",
+                    "method": "POST",
+                    "headers": {
+                      "content-type": "application/x-www-form-urlencoded",
+                      "cache-control": "no-cache",
+                    },
+                    "data": {
+                     "exist_id": exist_id
+                  }
+                }
+                $.ajax(settings).done(function (response) {      
+                    setEmpId({"empId": exist_id}, 2);
+                    window.open(SERVER_URI + '/human_resources','_self');
+                });
+                swal.clickConfirm();
+                  swal.clickConfirm();
+              });
+
+              $(document).on('click', '.SwalBtn3', function() {
+                  swal.clickCancel();
+              });
           }
           else{
             setEmpId(response,2);

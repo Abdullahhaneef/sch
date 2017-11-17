@@ -39,7 +39,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 600000
+        expires: 6000000
     }
 }));
 
@@ -435,6 +435,26 @@ app.post("/del_skills", jsonParser, function(req, res) {
                             DELETE FROM %s WHERE %s;"
                             , "skill_survey" , "emp_id  = "+req.body['exist_id']
                             ,"human_element_survey", "emp_id  = "+req.body['exist_id']);
+    client.query(query_delete_skill, function(err, result) {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            console.log("Successfully Delete");
+            client.end();
+            res.end(JSON.stringify({"status":"success","empId":req.body['empId']}));
+        }
+    });
+});
+
+
+
+////////////////////////////////////delete human element skills only///////////////////////////////////
+
+app.post("/del_human_skills", jsonParser, function(req, res) {
+    setupResponse(res);
+    var query_delete_skill = escape("DELETE FROM %s WHERE %s;"
+                            , "human_element_survey" , "emp_id  = "+req.body['exist_id']);
     client.query(query_delete_skill, function(err, result) {
         if(err) {
             console.log(err);
