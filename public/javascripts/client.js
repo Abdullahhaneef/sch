@@ -1,4 +1,4 @@
-  var SERVER_URI = "http://localhost:8090";
+  var SERVER_URI = "http://207.108.198.66:8090";
   var empId;
   var updatedAnalyticsIds = [];
   var updatedAnalyticsExp = [];

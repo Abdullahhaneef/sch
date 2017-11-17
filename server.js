@@ -4,7 +4,9 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var morgan = require('morgan');
 var User = require('./models/user');
-
+var ES6Promise = require('es6-promise');
+ES6Promise.polyfill();
+var axios = require('axios');
 var http = require('http');
 var request = require('request');
 var escape = require('pg-escape');
@@ -12,7 +14,7 @@ var jsonParser = bodyParser.json();
 var pg = require("pg");
 var fs = require("fs");
 var client;
-var conString = "postgres://postgres@localhost:5432/revel_db"
+var conString = "postgres://postgres:postgres@localhost:5432/revel_db"
 var path = __dirname + '/views/';
 var javascript_path = __dirname + '/javascripts/';
 
@@ -625,4 +627,5 @@ app.use(function (req, res, next) {
 
 
 // start the express server
-app.listen(app.get('port'), () => console.log(`App started on port ${app.get('port')}`));
+app.set('host', process.env.HOST || '0.0.0.0');
+app.listen(app.get('port'),app.get('host'),() => console.log(`App started on port ${app.get('port')} and host ${app.get('host')}`));
