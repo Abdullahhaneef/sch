@@ -14,9 +14,10 @@ var jsonParser = bodyParser.json();
 var pg = require("pg");
 var fs = require("fs");
 var client;
-var conString = "postgres://postgres:postgres@localhost:5432/revel_db"
+var conString = "postgres://postgres:postgres@localhost:5432/school"
 var path = __dirname + '/views/';
 var javascript_path = __dirname + '/javascripts/';
+var pdf = require('html-pdf');
 
 
 // invoke an instance of express application.
@@ -59,7 +60,7 @@ app.use((req, res, next) => {
 // middleware function to check for logged-in users
 var sessionChecker = (req, res, next) => {
     if (req.session.user && req.cookies.user_sid) {
-        res.redirect('/index');
+        res.redirect('/add_std');
     } else {
         next();
     }    
@@ -88,93 +89,83 @@ app.route('/login')
         var username = req.body.username,
             password = req.body.password;
 
+            console.log(password);
+
         User.findOne({ where: { username: username } }).then(function (user) {
             if (!user) {
                 res.redirect('/login');
             } else if (!user.validPassword(password)) {
                 res.redirect('/login');
-            } else if(user.dataValues.username == 'admin') {
-                req.session.user = user.dataValues;
-                res.redirect('/admin_capability');
             } else {
                 req.session.user = user.dataValues;
-                res.redirect('/index');
+                res.redirect('/add_std');
             }
         });
     });
 
-
-// route for user's dashboard
-app.get('/index', (req, res) => {
-    if (req.session.user && req.cookies.user_sid) {
-        res.sendFile(__dirname + '/views/index.html');
-    } else {
-        res.redirect('/login');
-    }
-});
-
-app.get('/analytics', (req, res) => {
-    if (req.session.user && req.cookies.user_sid) {
-        res.sendFile(__dirname + '/views/analytics.html');
-    } else {
-        res.redirect('/login');
-    }
-});
-
-app.get('/analytics', (req, res) => {
-    if (req.session.user && req.cookies.user_sid) {
-        res.sendFile(__dirname + '/views/analytics.html');
-    } else {
-        res.redirect('/login');
-    }
-});
-
-app.get('/analytics_update', (req, res) => {
-    if (req.session.user && req.cookies.user_sid) {
-        res.sendFile(__dirname + '/views/analytics.html');
-    } else {
-        res.redirect('/login');
-    }
-});
-
-app.get('/transformation', (req, res) => {
-    if (req.session.user && req.cookies.user_sid) {
-        res.sendFile(__dirname + '/views/transformation.html');
-    } else {
-        res.redirect('/login');
-    }
-});
-
-app.get('/transformation_update', (req, res) => {
-    if (req.session.user && req.cookies.user_sid) {
-        res.sendFile(__dirname + '/views/transformation.html');
-    } else {
-        res.redirect('/login');
-    }
-});
-
-app.get('/human_resources', (req, res) => {
-    if (req.session.user && req.cookies.user_sid) {
-        res.sendFile(__dirname + '/views/human_resources.html');
-    } else {
-        res.redirect('/login');
-    }
-});
-
-app.get('/human_element_update', (req, res) => {
-    if (req.session.user && req.cookies.user_sid) {
-        res.sendFile(__dirname + '/views/human_resources.html');
-    } else {
-        res.redirect('/login');
-    }
-});
-
-app.get('/admin_capability', (req, res) => {
+app.get('/add_std', (req, res) => {
     if (req.session.user && req.cookies.user_sid && req.session.user.username == 'admin') {
-        res.sendFile(__dirname + '/views/admin_capability.html');
+        res.sendFile(__dirname + '/views/add_std.html');
     } else {
         res.redirect('/login');
     }
+});
+app.get('/add_std_form', (req, res) => {
+    if (req.session.user && req.cookies.user_sid && req.session.user.username == 'admin') {
+        res.sendFile(__dirname + '/views/add_std_form.html');
+    } else {
+        res.redirect('/login');
+    }
+});
+app.get('/fees_page', (req, res) => {
+    if (req.session.user && req.cookies.user_sid && req.session.user.username == 'admin') {
+        res.sendFile(__dirname + '/views/fees_page.html');
+    } else {
+        res.redirect('/login');
+    }
+});
+app.get('/add_class', (req, res) => {
+    if (req.session.user && req.cookies.user_sid && req.session.user.username == 'admin') {
+        res.sendFile(__dirname + '/views/add_class_form.html');
+    } else {
+        res.redirect('/login');
+    }
+});
+
+app.post("/addStudent", function(req, res) {
+    setupResponse(res);
+    //console.log(req.body.data);
+    var stdId=0;
+    query_add_student = escape('INSERT INTO %s VALUES(%s) RETURNING id','student(gr_num, name, gender, dob, age, place_of_birth, nationality, religion, class_id, f_name, address, f_profession, m_profession, telephone_home, telephone_office, old_details, participation, awards, health)', ["'"+req.body.data.gr_num+"','"+req.body.data.name+"','"+req.body.data.gender+"','"+req.body.data.dob+"','"+req.body.data.age+"','"+req.body.data.place_of_birth+"','"+req.body.data.nationality+"','"+req.body.data.religion+"','"+req.body.data.class_id+"','"+req.body.data.f_name+"','"+req.body.data.address+"','"+req.body.data.f_profession+"','"+req.body.data.m_profession+"',"+req.body.data.telephone_home+","+req.body.data.telephone_office+",'"+req.body.data.old_details+"','"+req.body.data.participation+"','"+req.body.data.awards+"','"+req.body.data.health+"'"]);
+    console.log(query_add_student);
+    client.query(query_add_student, function(err, result) {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            stdId = result.rows[0].id;
+            client.end();
+            res.end(JSON.stringify({"status":"success", "stdId":stdId}));
+        }
+    })        
+});
+
+app.post("/addClass", function(req, res) {
+    setupResponse(res);
+    //console.log(req.body.data);
+    var classId=0;
+    query_add_class = escape('INSERT INTO %s VALUES(%s) RETURNING id','class(name)', ["'"+req.body.data.name+"'"]);
+    console.log(query_add_class);
+    client.query(query_add_class, function(err, result) {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            classId = result.rows[0].id;
+            client.end();
+            res.end(JSON.stringify({"status":"success", "classId":classId}));
+        }
+    })        
 });
 
 // route for user logout
@@ -187,216 +178,32 @@ app.get('/logout', (req, res) => {
     }
 });
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////ADMIN CAPABILITY///////////////////////////////////////////////////////////////////
-///////////////////////////Add Employees////////////////////////////////////////////////////
-
-app.post("/addEmployee", function(req, res) {
+app.get("/get_student", function(req, res) {
     setupResponse(res);
-    var empId=0;
-    query_check_email = escape("SELECT %s FROM %s WHERE %s","id","employees", "email = '"+req.body.email+"'");
-    query_add_employee = escape('INSERT INTO %s VALUES(%s) RETURNING id','employees(name , community_id , email)', ["'"+req.body.empName+"',"+req.body.community+","+"'"+req.body.email+"'"]);
-    client.query(query_check_email, function(err, result) {
+    var students;
+    query_get_student = "SELECT *\
+                            FROM student order by id Desc;"
+    client.query(query_get_student, function(err, result) {
         if(err) {
-            console.log(err);
+            console.log(err)
         }
         else {
-            id = result.rows[0];
-            if(id == undefined){
-                client.query(query_add_employee, function(err, result) {
-                    if(err) {
-                        console.log(err);
-                    }
-                    else {
-                        empId = result.rows[0].id;
-                        client.end();
-                        res.end(JSON.stringify({"status":"success", "empId":empId}));
-                    }
-                })                
+            for (i=0; i<result.rows.length; i++){
+                students = result.rows;
             }
-            else{
-                res.end(JSON.stringify({"status":"employee_exist", "empId":id}));
-            }
-        }
-    });    
-});
-
-
-////////////////////////////Add Employee Skills///////////////////////////////////////////////
-app.post("/addAnalyticsEmpSkill", function(req, res) {
-    setupResponse(res);
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    if(dd<10){
-        dd='0'+dd;
-    } 
-    if(mm<10){
-        mm='0'+mm;
-    } 
-    var date = yyyy+'-'+mm+'-'+dd;
-    query_add_skill = "INSERT INTO skill_survey (\
-            emp_id, core_competency, tool_capability_id, category, \
-            skill, experience_id, level_id, certification_id, learning_interest_id,community_id) VALUES ";
-    len = req.body.skill.length;
-    for(i = 0; i < len; i++){
-        query_add_skill = query_add_skill + "(" + req.body.empId + ",'" +req.body.core_competency[i] + "'\
-        ," +req.body.tool_capability[i] + ",'" + req.body.category[i] + "','" + req.body.skill[i] + "'," + req.body.experience[i] + "\
-        ," + req.body.level[i] + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + ",1), "
-    }
-    query_add_skill = query_add_skill.substring(0, query_add_skill.length - 2) + "; INSERT INTO skill_survey_history (\
-            emp_id, core_competency, tool_capability_id, category, \
-            skill,experience_id,level_id,certification_id,learning_interest_id,community_id,created_date) VALUES ";
-
-    for(i = 0; i < len; i++){
-        query_add_skill = query_add_skill + "(" + req.body.empId + ",'" +req.body.core_competency[i] + "'\
-        ," +req.body.tool_capability[i] + ",'" + req.body.category[i] + "','" + req.body.skill[i] + "'," + req.body.experience[i] + "\
-        ," + req.body.level[i] + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + ",1,'"+date+"'), "
-    }
-    client.query(query_add_skill.substring(0, query_add_skill.length - 2) + ";", function(err, result) {
-        if(err) {
-            console.log(err);
-        }
-        else {
             client.end();
-            
+            res.end(JSON.stringify({"status":"success", "students":students}));
         }
-        res.end(JSON.stringify({"status":"success"}));
-    });
-});
-//    
-
-////////////////////////////Add Transformation Skills///////////////////////////////////////////////
-app.post("/addTransformationEmpSkill", function(req, res) {
-    setupResponse(res);
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    if(dd<10){
-        dd='0'+dd;
-    } 
-    if(mm<10){
-        mm='0'+mm;
-    } 
-    var date = yyyy+'-'+mm+'-'+dd;    
-    query_add_skill = "INSERT INTO skill_survey (\
-            emp_id, core_competency, tool_capability_id, category, \
-            skill, experience_id, level_id, certification_id, learning_interest_id,community_id) VALUES "
-    len = req.body.skill.length;
-    for(i = 0; i < len; i++){
-        query_add_skill = query_add_skill + "(" + req.body.empId + ",'" +req.body.core_competency[i] + "'\
-        ," +req.body.tool_capability[i] + ",'" + req.body.category[i] + "','" + req.body.skill[i] + "'," + req.body.experience[i] + "\
-        ," + req.body.level[i] + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + ",2), "
-    }
-    query_add_skill = query_add_skill.substring(0, query_add_skill.length - 2) + "; INSERT INTO skill_survey_history (\
-            emp_id, core_competency, tool_capability_id, category, \
-            skill,experience_id,level_id,certification_id,learning_interest_id,community_id,created_date) VALUES ";
-
-    for(i = 0; i < len; i++){
-        query_add_skill = query_add_skill + "(" + req.body.empId + ",'" +req.body.core_competency[i] + "'\
-        ," +req.body.tool_capability[i] + ",'" + req.body.category[i] + "','" + req.body.skill[i] + "'," + req.body.experience[i] + "\
-        ," + req.body.level[i] + "," + req.body.certification[i] + "," + req.body.learning_interest[i] + ",2,'"+date+"'), "
-    }    
-    client.query(query_add_skill.substring(0, query_add_skill.length - 2) + ";", function(err, result) {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            client.end();
-            
-        }
-        res.end(JSON.stringify({"status":"success"}));
     });
 });
 
-
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////Add Human Element////////////////////////////////////////////////
-
-app.post("/addHumanElement", function(req, res) {
-    setupResponse(res);    
-    var query_add_human="";
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    if(dd<10){
-        dd='0'+dd;
-    } 
-    if(mm<10){
-        mm='0'+mm;
-    } 
-    var date = yyyy+'-'+mm+'-'+dd;    
-    var category =[];
-    var dimension =[];
-    for (var i = 0; i<req.body.name.length; i++){
-        if(req.body.name[i].split("_")[1] != undefined){
-            if(req.body.name[i].split("_")[0] == 'personality'){
-                category[i] = 'My Personality'
-            }
-            else if(req.body.name[i].split("_")[0] == 'satisfaction'){
-                category[i] = 'My Satisfaction'
-            }
-            else if(req.body.name[i].split("_")[0] == 'habit'){
-                category[i] = 'My Habits'
-            }
-            else if(req.body.name[i].split("_")[0] == 'motivation'){
-                category[i] = 'My Motivations'
-            }
-            dimension[i] = req.body.name[i].split("_")[1].charAt(0).toUpperCase() + req.body.name[i].split("_")[1].slice(1);;
-        }
-        else{
-            category[i] = req.body.name[i];
-            dimension[i] = req.body.name[i];
-        }
-    }
-    query_add_human = "INSERT INTO human_element_survey (emp_id, category, dimension, value, community_id) VALUES ";
-    len = category.length;
-    for(i = 0; i < len-1; i++){
-        var val = req.body.value[i].replace(/'/g, "''");
-        if (category[i] == 'My Motivations'){
-            val = val.substring(0, val.length -2);
-        }
-        query_add_human=query_add_human+"("+req.body.empId+",'"+category[i]+"','"+dimension[i]+"','"+val+"',"+req.body.community_id+" ), ";
-    }
-    query_add_human = query_add_human.substring(0, query_add_human.length - 2) + "; \
-    INSERT INTO human_element_survey_history (emp_id, category,dimension,value,community_id,created_date) VALUES ";
-    for(i = 0; i < len-1; i++){
-        var val = req.body.value[i].replace(/'/g, "''");
-        if (category[i] == 'My Motivations'){
-            val = val.substring(0, val.length -2);
-        }
-        query_add_human=query_add_human+"("+req.body.empId+",'"+category[i]+"','"+dimension[i]+"','"+val+"',"+req.body.community_id+",'"+date+"' ), ";
-    }
-    client.query(query_add_human.substring(0, query_add_human.length - 2) + ";", function(err, result) {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            client.end();
-        }
-        res.end(JSON.stringify({"status":"success"}));
-    });
-});
-
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////Admin Capability/////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////Get Employees////////////////////////////////////////////////
-
-app.get("/get_employees", function(req, res) {
+app.get("/get_class", function(req, res) {
     setupResponse(res);
     var employees;
-    query_get_employee = "SELECT employees.id, employees.name as Name, employees.email, community.name as Community, employees.is_active\
-                            FROM employees\
-                            LEFT JOIN community ON community_id = community.id ORDER BY employees.id";
-    client.query(query_get_employee, function(err, result) {
+    query_get_class = "SELECT * \
+                            FROM class\
+                            ";
+    client.query(query_get_class, function(err, result) {
         if(err) {
             console.log(err)
         }
@@ -410,65 +217,21 @@ app.get("/get_employees", function(req, res) {
     });
 });
 
-///////////////////////////////Delete Employee////////////////////////////////////////////////////
-app.post("/delete_employee", jsonParser, function(req, res) {
-    setupResponse(res);
-    var query_delete_skill = "DELETE FROM skill_survey WHERE emp_id  = "+req.body['empId']+"; \
-                            DELETE FROM skill_survey_history WHERE emp_id  = "+req.body['empId']+"; \
-                            DELETE FROM human_element_survey WHERE emp_id  = "+req.body['empId']+"; \
-                            DELETE FROM human_element_survey_history WHERE emp_id = "+req.body['empId']+"; \
-                            DELETE FROM employees WHERE id  = "+req.body['empId']+";";                              
-    client.query(query_delete_skill, function(err, result) {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            console.log("Successfully Delete");
-            client.end();
-            res.end(JSON.stringify({"status":"success","empId":req.body['empId']}));
-        }
-    });
-});
-////////////////////////////////////delete skills only///////////////////////////////////
 
-app.post("/del_skills", jsonParser, function(req, res) {
+app.post("/print_challan", jsonParser, function(req, res) {
     setupResponse(res);
-    var query_delete_skill = escape("DELETE FROM %s WHERE %s; \
-                            DELETE FROM %s WHERE %s;"
-                            , "skill_survey" , "emp_id  = "+req.body['exist_id']
-                            ,"human_element_survey", "emp_id  = "+req.body['exist_id']);
-    client.query(query_delete_skill, function(err, result) {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            console.log("Successfully Delete");
-            client.end();
-            res.end(JSON.stringify({"status":"success","empId":req.body['empId']}));
-        }
-    });
+    console.log(req.body);
+    res.end(JSON.stringify({"status":"success"}));
 });
 
-
-
-////////////////////////////////////delete human element skills only///////////////////////////////////
-
-app.post("/del_human_skills", jsonParser, function(req, res) {
-    setupResponse(res);
-    var query_delete_skill = escape("DELETE FROM %s WHERE %s;"
-                            , "human_element_survey" , "emp_id  = "+req.body['exist_id']);
-    client.query(query_delete_skill, function(err, result) {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            console.log("Successfully Delete");
-            client.end();
-            res.end(JSON.stringify({"status":"success","empId":req.body['empId']}));
-        }
+app.get("/challans/:fileId", function(req, res) {
+    fs.readFile(__dirname + '/'+req.params.fileId+'.pdf' , function (err,data){
+        res.contentType("application/pdf");
+        res.send(data);
+        res.end(JSON.stringify({"status":"pdf_success"}));
     });
 });
-
+/*
 ///////////////////////////////Update Employee/////////////////////////////////////////////////////
 
 app.post("/update_employee", jsonParser, function(req, res) {
@@ -487,8 +250,8 @@ app.post("/update_employee", jsonParser, function(req, res) {
         }
         res.end(JSON.stringify({"status":"success"}));
     });   
-});
-
+});*/
+/*
 ///////////////////////////////Update Analytic Skills/////////////////////////////////////////////////////
 
 app.post("/update_analytics_skills", jsonParser, function(req, res) {
@@ -512,113 +275,7 @@ app.post("/update_analytics_skills", jsonParser, function(req, res) {
         }
         res.end(JSON.stringify({"status":"success"}));
     });   
-});
-
-////////////////////////////////////////update transformation Skills//////////////////////////////////////////////
-
-app.post("/update_transformation_skills", jsonParser, function(req, res) {
-    setupResponse(res);
-     var update_transformation_skills = "";
-    for (var index = 0; index<req.body['updatedTransformationIds'].length; index++){
-        update_transformation_skills = update_transformation_skills+"UPDATE skill_survey SET experience_id = '"+req.body['updatedTransformationExp'][index]+"', \
-        level_id = "+req.body['updatedTransformationLvl'][index]+", \
-        certification_id = "+req.body['updatedTransformationCer'][index]+",  \
-        learning_interest_id = "+req.body['updatedTransformationInt'][index]+" \
-        WHERE emp_id = "+req.body['empId']+" \
-        AND skill = '"+req.body['updatedTransformationIds'][index]+"';"
-    } 
-    client.query(update_transformation_skills, function(err, result) {
-        if(err) {
-            console.log(err)
-        }
-        else {
-            client.end();
-            console.log("successful updated")
-        }
-        res.end(JSON.stringify({"status":"success"}));
-    });   
-});
-
-
-//////////////////////////////Get Analytics and Transformation Skills////////////////////////////////////////////////////
-app.post("/get_skills", jsonParser, function(req, res) {
-    setupResponse(res);
-    var skills;
-    var query_get_skills ="Select skill_survey.skill, experience.name as experience,level.name as level, \
-                certification.value as certification,learning_interest.name as learning_interest\
-                from skill_survey\
-                Left join experience on experience.id = experience_id\
-                Left join level on level.id =level_id\
-                Left join certification on certification.id =certification_id\
-                left join learning_interest on learning_interest.id = learning_interest_id\
-                WHERE skill_survey.emp_id = "+req.body['empId']+"\
-                order by skill_survey.id;"
-    client.query(query_get_skills, function(err, result) {
-        if(err) {
-            console.log(err)
-        }
-        else {
-            for (i=0; i<result.rows.length; i++){
-                skills = result.rows;
-            }
-            client.end();
-        }
-        res.end(JSON.stringify({"status":"success" , "skills":skills}));
-    });   
-});
-
-//////////////////////////////Get Human Elements////////////////////////////////////////////////////
-app.post("/get_human_elements", jsonParser, function(req, res) {
-    setupResponse(res);
-    var human_element;
-    var query_get_human_elements ="Select category, dimension as dimension, value as value FROM human_element_survey WHERE emp_id = "+req.body['empId']+" ORDER by id;"
-    client.query(query_get_human_elements, function(err, result) {
-        if(err) {
-            console.log(err)
-        }
-        else {
-            for (i=0; i<result.rows.length; i++){
-                human_element = result.rows;
-            }
-            client.end();
-        }
-        res.end(JSON.stringify({"status":"success" , "human_element":human_element}));
-    });   
-});
-
-//////////////////////////update Human Element form////////////////////////////////////////////////
-app.post("/update_human_element", jsonParser, function(req, res) {
-    setupResponse(res);
-    var update_human_elements = "";
-    for (var index = 0; index<req.body['humanElementId'].length; index++){
-        if (req.body['humanElementValue'][index] == '1st' || req.body['humanElementValue'][index] == '2nd' || req.body['humanElementValue'][index] == '3rd'
-         || req.body['humanElementValue'][index] == '4th' || req.body['humanElementValue'][index] == '5th' || req.body['humanElementValue'][index] == '6th' 
-         || req.body['humanElementValue'][index] == '7th' || req.body['humanElementValue'][index] == '8th' || req.body['humanElementValue'][index] == '9th' 
-         || req.body['humanElementValue'][index] == '10th'){
-            update_human_elements = update_human_elements+"UPDATE human_element_survey SET value = '"+req.body['humanElementValue'][index].substring(0, req.body['humanElementValue'][index].length - 2)+"' \
-            WHERE emp_id = "+req.body['empId']+" \
-            AND dimension = '"+req.body['humanElementId'][index]+"';";
-        }
-        else{
-            update_human_elements = update_human_elements+"UPDATE human_element_survey SET value = '"+req.body['humanElementValue'][index]+"' \
-            WHERE emp_id = "+req.body['empId']+" \
-            AND dimension = '"+req.body['humanElementId'][index]+"';"
-        }
-    }
-    client.query(update_human_elements, function(err, result) {
-        if(err) {
-            console.log(err)
-            res.end(JSON.stringify({"status":"failed"}));
-        }
-        else {
-            client.end();
-            console.log("successful updated")
-            res.end(JSON.stringify({"status":"success"}));
-        }
-    });   
-});
-
-
+});*/
 
 // route for handling 404 requests(unavailable routes)
 app.use(function (req, res, next) {

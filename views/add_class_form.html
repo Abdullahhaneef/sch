@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <link rel="stylesheet" href="stylesheets/main.css" type="text/css" media="screen" />
+        <link rel="stylesheet" href="stylesheets/sweetalert2.min.css" type="text/css" media="screen" />
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"> 
+        <link rel="stylesheet" href="stylesheets/jquery.dataTables.min.css" type="text/css" media="screen"/>
+        <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" /> 
+        <link rel="icon" type="image/png" href="images/tab_logo.png">
+        <script type="text/javascript" charset="utf-8" src="javascripts/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="javascripts/client.js"></script>
+        <script type="text/javascript" charset="utf-8" src="javascripts/sweetalert2.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="javascripts/notify.min.js"></script> 
+        <script type="text/javascript" charset="utf-8" src="javascripts/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="javascripts/core.js"></script>
+    
+		<style type="text/css">
+			body{
+				background: #f5f5f5;
+				width:100%;
+				height:100vh;
+				overflow:auto;
+			}
+
+			.container.form-container{
+				margin: 0 auto;
+				background: #FFF;
+				max-width: 800px;
+				border-radius: 3px;
+				box-shadow: 0 0 10px rgba(0,0,0,0.2);
+			}
+
+			.form-container form{
+				padding: 20px;
+			}
+			.heading{
+				text-align: center;
+				margin-bottom: 20px;
+			}
+		</style>
+
+	</head>
+	<body>
+		<div class="container">
+			<div class="row heading">
+				<h1>UN ACADEMY</h1>
+				<p>School Management System</p>
+				<a href="/add_std"> Back to home</a>
+			</div>
+
+		</div>
+	<div class="container form-container">
+		<!---Form starting----> 
+		<div class="row ">
+			<form id="classForm" class="form-horizontal">
+				<fieldset>
+					<legend>Class Form</legend>
+					<div>
+					  <span>Class Name: </span>
+					  <input id="name" name="name" type="text" >
+					  <br>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-3 col-sm-9">
+							<div id="add_class_button" class="">
+								<button onclick="addClass(); return false;" style="margin-bottom: 55px;" class="btn btn-primary">SUBMIT</button>
+							</div>
+						</div>
+					</div>	
+					</div>					
+				</fieldset>
+			</form> 
+		</div>
+	</div>
+
+	</body>
+</html>
