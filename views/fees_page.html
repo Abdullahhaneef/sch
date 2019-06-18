@@ -159,6 +159,9 @@
     margin-right: 790px;
     margin-bottom: 100px;
   }
+  .panel-body {
+    overflow-y: hidden;
+  }
 </style>
 </head>
 <body onload="getFees()">
@@ -238,6 +241,23 @@
                             <th> Print Admission Challan </th>
                             <th> Print Monthly Challan </th>
                           </tr> 
+                          <tr>
+                            <td>  </td>
+                            <td>  </td>
+                            <td>  </td>
+                            <td>  </td>
+                            <td> <input name="admission_fees" type="number"></td>
+                            <td> <input name="security_fees" type="number"></td>
+                            <td> <input name="annual_fees" type="number"></td>
+                            <td> <input name="monthly_fees" type="number"></td>
+                            <td> <input name="misc_fees" type="number"></td>
+                            <td> <input name="arrears" type="number"></td>
+                            <td> <input name="current_penalty" type="number"></td>
+                            <td> <span id = "updateAllRecord" title="Update All record" class="btn btn-link" style="cursor:pointer" onclick="updateEmployee('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Update</span> </td>
+                            <td> <span id = "printAllAdmission" title="Print all record below" class="btn btn-link" style="cursor:pointer" onclick="printChallan('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>
+                            <td> <span id = "printMonthly" title="Print all record below" class="btn btn-link" style="cursor:pointer" onclick="updateEmployee('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>
+
+                          </tr>
                         </thead>
                         <tbody id="fees_table_body">
                         </tbody>

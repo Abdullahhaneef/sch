@@ -1,4 +1,4 @@
-  var SERVER_URI = "http://321802ad.ngrok.io";
+  var SERVER_URI = "http://localhost:8090";
   var empId;
   var updatedAnalyticsIds = [];
   var updatedAnalyticsExp = [];
@@ -755,7 +755,7 @@ function printChallan(empId,emp){
                             <table class="enrol">\
                                 <tbody>\
                                     <tr>\
-                                        <th><span>Enrolment No</span></th>\
+                                        <th><span>Enrol No</span></th>\
                                         <td><span>101138</span></td>\
                                     </tr>\
                                 </tbody>\
@@ -855,7 +855,7 @@ function printChallan(empId,emp){
                                 </div>\
                                 <div class="col-sm-2">\
                                 </div>\
-                                <div class="col-sm-6 text-right sign ">\
+                                <div class="col-md-6 text-right sign ">\
                                     <h6 class="signature"><strong>Signature of Receiver</strong></h6>\
                                 </div>\
                             </div> \
@@ -901,7 +901,7 @@ function printChallan(empId,emp){
                     <table class="enrol">\
                         <tbody>\
                             <tr>\
-                                <th><span>Enrolment No</span></th>\
+                                <th><span>Enrol No</span></th>\
                                 <td><span>101138</span></td>\
                             </tr>\
                         </tbody>\
@@ -1001,7 +1001,7 @@ function printChallan(empId,emp){
                         </div>\
                         <div class="col-sm-2">\
                         </div>\
-                        <div class="col-sm-6 text-right sign ">\
+                        <div class="col-md-6 text-right sign ">\
                             <h6 class="signature"><strong>Signature of Receiver</strong></h6>\
                         </div>\
                     </div> \
@@ -1091,14 +1091,13 @@ table.enrol td, table.challan-no td {\
     border-top: 2px solid;\
     margin-top: 60px;\
 }\
-   .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {\
+   .col-sm-1, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-md-6, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-10, .col-sm-11, .col-sm-12 {\
         float: left;\
    }\
    .col-sm-12 {\
         width: 100%;\
-        float: left;\
-        padding-left: 15px;\
-        padding-right: 15px;\
+        display: block;\
+        padding: 15px;\
    }\
    .col-sm-11 {\
         width: 91.66666667%;\
@@ -1116,7 +1115,11 @@ table.enrol td, table.challan-no td {\
         width: 58.33333333%;\
    }\
    .col-sm-6 {\
-        width: 50%;\
+        width: 48%;\
+        margin: 1%;\
+   }\
+   .col-md-6{\
+      width: 50%;\
    }\
    .col-sm-5 {\
         width: 41.66666667%;\
