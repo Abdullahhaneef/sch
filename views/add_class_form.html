@@ -37,18 +37,37 @@
 				text-align: center;
 				margin-bottom: 20px;
 			}
+			.navbar-nav>li>a {
+      			padding-top: 25px;
+      			padding-bottom: 25px;
+    		}
 		</style>
 
 	</head>
 	<body>
-		<div class="container">
-			<div class="row heading">
-				<h1>UN ACADEMY</h1>
-				<p>School Management System</p>
-				<a href="/add_std"> Back to home</a>
-			</div>
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">UN ACADEMY<br/>
+          <small>School Management System</small>
+        </a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+                
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a href="/add_std">Home</a></li>
+                  <li><a href="/logout">Sign Out</a></li>
+                </ul>
 
-		</div>
+      </div><!--/.navbar-collapse -->
+    </div>
+  </nav>
 	<div class="container form-container">
 		<!---Form starting----> 
 		<div class="row ">

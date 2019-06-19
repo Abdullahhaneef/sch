@@ -182,12 +182,13 @@
       <div id="navbar" class="navbar-collapse collapse">
                 
                 <ul class="nav navbar-nav navbar-right">
+                  <li><a href="/add_std">Home</a></li>
                   <li><a href="/logout">Sign Out</a></li>
                 </ul>
 
-              </div><!--/.navbar-collapse -->
-            </div>
-          </nav>
+      </div><!--/.navbar-collapse -->
+    </div>
+  </nav>
           <div class="container">
             <div class="row">
               <div class="col-md-4">
@@ -199,7 +200,7 @@
                   <div class="col-md-12">
                     <div class="panel panel-default panel-table">
                       <div class="panel-heading">
-                        <div class="row">
+                        <div class="row fee-search">
                           <div class="form-group col-md-3 ">
                             <label class="control-label" for="card-number">Gr No.</label>
                             <input class="form-control input-sm" id="gr_num" name="gr_num" type="text" placeholder="GR Number" >
@@ -218,7 +219,7 @@
                           </div>
 
                           <div class="form-group col-md-3 ">
-                            <button class="btn btn-sm btn-success btn-block" onclick="searchStudent(); return false;" >Search</button>
+                            <button class="btn btn-sm btn-success btn-block" onclick="searchStudentFees(); return false;" >Search</button>
                           </div>
                         </div>
                       </div>
@@ -237,6 +238,9 @@
                             <th> Miscellaneous </th>
                             <th> Arrears </th>
                             <th> Current Penalty  </th>
+                            <th> For the month  </th>
+                            <th> Issue Date </th>
+                            <th> Due Date  </th>
                             <th> Update Record  </th>
                             <th> Print Admission Challan </th>
                             <th> Print Monthly Challan </th>
@@ -253,8 +257,11 @@
                             <td> <input name="misc_fees" type="number"></td>
                             <td> <input name="arrears" type="number"></td>
                             <td> <input name="current_penalty" type="number"></td>
+                            <td> <input name="month" type="month"></td>
+                            <td> <input name="issue" type="Date"></td>
+                            <td> <input name="due" type="Date"></td>
                             <td> <span id = "updateAllRecord" title="Update All record" class="btn btn-link" style="cursor:pointer" onclick="updateEmployee('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Update</span> </td>
-                            <td> <span id = "printAllAdmission" title="Print all record below" class="btn btn-link" style="cursor:pointer" onclick="printChallan('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>
+                            <td> <span id = "printAllAdmission" title="Print all record below" class="btn btn-link" style="cursor:pointer" onclick="batchPrintChallan()">Print</span> </td>
                             <td> <span id = "printMonthly" title="Print all record below" class="btn btn-link" style="cursor:pointer" onclick="updateEmployee('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>
 
                           </tr>
@@ -268,7 +275,9 @@
           </div>
         </div>
       </form>
-      <div class="print_pdf" id="print_pdf" style="display: none;"></div>
+      <div class="print_pdf" id="print_pdf" style="display: none;">
+        <div class="print_pdf_show" id="printSection"></div>
+      </div>
     </div>
   </div>
 </body>
