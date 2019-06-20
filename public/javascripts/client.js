@@ -799,6 +799,37 @@ function updateStudentFee(stdId,std){
 
 }
 
+function updateAllFees(std){
+  console.log("in update All student");
+  console.log(std);
+  var obj = {
+            "admission_fees":jQuery(std).children().find("input")[0].value,
+            "security_fees":jQuery(std).children().find("input")[1].value,
+            "annual_fees":jQuery(std).children().find("input")[2].value,
+            "monthly_fees":jQuery(std).children().find("input")[3].value,
+            "misc_fees":jQuery(std).children().find("input")[4].value,
+            "arrears":jQuery(std).children().find("input")[5].value,
+            "current_penalty":jQuery(std).children().find("input")[6].value
+          };
+  console.log(obj);
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": SERVER_URI+"/update_all_fees",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "cache-control": "no-cache"
+    },
+    "processData": false,
+    "data": JSON.stringify(obj)
+  };
+  $.ajax(settings).done(function (response) {
+    jQuery.notify("User Updated","success");
+  });
+
+}
+
 
 function printChallan(stdId,emp){
   console.log(stdId);

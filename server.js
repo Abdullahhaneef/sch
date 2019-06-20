@@ -284,10 +284,41 @@ app.post("/update_student_fee", jsonParser, function(req, res) {
             res.end(JSON.stringify({"status":"success"}));
         }
     });
-    //query_get_student  = query_get_student.substring(0, query_get_student.length - 6);
-    //query_get_student = query_get_student + ";";    
-    //res.end(JSON.stringify({"status":"success"}));
 });
+
+app.post("/update_all_fees", jsonParser, function(req, res) {
+    setupResponse(res);
+    console.log(req.body);
+    console.log(Object.keys(req.body).length);
+    for (i=0;i<Object.keys(req.body).length;i++){
+        console.log(Object.keys(req.body)[i])
+        var accessKey = Object.keys(req.body)[i];
+        if(req.body[accessKey] == ""){
+            req.body[accessKey] = 0;
+        }
+        //var accessKey = Object.keys(req.body.data)[i];
+        //query_get_student = query_get_student + accessKey +" = '" + req.body.data[accessKey] + "'  AND "
+    }
+    var query_update_student = "UPDATE student SET \
+                                admission_fees="+req.body['admission_fees']+", \
+                                monthly_fees="+req.body['monthly_fees']+", \
+                                arrears="+req.body['arrears']+", \
+                                security_fees="+req.body['security_fees']+", \
+                                annual_fees="+req.body['annual_fees']+", \
+                                misc_fees="+req.body['misc_fees']+", \
+                                current_penalty="+req.body['current_penalty']+";";
+    console.log(query_update_student);
+    client.query(query_update_student, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            client.end();
+            res.end(JSON.stringify({"status":"success"}));
+        }
+    });
+});
+
 
 app.post("/print_challan", jsonParser, function(req, res) {
     setupResponse(res);
