@@ -194,7 +194,28 @@
               <div class="col-md-4">
                 <h2 style="margin: 10px 0; text-transform: uppercase;"><strong>Students</strong></h2>
               </div>
+              <br>
+              <div class="col-md-12">
 
+                <div class="row">
+                <div class="form-group col-md-3">
+                    <label class="control-label">For the Month: </label>
+                    <input class="form-control input-sm month" id="month" name="month" type="month" >
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="control-label">Issue Date: </label>
+                    <input class="form-control input-sm month issue" id="issue" name="issue" type="Date" >
+                </div>
+                <div class="form-group col-md-3">
+                    <label class="control-label">Due Date: </label>
+                    <input class="form-control input-sm month due" id="due" name="due" type="Date" >
+                </div> 
+                  <div class="form-group col-md-3 ">
+                    <button class="btn btn-sm btn-success btn-block" onclick="changeMonth(); return false;" style="    margin-top: 20px;" >Change Month</button>
+                  </div>                        
+                </div>   
+
+              </div>
               <form id = "fees_form">
                 <div id = "">
                   <div class="col-md-12">
@@ -224,6 +245,7 @@
                         </div>
                       </div>
                       <div class="panel-body">
+                                            
                        <table id="fees_table" class="table table-striped table-bordered table-list">
                         <thead>
                           <tr>
@@ -238,9 +260,7 @@
                             <th> Miscellaneous </th>
                             <th> Arrears </th>
                             <th> Current Penalty  </th>
-                            <th> For the month  </th>
-                            <th> Issue Date </th>
-                            <th> Due Date  </th>
+                            <th> Receive Date  </th>
                             <th> Update Record  </th>
                             <th> Print Admission Challan </th>
                             <th> Print Monthly Challan </th>
@@ -257,9 +277,7 @@
                             <td> <input name="misc_fees" type="number"></td>
                             <td> <input name="arrears" type="number"></td>
                             <td> <input name="current_penalty" type="number"></td>
-                            <td> <input name="month" type="month"></td>
-                            <td> <input name="issue" type="Date"></td>
-                            <td> <input name="due" type="Date"></td>
+                            <td> </td>
                             <td> <span id = "updateAllRecord" title="Update All record" class="btn btn-link" style="cursor:pointer" onclick="updateAllFees(jQuery(this).parent().parent())">Update All</span> </td>
                             <td> <span id = "printAllAdmission" title="Print all record below" class="btn btn-link" style="cursor:pointer" onclick="batchPrintChallan()">Print</span> </td>
                             <td> <span id = "printMonthly" title="Print all record below" class="btn btn-link" style="cursor:pointer" onclick="updateEmployee('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>

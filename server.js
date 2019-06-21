@@ -252,6 +252,53 @@ app.get("/get_class", function(req, res) {
     });
 });
 
+app.post("/change_month", jsonParser, function(req, res) {
+    setupResponse(res);
+    console.log(req.body);
+    var arrears_value = 0;
+    var current_penalty_value = 0;
+    var students;
+    query_get_student = "SELECT due_date, receive_date, arrears, current_penalty FROM student \
+                        WHERE receive_date is null or receive_date > due_date;"
+    client.query(query_get_student, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            for (i=0; i<result.rows.length; i++){
+                students = result.rows;
+            }
+            client.end();
+            
+        }
+    });
+
+
+    var query_change_month = "INSERT INTO public.history(id,\
+            gender, dob, age, section_id, telephone_home, telephone_office, \
+            name, place_of_birth, religion, nationality, f_name, address, \
+            f_profession, m_profession, old_details, participation, awards, \
+            health, gr_num, create_date, class_id, admission_fees, monthly_fees, \
+            arrears, security_fees, annual_fees, misc_fees, current_penalty, \
+            issue_date, due_date, receive_date, month)\
+            SELECT * FROM student;\
+                                UPDATE student SET \
+                                month='"+req.body['month']+"', \
+                                issue_date='"+req.body['issue_date']+"', \
+                                due_date='"+req.body['due_date']+"', \
+                                receive_date=null;"
+    console.log(query_change_month);
+    client.query(query_change_month, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            client.end();
+            res.end(JSON.stringify({"status":"success"}));
+        }
+    });
+});
+
 app.post("/update_student_fee", jsonParser, function(req, res) {
     setupResponse(res);
     console.log(req.body);
@@ -273,6 +320,7 @@ app.post("/update_student_fee", jsonParser, function(req, res) {
                                 annual_fees="+req.body['annual_fees']+", \
                                 misc_fees="+req.body['misc_fees']+", \
                                 current_penalty="+req.body['current_penalty']+" \
+                                receive_date='"+req.body['receive_date']+"' \
                                 WHERE id="+req.body['stdId']+";"
     console.log(query_update_student);
     client.query(query_update_student, function(err, result) {

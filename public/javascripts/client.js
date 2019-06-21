@@ -706,9 +706,7 @@ function renderFees(response){
                             <td> <input name="misc_fees" type="number" value = "'+response["students"][i]["misc_fees"]+'"></td>\
                             <td> <input name="arrears" type="number" value = "'+response["students"][i]["arrears"]+'"></td>\
                             <td> <input name="current_penalty" type="number" value = "'+response["students"][i]["current_penalty"]+'"></td>\
-                            <td> <input name="month" type="month"></td>\
-                            <td> <input name="issue" type="Date"></td>\
-                            <td> <input name="due" type="Date"></td>\
+                            <td> <input name="receive_date" type="Date" value = "'+response["students"][i]["receive_date"]+'"></td>\
                             <td> <span id = "updateRecord" title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="updateStudentFee('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Update</span> </td>\
                             <td> <span id = "printAdmission" title="Print this record" class="btn btn-link" style="cursor:pointer" onclick="printChallan('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>\
                             <td> <span id = "printMonthly" title="Print this record" class="btn btn-link" style="cursor:pointer" onclick="updateEmployee('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>\
@@ -723,6 +721,40 @@ function renderFees(response){
           "retrieve": true
     });
   }
+}
+
+function changeMonth(){
+  console.log("in change month");
+  month = jQuery('#month')[0].value;
+  issue_date = jQuery('#issue')[0].value;
+  due_date = jQuery('#due')[0].value;
+  if (month == "" || issue_date == "" || due_date == ""){
+    jQuery.notify("Please fill all Three fields","error");
+  }
+
+  var obj = {
+            "month":month,
+            "issue_date":issue_date,
+            "due_date":due_date
+          };
+
+  console.log(obj);
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": SERVER_URI+"/change_month",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "cache-control": "no-cache"
+    },
+    "processData": false,
+    "data": JSON.stringify(obj)
+  };
+  $.ajax(settings).done(function (response) {
+    jQuery.notify("User Updated","success");
+  });  
+
 }
 
 function searchStudentFees(){
@@ -778,7 +810,8 @@ function updateStudentFee(stdId,std){
             "monthly_fees":jQuery(std).children().find("input")[7].value,
             "misc_fees":jQuery(std).children().find("input")[8].value,
             "arrears":jQuery(std).children().find("input")[9].value,
-            "current_penalty":jQuery(std).children().find("input")[10].value
+            "current_penalty":jQuery(std).children().find("input")[10].value,
+            "receive_date":jQuery(std).children().find("input")[11].value
           };
   console.log(obj);
   var settings = {
@@ -855,21 +888,7 @@ function printChallan(stdId,emp){
   var total = +obj["admission_fees"] + +obj["security_fees"] + +obj["annual_fees"] + +obj["monthly_fees"] + +obj["misc_fees"] + +obj["arrears"] + +obj["current_penalty"];
   console.log(total);
   console.log(obj);
-/*  var settings = {
-    "async": true,
-    "crossDomain": true,
-    "url": SERVER_URI+"/print_challan",
-    "method": "POST",
-    "headers": {
-      "content-type": "application/json",
-      "cache-control": "no-cache"
-    },
-    "processData": false,
-    "data": JSON.stringify(obj)
-  };*/
-/*  $.ajax(settings).done(function (response) {
-    jQuery.notify("Challan downloaded","success");*/
-    //window.open(SERVER_URI + '/challans/businesscard','_blank');
+
     var html =''
     html = '\
     <div class="container-fluid" id="printSect">\
