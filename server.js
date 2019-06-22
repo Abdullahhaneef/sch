@@ -88,9 +88,6 @@ app.route('/login')
     .post((req, res) => {
         var username = req.body.username,
             password = req.body.password;
-
-            console.log(password);
-
         User.findOne({ where: { username: username } }).then(function (user) {
             if (!user) {
                 res.redirect('/login');
@@ -124,6 +121,13 @@ app.get('/fees_page', (req, res) => {
         res.redirect('/login');
     }
 });
+app.get('/fees_history', (req, res) => {
+    if (req.session.user && req.cookies.user_sid && req.session.user.username == 'admin') {
+        res.sendFile(__dirname + '/views/fees_history.html');
+    } else {
+        res.redirect('/login');
+    }
+});
 app.get('/add_class', (req, res) => {
     if (req.session.user && req.cookies.user_sid && req.session.user.username == 'admin') {
         res.sendFile(__dirname + '/views/add_class_form.html');
@@ -134,10 +138,9 @@ app.get('/add_class', (req, res) => {
 
 app.post("/addStudent", function(req, res) {
     setupResponse(res);
-    //console.log(req.body.data);
     var stdId=0;
     query_add_student = escape('INSERT INTO %s VALUES(%s) RETURNING id','student(gr_num, name, gender, dob, age, place_of_birth, nationality, religion, class_id, f_name, address, f_profession, m_profession, telephone_home, telephone_office, old_details, participation, awards, health)', ["'"+req.body.data.gr_num+"','"+req.body.data.name+"','"+req.body.data.gender+"','"+req.body.data.dob+"','"+req.body.data.age+"','"+req.body.data.place_of_birth+"','"+req.body.data.nationality+"','"+req.body.data.religion+"','"+req.body.data.class_id+"','"+req.body.data.f_name+"','"+req.body.data.address+"','"+req.body.data.f_profession+"','"+req.body.data.m_profession+"',"+req.body.data.telephone_home+","+req.body.data.telephone_office+",'"+req.body.data.old_details+"','"+req.body.data.participation+"','"+req.body.data.awards+"','"+req.body.data.health+"'"]);
-    console.log(query_add_student);
+
     client.query(query_add_student, function(err, result) {
         if(err) {
             console.log(err);
@@ -152,10 +155,9 @@ app.post("/addStudent", function(req, res) {
 
 app.post("/addClass", function(req, res) {
     setupResponse(res);
-    //console.log(req.body.data);
     var classId=0;
     query_add_class = escape('INSERT INTO %s VALUES(%s) RETURNING id','class(name)', ["'"+req.body.data.name+"'"]);
-    console.log(query_add_class);
+
     client.query(query_add_class, function(err, result) {
         if(err) {
             console.log(err);
@@ -170,7 +172,6 @@ app.post("/addClass", function(req, res) {
 
 app.post("/searchStd", function(req, res) {
     setupResponse(res);
-    console.log(Object.keys(req.body.data).length)
 
     var students;
     var query_get_student = ""
@@ -187,8 +188,33 @@ app.post("/searchStd", function(req, res) {
         query_get_student  = query_get_student.substring(0, query_get_student.length - 6);
         query_get_student = query_get_student + ";";
     }
-    console.log(query_get_student);
     client.query(query_get_student, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            for (i=0; i<result.rows.length; i++){
+                students = result.rows;
+            }
+            client.end();
+            res.end(JSON.stringify({"status":"success", "students":students}));
+        }
+    });        
+});
+
+app.post("/searchHistory", function(req, res) {
+    setupResponse(res);
+
+    var students;
+    var query_get_history = "SELECT * FROM history WHERE "
+    for (i=0;i<Object.keys(req.body.data).length;i++){
+        var accessKey = Object.keys(req.body.data)[i];
+        query_get_history = query_get_history + accessKey +" = '" + req.body.data[accessKey] + "'  AND "
+    }
+    query_get_history  = query_get_history.substring(0, query_get_history.length - 6);
+    query_get_history = query_get_history + ";";
+    console.log(query_get_history);
+    client.query(query_get_history, function(err, result) {
         if(err) {
             console.log(err)
         }
@@ -252,13 +278,25 @@ app.get("/get_class", function(req, res) {
     });
 });
 
+const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+
+// a and b are javascript Date objects
+function dateDiffInDays(a, b) {
+  // Discard the time and time-zone information.
+  const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+  const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+  return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+}
+
 app.post("/change_month", jsonParser, function(req, res) {
     setupResponse(res);
-    console.log(req.body);
     var arrears_value = 0;
     var current_penalty_value = 0;
     var students;
-    query_get_student = "SELECT due_date, receive_date, arrears, current_penalty FROM student \
+
+    query_get_student = "SELECT id, gr_num, due_date, receive_date, monthly_fees, security_fees, arrears, annual_fees, \
+                        misc_fees, transport_fees, current_penalty FROM student \
                         WHERE receive_date is null or receive_date > due_date;"
     client.query(query_get_student, function(err, result) {
         if(err) {
@@ -268,49 +306,64 @@ app.post("/change_month", jsonParser, function(req, res) {
             for (i=0; i<result.rows.length; i++){
                 students = result.rows;
             }
-            client.end();
-            
-        }
-    });
-
-
-    var query_change_month = "INSERT INTO public.history(id,\
-            gender, dob, age, section_id, telephone_home, telephone_office, \
-            name, place_of_birth, religion, nationality, f_name, address, \
-            f_profession, m_profession, old_details, participation, awards, \
-            health, gr_num, create_date, class_id, admission_fees, monthly_fees, \
-            arrears, security_fees, annual_fees, misc_fees, current_penalty, \
-            issue_date, due_date, receive_date, month)\
-            SELECT * FROM student;\
-                                UPDATE student SET \
-                                month='"+req.body['month']+"', \
-                                issue_date='"+req.body['issue_date']+"', \
-                                due_date='"+req.body['due_date']+"', \
-                                receive_date=null;"
-    console.log(query_change_month);
-    client.query(query_change_month, function(err, result) {
-        if(err) {
-            console.log(err)
-        }
-        else {
-            client.end();
-            res.end(JSON.stringify({"status":"success"}));
+            var update_penalty_query=""
+            for(i=0; i<students.length; i++){
+                if(students[i]["receive_date"] != null){
+                    var a = new Date(students[i]["due_date"]);
+                    var b = new Date(students[i]["receive_date"]);
+                    difference = dateDiffInDays(a, b);
+                    update_penalty_query = update_penalty_query + " UPDATE student SET current_penalty = " + difference*10 + " \
+                                            WHERE id = " + students[i]["id"] + ";"
+                }
+                else{
+                    var arrears_val = students[i]["monthly_fees"] + students[i]["security_fees"] + students[i]["annual_fees"] + students[i]["misc_fees"] + students[i]["transport_fees"] + students[i]["arrears"] + students[i]["current_penalty"];                    
+                    var a = new Date(students[i]["due_date"]);
+                    var b = new Date(req.body["issue_date"]);
+                    difference = dateDiffInDays(a, b);
+                    update_penalty_query = update_penalty_query + " UPDATE student SET current_penalty = " + difference*10 + "\
+                                                    , arrears = " + arrears_val + " WHERE id = " + students[i]["id"] + ";"
+                }
+            }
+            client.query(update_penalty_query, function(err, result) {
+                if(err) {
+                    console.log(err)
+                }
+                else {
+                    var query_change_month = "INSERT INTO public.history(id,\
+                            gender, dob, age, section_id, telephone_home, telephone_office, \
+                            name, place_of_birth, religion, nationality, f_name, address, \
+                            f_profession, m_profession, old_details, participation, awards, \
+                            health, gr_num, create_date, class_id, admission_fees, monthly_fees, \
+                            arrears, security_fees, annual_fees, misc_fees, current_penalty, \
+                            issue_date, due_date, receive_date, month, transport_fees)\
+                            SELECT * FROM student;\
+                                                UPDATE student SET \
+                                                month='"+req.body['month']+"', \
+                                                issue_date='"+req.body['issue_date']+"', \
+                                                due_date='"+req.body['due_date']+"', \
+                                                receive_date=null;"
+                    client.query(query_change_month, function(err, result) {
+                        if(err) {
+                            console.log(err)
+                        }
+                        else {
+                            client.end();
+                            res.end(JSON.stringify({"status":"success"}));
+                        }
+                    });                    
+                }
+            });            
         }
     });
 });
 
 app.post("/update_student_fee", jsonParser, function(req, res) {
     setupResponse(res);
-    console.log(req.body);
-    console.log(Object.keys(req.body).length);
     for (i=0;i<Object.keys(req.body).length;i++){
-        console.log(Object.keys(req.body)[i])
         var accessKey = Object.keys(req.body)[i];
         if(req.body[accessKey] == ""){
             req.body[accessKey] = 0;
         }
-        //var accessKey = Object.keys(req.body.data)[i];
-        //query_get_student = query_get_student + accessKey +" = '" + req.body.data[accessKey] + "'  AND "
     }
     var query_update_student = "UPDATE student SET \
                                 admission_fees="+req.body['admission_fees']+", \
@@ -319,10 +372,10 @@ app.post("/update_student_fee", jsonParser, function(req, res) {
                                 security_fees="+req.body['security_fees']+", \
                                 annual_fees="+req.body['annual_fees']+", \
                                 misc_fees="+req.body['misc_fees']+", \
-                                current_penalty="+req.body['current_penalty']+" \
+                                transport_fees="+req.body['transport_fees']+", \
+                                current_penalty="+req.body['current_penalty']+", \
                                 receive_date='"+req.body['receive_date']+"' \
                                 WHERE id="+req.body['stdId']+";"
-    console.log(query_update_student);
     client.query(query_update_student, function(err, result) {
         if(err) {
             console.log(err)
@@ -336,26 +389,17 @@ app.post("/update_student_fee", jsonParser, function(req, res) {
 
 app.post("/update_all_fees", jsonParser, function(req, res) {
     setupResponse(res);
-    console.log(req.body);
-    console.log(Object.keys(req.body).length);
     for (i=0;i<Object.keys(req.body).length;i++){
-        console.log(Object.keys(req.body)[i])
         var accessKey = Object.keys(req.body)[i];
         if(req.body[accessKey] == ""){
             req.body[accessKey] = 0;
         }
-        //var accessKey = Object.keys(req.body.data)[i];
-        //query_get_student = query_get_student + accessKey +" = '" + req.body.data[accessKey] + "'  AND "
     }
     var query_update_student = "UPDATE student SET \
-                                admission_fees="+req.body['admission_fees']+", \
                                 monthly_fees="+req.body['monthly_fees']+", \
-                                arrears="+req.body['arrears']+", \
                                 security_fees="+req.body['security_fees']+", \
                                 annual_fees="+req.body['annual_fees']+", \
-                                misc_fees="+req.body['misc_fees']+", \
-                                current_penalty="+req.body['current_penalty']+";";
-    console.log(query_update_student);
+                                misc_fees="+req.body['misc_fees']+";";
     client.query(query_update_student, function(err, result) {
         if(err) {
             console.log(err)
@@ -366,66 +410,6 @@ app.post("/update_all_fees", jsonParser, function(req, res) {
         }
     });
 });
-
-
-app.post("/print_challan", jsonParser, function(req, res) {
-    setupResponse(res);
-    console.log(req.body);
-    res.end(JSON.stringify({"status":"success"}));
-});
-
-app.get("/challans/:fileId", function(req, res) {
-    fs.readFile(__dirname + '/'+req.params.fileId+'.pdf' , function (err,data){
-        res.contentType("application/pdf");
-        res.send(data);
-        res.end(JSON.stringify({"status":"pdf_success"}));
-    });
-});
-/*
-///////////////////////////////Update Employee/////////////////////////////////////////////////////
-
-app.post("/update_employee", jsonParser, function(req, res) {
-    setupResponse(res);
-    console.log(req.body);
-    var update_emp = escape("UPDATE %s SET %s WHERE %s", "employees" 
-        , "name =  '"+req.body['name']+"', email =  '"+req.body['email']+"' ,is_active = '"+req.body['is_active']+"'"
-        ,"id = "+req.body['empId']);
-    client.query(update_emp, function(err, result) {
-        if(err) {
-            console.log(err)
-        }
-        else {
-            client.end();
-            console.log("successful updated")
-        }
-        res.end(JSON.stringify({"status":"success"}));
-    });   
-});*/
-/*
-///////////////////////////////Update Analytic Skills/////////////////////////////////////////////////////
-
-app.post("/update_analytics_skills", jsonParser, function(req, res) {
-    setupResponse(res);
-     var update_analytic_skills = "";
-    for (var index = 0; index<req.body['updatedAnalyticsIds'].length; index++){
-        update_analytic_skills = update_analytic_skills+"UPDATE skill_survey SET experience_id = '"+req.body['updatedAnalyticsExp'][index]+"', \
-        level_id = "+req.body['updatedAnalyticsLvl'][index]+", \
-        certification_id = "+req.body['updatedAnalyticsCer'][index]+",  \
-        learning_interest_id = "+req.body['updatedAnalyticsInt'][index]+" \
-        WHERE emp_id = "+req.body['empId']+" \
-        AND skill = '"+req.body['updatedAnalyticsIds'][index]+"';"
-    } 
-    client.query(update_analytic_skills, function(err, result) {
-        if(err) {
-            console.log(err)
-        }
-        else {
-            client.end();
-            console.log("successful updated")
-        }
-        res.end(JSON.stringify({"status":"success"}));
-    });   
-});*/
 
 // route for handling 404 requests(unavailable routes)
 app.use(function (req, res, next) {

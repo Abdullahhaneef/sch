@@ -162,6 +162,9 @@
   .panel-body {
     overflow-y: hidden;
   }
+  .search-btn{
+    margin-top: 20px;
+  }
 </style>
 </head>
 <body onload="getFees()">
@@ -240,7 +243,7 @@
                           </div>
 
                           <div class="form-group col-md-3 ">
-                            <button class="btn btn-sm btn-success btn-block" onclick="searchStudentFees(); return false;" >Search</button>
+                            <button class="btn btn-sm btn-success btn-block search-btn" onclick="searchStudentFees(); return false;" >Search</button>
                           </div>
                         </div>
                       </div>
@@ -258,8 +261,12 @@
                             <th> Annual Charges </th>
                             <th> Tution Fees </th>
                             <th> Miscellaneous </th>
+                            <th> Transport Fees </th>
                             <th> Arrears </th>
                             <th> Current Penalty  </th>
+                            <th> For the Month  </th>
+                            <th> Issue Date  </th>
+                            <th> Due Date  </th>
                             <th> Receive Date  </th>
                             <th> Update Record  </th>
                             <th> Print Admission Challan </th>
@@ -270,17 +277,21 @@
                             <td>  </td>
                             <td>  </td>
                             <td>  </td>
-                            <td> <input name="admission_fees" type="number"></td>
+                            <td> </td>
                             <td> <input name="security_fees" type="number"></td>
                             <td> <input name="annual_fees" type="number"></td>
                             <td> <input name="monthly_fees" type="number"></td>
                             <td> <input name="misc_fees" type="number"></td>
-                            <td> <input name="arrears" type="number"></td>
-                            <td> <input name="current_penalty" type="number"></td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
                             <td> </td>
                             <td> <span id = "updateAllRecord" title="Update All record" class="btn btn-link" style="cursor:pointer" onclick="updateAllFees(jQuery(this).parent().parent())">Update All</span> </td>
-                            <td> <span id = "printAllAdmission" title="Print all record below" class="btn btn-link" style="cursor:pointer" onclick="batchPrintChallan()">Print</span> </td>
-                            <td> <span id = "printMonthly" title="Print all record below" class="btn btn-link" style="cursor:pointer" onclick="updateEmployee('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>
+                            <td> <span id = "printAllAdmission" title="Print all record below" class="btn btn-link" style="cursor:pointer" onclick="batchPrintAdmissionChallan()">Print All</span> </td>
+                            <td> <span id = "printMonthly" title="Print all record below" class="btn btn-link" style="cursor:pointer" onclick="batchPrintChallan()">Print All</span> </td>
 
                           </tr>
                         </thead>
