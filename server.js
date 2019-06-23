@@ -139,7 +139,7 @@ app.get('/add_class', (req, res) => {
 app.post("/addStudent", function(req, res) {
     setupResponse(res);
     var stdId=0;
-    query_add_student = escape('INSERT INTO %s VALUES(%s) RETURNING id','student(gr_num, name, gender, dob, age, place_of_birth, nationality, religion, class_id, f_name, address, f_profession, m_profession, telephone_home, telephone_office, old_details, participation, awards, health)', ["'"+req.body.data.gr_num+"','"+req.body.data.name+"','"+req.body.data.gender+"','"+req.body.data.dob+"','"+req.body.data.age+"','"+req.body.data.place_of_birth+"','"+req.body.data.nationality+"','"+req.body.data.religion+"','"+req.body.data.class_id+"','"+req.body.data.f_name+"','"+req.body.data.address+"','"+req.body.data.f_profession+"','"+req.body.data.m_profession+"',"+req.body.data.telephone_home+","+req.body.data.telephone_office+",'"+req.body.data.old_details+"','"+req.body.data.participation+"','"+req.body.data.awards+"','"+req.body.data.health+"'"]);
+    query_add_student = escape('INSERT INTO %s VALUES(%s) RETURNING id','student(gr_num, name, gender, dob, age, place_of_birth, nationality, religion, class_id, f_name, address, f_profession, m_profession, telephone_home, telephone_office, old_details, participation, awards, health )', ["'"+req.body.data.gr_num+"','"+req.body.data.name+"','"+req.body.data.gender+"','"+req.body.data.dob+"','"+req.body.data.age+"','"+req.body.data.place_of_birth+"','"+req.body.data.nationality+"','"+req.body.data.religion+"','"+req.body.data.class_id+"','"+req.body.data.f_name+"','"+req.body.data.address+"','"+req.body.data.f_profession+"','"+req.body.data.m_profession+"',"+req.body.data.telephone_home+","+req.body.data.telephone_office+",'"+req.body.data.old_details+"','"+req.body.data.participation+"','"+req.body.data.awards+"','"+req.body.data.health+"'"]);
 
     client.query(query_add_student, function(err, result) {
         if(err) {
@@ -307,21 +307,23 @@ app.post("/change_month", jsonParser, function(req, res) {
                 students = result.rows;
             }
             var update_penalty_query=""
-            for(i=0; i<students.length; i++){
-                if(students[i]["receive_date"] != null){
-                    var a = new Date(students[i]["due_date"]);
-                    var b = new Date(students[i]["receive_date"]);
-                    difference = dateDiffInDays(a, b);
-                    update_penalty_query = update_penalty_query + " UPDATE student SET current_penalty = " + difference*10 + " \
-                                            WHERE id = " + students[i]["id"] + ";"
-                }
-                else{
-                    var arrears_val = students[i]["monthly_fees"] + students[i]["security_fees"] + students[i]["annual_fees"] + students[i]["misc_fees"] + students[i]["transport_fees"] + students[i]["arrears"] + students[i]["current_penalty"];                    
-                    var a = new Date(students[i]["due_date"]);
-                    var b = new Date(req.body["issue_date"]);
-                    difference = dateDiffInDays(a, b);
-                    update_penalty_query = update_penalty_query + " UPDATE student SET current_penalty = " + difference*10 + "\
-                                                    , arrears = " + arrears_val + " WHERE id = " + students[i]["id"] + ";"
+            if (students){
+                for(i=0; i<students.length; i++){
+                    if(students[i]["receive_date"] != null){
+                        var a = new Date(students[i]["due_date"]);
+                        var b = new Date(students[i]["receive_date"]);
+                        difference = dateDiffInDays(a, b);
+                        update_penalty_query = update_penalty_query + " UPDATE student SET current_penalty = " + difference*10 + " \
+                                                WHERE id = " + students[i]["id"] + ";"
+                    }
+                    else{
+                        var arrears_val = students[i]["monthly_fees"] + students[i]["security_fees"] + students[i]["annual_fees"] + students[i]["misc_fees"] + students[i]["transport_fees"] + students[i]["arrears"] + students[i]["current_penalty"];                    
+                        var a = new Date(students[i]["due_date"]);
+                        var b = new Date(req.body["issue_date"]);
+                        difference = dateDiffInDays(a, b);
+                        update_penalty_query = update_penalty_query + " UPDATE student SET current_penalty = " + difference*10 + "\
+                                                        , arrears = " + arrears_val + " WHERE id = " + students[i]["id"] + ";"
+                    }
                 }
             }
             client.query(update_penalty_query, function(err, result) {
