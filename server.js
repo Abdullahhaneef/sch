@@ -139,8 +139,19 @@ app.get('/add_class', (req, res) => {
 app.post("/addStudent", function(req, res) {
     setupResponse(res);
     var stdId=0;
-    query_add_student = escape('INSERT INTO %s VALUES(%s) RETURNING id','student(gr_num, name, gender, dob, age, place_of_birth, nationality, religion, class_id, f_name, address, f_profession, m_profession, telephone_home, telephone_office, old_details, participation, awards, health )', ["'"+req.body.data.gr_num+"','"+req.body.data.name+"','"+req.body.data.gender+"','"+req.body.data.dob+"','"+req.body.data.age+"','"+req.body.data.place_of_birth+"','"+req.body.data.nationality+"','"+req.body.data.religion+"','"+req.body.data.class_id+"','"+req.body.data.f_name+"','"+req.body.data.address+"','"+req.body.data.f_profession+"','"+req.body.data.m_profession+"',"+req.body.data.telephone_home+","+req.body.data.telephone_office+",'"+req.body.data.old_details+"','"+req.body.data.participation+"','"+req.body.data.awards+"','"+req.body.data.health+"'"]);
-
+    query_add_student = escape('INSERT INTO %s VALUES(%s) RETURNING id','student(gr_num, name, gender, dob, age,\
+                                 place_of_birth, nationality, religion, class_id, f_name, address, f_profession, \
+                                 m_profession, telephone_home, telephone_office, old_details, participation, \
+                                 awards, health, admission_fees, monthly_fees, issue_date, due_date, receive_date )\
+                                 ', ["'"+req.body.data.gr_num+"','"+req.body.data.name+"','"+req.body.data.gender+"','\
+                                 "+req.body.data.dob+"','"+req.body.data.age+"','"+req.body.data.place_of_birth+"','\
+                                 "+req.body.data.nationality+"','"+req.body.data.religion+"','"+req.body.data.class_id+"','\
+                                 "+req.body.data.f_name+"','"+req.body.data.address+"','"+req.body.data.f_profession+"','\
+                                 "+req.body.data.m_profession+"',"+req.body.data.telephone_home+","+req.body.data.telephone_office+",'\
+                                 "+req.body.data.old_details+"','"+req.body.data.participation+"','"+req.body.data.awards+"','\
+                                 "+req.body.data.health+"',"+req.body.data.admission_fees+","+req.body.data.monthly_fees+",'\
+                                 "+req.body.data.today_date+"','"+req.body.data.today_date+"','"+req.body.data.today_date+"'"]);
+    console.log(query_add_student);
     client.query(query_add_student, function(err, result) {
         if(err) {
             console.log(err);
@@ -295,9 +306,18 @@ app.post("/change_month", jsonParser, function(req, res) {
     var current_penalty_value = 0;
     var students;
 
-    query_get_student = "SELECT id, gr_num, due_date, receive_date, monthly_fees, security_fees, arrears, annual_fees, \
+    query_get_student = "INSERT INTO public.history(id,\
+                            gender, dob, age, section_id, telephone_home, telephone_office, \
+                            name, place_of_birth, religion, nationality, f_name, address, \
+                            f_profession, m_profession, old_details, participation, awards, \
+                            health, gr_num, create_date, class_id, admission_fees, monthly_fees, \
+                            arrears, security_fees, annual_fees, misc_fees, current_penalty, \
+                            issue_date, due_date, receive_date, month, transport_fees)\
+                            SELECT * FROM student;\
+                        SELECT id, gr_num, due_date, receive_date, monthly_fees, security_fees, arrears, annual_fees, \
                         misc_fees, transport_fees, current_penalty FROM student \
-                        WHERE receive_date is null or receive_date > due_date;"
+                        WHERE receive_date is null or receive_date > due_date;\
+                        "
     client.query(query_get_student, function(err, result) {
         if(err) {
             console.log(err)
@@ -331,14 +351,7 @@ app.post("/change_month", jsonParser, function(req, res) {
                     console.log(err)
                 }
                 else {
-                    var query_change_month = "INSERT INTO public.history(id,\
-                            gender, dob, age, section_id, telephone_home, telephone_office, \
-                            name, place_of_birth, religion, nationality, f_name, address, \
-                            f_profession, m_profession, old_details, participation, awards, \
-                            health, gr_num, create_date, class_id, admission_fees, monthly_fees, \
-                            arrears, security_fees, annual_fees, misc_fees, current_penalty, \
-                            issue_date, due_date, receive_date, month, transport_fees)\
-                            SELECT * FROM student;\
+                    var query_change_month = "\
                                                 UPDATE student SET \
                                                 month='"+req.body['month']+"', \
                                                 issue_date='"+req.body['issue_date']+"', \

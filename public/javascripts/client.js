@@ -238,6 +238,26 @@ function getFeesInfo(){
   });
 }
 
+function _calculateAge(birthday) { // birthday is a date
+    var ageDifMs = Date.now() - birthday.getTime();
+    var ageDate = new Date(ageDifMs); // miliseconds from epoch
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
+}
+
+function calcAge(dateString) {
+  var birthday = +new Date(dateString);
+  return ~~((Date.now() - birthday) / (31557600000));
+}
+
+function getAge(){
+  console.log("in get age");
+  date_of_birth = jQuery('#dob')[0].value;
+  console.log(date_of_birth);
+  age = calcAge(date_of_birth);
+  console.log(age);
+  jQuery('#age')[0].value = age;
+}
+
 function renderFees(response){
   var is_active;
   jQuery("#fees_table_body").empty();
@@ -262,9 +282,9 @@ function renderFees(response){
                             <td> <input name="transport_fees" type="number" value = "'+response["students"][i]["transport_fees"]+'"></td>\
                             <td> <input name="arrears" type="number" value = "'+response["students"][i]["arrears"]+'"></td>\
                             <td> <input name="current_penalty" type="number" value = "'+response["students"][i]["current_penalty"]+'"></td>\
-                            <td> <input name="month" type="month" value = "'+response["students"][i]["month"]+'" readonly></td>\
-                            <td> <input name="issue_date" type="Date" value = "'+response["students"][i]["issue_date"]+'" readonly></td>\
-                            <td> <input name="due_date" type="Date" value = "'+response["students"][i]["due_date"]+'" readonly></td>\
+                            <td> <input name="month" type="month" value = "'+response["students"][i]["month"]+'"></td>\
+                            <td> <input name="issue_date" type="Date" value = "'+response["students"][i]["issue_date"]+'"></td>\
+                            <td> <input name="due_date" type="Date" value = "'+response["students"][i]["due_date"]+'"></td>\
                             <td> <input name="receive_date" type="Date" value = "'+response["students"][i]["receive_date"]+'"></td>\
                             <td> <span id = "updateRecord" title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="updateStudentFee('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Update</span> </td>\
                             <td> <span id = "printAdmission" title="Print this record" class="btn btn-link" style="cursor:pointer" onclick="printAdmissionChallan('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>\
@@ -319,6 +339,7 @@ function changeMonth(){
         };
         $.ajax(settings).done(function (response) {
           jQuery.notify("User Updated","success");
+          getFeesInfo();
         });  
         swal(
           'Saved!',
@@ -2274,7 +2295,7 @@ body {\
      size: 8.2in 10.5in;\
  }\
  .table {\
-margin-top: 8mm;\
+margin-top: 7mm;\
 }\
 }\
 }}'});
@@ -2301,6 +2322,22 @@ function addStudent(){
   $('#stdForm').find('input, textarea, select').each(function(i, field) {
       data[field.name] = field.value;
   });
+
+  var today = new Date();
+  var dd = today.getDate();
+  var mm = today.getMonth() + 1; //January is 0!
+
+  var yyyy = today.getFullYear();
+  if (dd < 10) {
+    dd = '0' + dd;
+  } 
+  if (mm < 10) {
+    mm = '0' + mm;
+  } 
+  var today = mm + '-' + dd + '-' + yyyy;
+  data['today_date'] = today;
+  console.log(today);
+  debugger;
   if (isEmpty) {
     jQuery.notify("Correctly Fill the highlighted fields", "error");
   }
