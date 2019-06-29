@@ -81,7 +81,7 @@ function renderStd(response){
 
 function updateStudent(stdId){
   localStorage.setItem('stdId',stdId);
-  setTimeout(function(){window.open(SERVER_URI + '/update_std','_self') }, 1000);
+  setTimeout(function(){window.open(SERVER_URI + '/update_std','_self') }, 500);
 }
 
 function updateStudentInfo(){
