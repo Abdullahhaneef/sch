@@ -83,7 +83,6 @@ function updateStudent(stdId){
   localStorage.setItem('stdId',stdId);
   setTimeout(function(){window.open(SERVER_URI + '/update_std','_self') }, 3000);
 }
-setTimeout(function(){ alert("Hello"); }, 3000);
 
 function updateStudentInfo(){
   getClassUpdate();
