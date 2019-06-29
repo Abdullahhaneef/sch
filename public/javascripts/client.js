@@ -85,44 +85,62 @@ function updateStudent(stdId){
 }
 
 function updateStudentInfo(){
-  getClassUpdate();
-  var data={};
-  data['stdId'] = localStorage.getItem('stdId');
+
   var settings = {
     "async": true,
     "crossDomain": true,
-    "url": SERVER_URI+"/get_student_id",
-    "method": "POST",
+    "url": SERVER_URI+"/get_class",
+    "method": "GET",
     "headers": {
-      "content-type": "application/x-www-form-urlencoded",
-      "cache-control": "no-cache",
-    },
-    "data": {
-      data
+      "cache-control": "no-cache"
     }
   }
   $.ajax(settings).done(function (response) {
-    std = response.student[0];
-    jQuery("#gr_num")[0].value = std.gr_num;
-    jQuery("#full_name")[0].value = std.name;
-    jQuery("#gender")[0].value = std.gender;
-    jQuery("#dob")[0].value = std.dob;
-    jQuery("#age")[0].value = std.age;
-    jQuery("#pob")[0].value = std.place_of_birth;
-    jQuery("#nationality")[0].value = std.nationality;
-    jQuery("#religion")[0].value = std.religion;
-    jQuery("#classes")[0].value = std.class_id;
-    jQuery("#f_name")[0].value = std.f_name;
-    jQuery("#address")[0].value = std.address;
-    jQuery("#f_profession")[0].value = std.f_profession;
-    jQuery("#m_profession")[0].value = std.m_profession;
-    jQuery("#t_home")[0].value = std.telephone_home;
-    jQuery("#t_office")[0].value = std.telephone_office;
-    jQuery("#previous_info")[0].value = std.old_details;
-    jQuery("#participation")[0].value = std.participation;
-    jQuery("#awards")[0].value = std.awards;
-    jQuery("#health")[0].value = std.health;
+    $.each(response.employees, function (index, name) {
+        $('#classes').append('<option value="' + name.name + '">' +
+            name.name + '</option>');
+    });
+
+    var data={};
+    data['stdId'] = localStorage.getItem('stdId');
+    var settings = {
+      "async": true,
+      "crossDomain": true,
+      "url": SERVER_URI+"/get_student_id",
+      "method": "POST",
+      "headers": {
+        "content-type": "application/x-www-form-urlencoded",
+        "cache-control": "no-cache",
+      },
+      "data": {
+        data
+      }
+    }
+    $.ajax(settings).done(function (response) {
+      std = response.student[0];
+      jQuery("#gr_num")[0].value = std.gr_num;
+      jQuery("#full_name")[0].value = std.name;
+      jQuery("#gender")[0].value = std.gender;
+      jQuery("#dob")[0].value = std.dob;
+      jQuery("#age")[0].value = std.age;
+      jQuery("#pob")[0].value = std.place_of_birth;
+      jQuery("#nationality")[0].value = std.nationality;
+      jQuery("#religion")[0].value = std.religion;
+      jQuery("#classes")[0].value = std.class_id;
+      jQuery("#f_name")[0].value = std.f_name;
+      jQuery("#address")[0].value = std.address;
+      jQuery("#f_profession")[0].value = std.f_profession;
+      jQuery("#m_profession")[0].value = std.m_profession;
+      jQuery("#t_home")[0].value = std.telephone_home;
+      jQuery("#t_office")[0].value = std.telephone_office;
+      jQuery("#previous_info")[0].value = std.old_details;
+      jQuery("#participation")[0].value = std.participation;
+      jQuery("#awards")[0].value = std.awards;
+      jQuery("#health")[0].value = std.health;
+    });
+
   });
+
 }
 
 function updateSetStudent(){
