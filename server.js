@@ -136,6 +136,14 @@ app.get('/add_class', (req, res) => {
     }
 });
 
+app.get('/update_std', (req, res) => {
+    if (req.session.user && req.cookies.user_sid && req.session.user.username == 'admin') {
+        res.sendFile(__dirname + '/views/update_std_form.html');
+    } else {
+        res.redirect('/login');
+    }
+});
+
 app.post("/addStudent", function(req, res) {
     setupResponse(res);
     var stdId=0;
@@ -143,14 +151,14 @@ app.post("/addStudent", function(req, res) {
                                  place_of_birth, nationality, religion, class_id, f_name, address, f_profession, \
                                  m_profession, telephone_home, telephone_office, old_details, participation, \
                                  awards, health, admission_fees, monthly_fees, issue_date, due_date, receive_date )\
-                                 ', ["'"+req.body.data.gr_num+"','"+req.body.data.name+"','"+req.body.data.gender+"','\
-                                 "+req.body.data.dob+"','"+req.body.data.age+"','"+req.body.data.place_of_birth+"','\
-                                 "+req.body.data.nationality+"','"+req.body.data.religion+"','"+req.body.data.class_id+"','\
-                                 "+req.body.data.f_name+"','"+req.body.data.address+"','"+req.body.data.f_profession+"','\
-                                 "+req.body.data.m_profession+"',"+req.body.data.telephone_home+","+req.body.data.telephone_office+",'\
-                                 "+req.body.data.old_details+"','"+req.body.data.participation+"','"+req.body.data.awards+"','\
-                                 "+req.body.data.health+"',"+req.body.data.admission_fees+","+req.body.data.monthly_fees+",'\
-                                 "+req.body.data.today_date+"','"+req.body.data.today_date+"','"+req.body.data.today_date+"'"]);
+                                 ', ["'"+req.body.data.gr_num+"','"+req.body.data.name+"','"+req.body.data.gender+"',\
+                                 '"+req.body.data.dob+"','"+req.body.data.age+"','"+req.body.data.place_of_birth+"',\
+                                 '"+req.body.data.nationality+"','"+req.body.data.religion+"','"+req.body.data.class_id+"',\
+                                 '"+req.body.data.f_name+"','"+req.body.data.address+"','"+req.body.data.f_profession+"',\
+                                 '"+req.body.data.m_profession+"',"+req.body.data.telephone_home+","+req.body.data.telephone_office+",\
+                                 '"+req.body.data.old_details+"','"+req.body.data.participation+"','"+req.body.data.awards+"',\
+                                 '"+req.body.data.health+"',"+req.body.data.admission_fees+","+req.body.data.monthly_fees+",\
+                                 '"+req.body.data.today_date+"','"+req.body.data.today_date+"','"+req.body.data.today_date+"'"]);
     console.log(query_add_student);
     client.query(query_add_student, function(err, result) {
         if(err) {
@@ -160,6 +168,31 @@ app.post("/addStudent", function(req, res) {
             stdId = result.rows[0].id;
             client.end();
             res.end(JSON.stringify({"status":"success", "stdId":stdId}));
+        }
+    })        
+});
+
+app.post("/updateSetStudent", function(req, res) {
+    setupResponse(res);
+    console.log(req.body.data)
+    query_update_student = "UPDATE student SET name='"+req.body.data.name+"'\
+                    , gender='"+req.body.data.gender+"', dob='"+req.body.data.dob+"', age='"+req.body.data.age+"'\
+                    , telephone_home='"+req.body.data.telephone_home+"', telephone_office='"+req.body.data.telephone_office+"'\
+                    , place_of_birth='"+req.body.data.place_of_birth+"', religion='"+req.body.data.religion+"'\
+                    , nationality='"+req.body.data.nationality+"', f_name='"+req.body.data.f_name+"'\
+                    , address='"+req.body.data.address+"', f_profession='"+req.body.data.f_profession+"'\
+                    , m_profession='"+req.body.data.m_profession+"', old_details='"+req.body.data.old_details+"'\
+                    , participation='"+req.body.data.participation+"', awards='"+req.body.data.awards+"'\
+                    , health='"+req.body.data.health+"', class_id='"+req.body.data.class_id+"'\
+                     WHERE id = "+req.body.data.stdId+";"
+    console.log(query_update_student);
+    client.query(query_update_student, function(err, result) {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            client.end();
+            res.end(JSON.stringify({"status":"success"}));
         }
     })        
 });
@@ -268,7 +301,25 @@ app.get("/get_student", function(req, res) {
         }
     });
 });
-
+app.post("/get_student_id", jsonParser, function(req, res) {
+    setupResponse(res);
+    var student;
+    console.log(req.body.data)
+    query_get_student_id = "SELECT *\
+                            FROM student WHERE id = "+req.body.data['stdId']+";"
+    client.query(query_get_student_id, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            for (i=0; i<result.rows.length; i++){
+                student = result.rows;
+            }
+            client.end();
+            res.end(JSON.stringify({"status":"success", "student":student}));
+        }
+    });
+});
 app.get("/get_class", function(req, res) {
     setupResponse(res);
     var employees;
@@ -425,6 +476,23 @@ app.post("/update_all_fees", jsonParser, function(req, res) {
         }
     });
 });
+
+
+app.post("/delete_student", jsonParser, function(req, res) {
+    setupResponse(res);
+    var query_delete_student = "DELETE FROM student \
+                                WHERE id="+req.body['stdId']+";"
+    client.query(query_delete_student, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            client.end();
+            res.end(JSON.stringify({"status":"success"}));
+        }
+    });
+});
+
 
 // route for handling 404 requests(unavailable routes)
 app.use(function (req, res, next) {

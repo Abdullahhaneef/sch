@@ -43,7 +43,7 @@ body{
 		padding-bottom: 25px;
 }
 </style>
-<body onload="getClass()">
+<body onload="updateStudentInfo()">
   <nav class="navbar navbar-default">
     <div class="container">
       <div class="navbar-header">
@@ -178,7 +178,7 @@ body{
 					<div class="form-group">
 						<label class="col-sm-3 control-label" for="participation">Any participation Co-Curricular Activities: </label>
 						<div class="col-sm-9">
-							<textarea id="activities" name="participation" rows="4" class="form-control"></textarea>
+							<textarea id="participation" name="participation" rows="4" class="form-control"></textarea>
 						</div>
 					</div>			  		  
 					<div class="form-group">
@@ -190,26 +190,14 @@ body{
 					<div class="form-group">
 						<label class="col-sm-3 control-label" for="health">Is there anything you would like to tell us about child's health habits, and educational Standard etc? </label>
 						<div class="col-sm-9">
-							<textarea id="activities" name="health" rows="4" class="form-control"></textarea>
-						</div>
-					</div>			  		  
-					<div class="form-group">
-						<label class="col-sm-3 control-label" for="admission_fees">Admission Fees: </label>
-						<div class="col-sm-9">
-							<input id="admission_fees" name="admission_fees" type="number" class="form-control" >
-						</div>
-					</div>			  		  
-					<div class="form-group">
-						<label class="col-sm-3 control-label" for="monthly_fees">Monthly Fees: </label>
-						<div class="col-sm-9">
-							<input id="monthly_fees" name="monthly_fees" type="number" class="form-control" >
+							<textarea id="health" name="health" rows="4" class="form-control"></textarea>
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="col-sm-offset-3 col-sm-9">
 							<div id="add_std_button" class="">
-								<button onclick="addStudent(); return false;" style="margin-bottom: 55px;" class="btn btn-primary">SUBMIT</button>
+								<button onclick="updateSetStudent(); return false;" style="margin-bottom: 55px;" class="btn btn-primary">SUBMIT</button>
 							</div>
 						</div>
 					</div>	

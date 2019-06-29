@@ -1,8 +1,6 @@
   var SERVER_URI = "http://localhost:8090";
 
 ///////////////////////////Get Class//////////////////////////////////////////
-
-
 function getClass(){
   var settings = {
     "async": true,
@@ -22,7 +20,23 @@ function getClass(){
   });
 
 }
-
+function getClassUpdate(){
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": SERVER_URI+"/get_class",
+    "method": "GET",
+    "headers": {
+      "cache-control": "no-cache"
+    }
+  }
+  $.ajax(settings).done(function (response) {
+    $.each(response.employees, function (index, name) {
+        $('#classes').append('<option value="' + name.name + '">' +
+            name.name + '</option>');
+    });
+  });
+}
 
 function getStd(){
   var settings = {
@@ -44,20 +58,14 @@ function renderStd(response){
   jQuery("#std_table_body").empty();
   if (response['students']){
     for (i=0; i < response['students'].length;i++){
-/*      if (response["students"][i]["is_active"]){
-        is_active = "checked";
-      }
-      else{
-        is_active = "";
-      }*/
       jQuery("#std_table_body").append('<tr>\
                             <td> '+response['students'][i]["gr_num"]+' </td>\
                             <td> <input name="name" type="Text" value = "'+response["students"][i]["name"]+'"></td>\
                             <td> <input name="f_name" type="Text" value = "'+response["students"][i]["f_name"]+'"></td>\
                             <td> <input name="telephone_home" type="Text" value = "'+response["students"][i]["telephone_home"]+'"></td>\
                             <td> <input name="telephone_office" type="Text" value = "'+response["students"][i]["telephone_office"]+'"></td>\
-                            <td> <span id = "updateRecord" title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="updateEmployee('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Update</span> </td>\
-                            <td> <span title="delete this record" class="glyphicon glyphicon-trash text-danger" style="cursor:pointer" onclick="delEmployee('+parseInt(response['students'][i]["id"])+')"></span> </td>\
+                            <td> <span id = "updateRecord" title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="updateStudent('+parseInt(response['students'][i]["id"])+')">Update</span> </td>\
+                            <td> <span title="delete this record" class="glyphicon glyphicon-trash text-danger" style="cursor:pointer" onclick="delStudent('+parseInt(response['students'][i]["id"])+')"></span> </td>\
                         </tr>');
     }
     emp_table = jQuery('#student_table').DataTable({
@@ -68,6 +76,98 @@ function renderStd(response){
           "retrieve": true,
           "bPaginate": false
     });
+  }
+}
+
+function updateStudent(stdId){
+  update_window = window.open(SERVER_URI + '/update_std','_self');
+  localStorage.setItem('stdId',stdId);
+}
+
+function updateStudentInfo(){
+  getClassUpdate();
+  var data={};
+  data['stdId'] = localStorage.getItem('stdId');
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": SERVER_URI+"/get_student_id",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/x-www-form-urlencoded",
+      "cache-control": "no-cache",
+    },
+    "data": {
+      data
+    }
+  }
+  $.ajax(settings).done(function (response) {
+    std = response.student[0];
+    jQuery("#gr_num")[0].value = std.gr_num;
+    jQuery("#full_name")[0].value = std.name;
+    jQuery("#gender")[0].value = std.gender;
+    jQuery("#dob")[0].value = std.dob;
+    jQuery("#age")[0].value = std.age;
+    jQuery("#pob")[0].value = std.place_of_birth;
+    jQuery("#nationality")[0].value = std.nationality;
+    jQuery("#religion")[0].value = std.religion;
+    jQuery("#classes")[0].value = std.class_id;
+    jQuery("#f_name")[0].value = std.f_name;
+    jQuery("#address")[0].value = std.address;
+    jQuery("#f_profession")[0].value = std.f_profession;
+    jQuery("#m_profession")[0].value = std.m_profession;
+    jQuery("#t_home")[0].value = std.telephone_home;
+    jQuery("#t_office")[0].value = std.telephone_office;
+    jQuery("#previous_info")[0].value = std.old_details;
+    jQuery("#participation")[0].value = std.participation;
+    jQuery("#awards")[0].value = std.awards;
+    jQuery("#health")[0].value = std.health;
+  });
+}
+
+function updateSetStudent(){
+  var isEmpty = false;
+  //var values = $("#stdForm").serialize();
+  var data = {};
+  data['stdId'] = localStorage.getItem('stdId');
+  $('#stdForm').find('input, textarea, select').each(function(i, field) {
+      data[field.name] = field.value;
+  });
+  if (isEmpty) {
+    jQuery.notify("Correctly Fill the highlighted fields", "error");
+  }
+  else{
+    swal({
+    title: 'Are you sure?',
+    text: "Check the values, you won't be able to revert this.",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, save'
+    }).then(function () {
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": SERVER_URI+"/updateSetStudent",
+        "method": "POST",
+        "headers": {
+          "content-type": "application/x-www-form-urlencoded",
+          "cache-control": "no-cache",
+        },
+        "data": {
+          data
+        }
+      }
+      $.ajax(settings).done(function (response) {
+          window.open(SERVER_URI + '/add_std','_self');
+      });
+      swal(
+        'Saved!',
+        'Request has been saved.',
+        'success'
+      )
+    })
   }
 }
 
@@ -449,6 +549,15 @@ function updateAllFees(std){
 
 }
 
+function print_std(){
+    printJS({printable:'student_table',type: 'html',scanStyles:false})
+}
+function fees_print(){
+    printJS({printable:'fees_table',type: 'html',scanStyles:false})
+}
+function print_history(){
+    printJS({printable:'history_table',type: 'html',scanStyles:false})
+}
 function printAdmissionChallan(stdId,emp){
 
   $(".print_pdf_show").empty();
@@ -2424,8 +2533,8 @@ function addClass(){
 
 
 /////////////////////////////////Delete Employee//////////////////////////////////////
-function delEmployee(empId){
-  var obj = {"empId" : empId};
+function delStudent(stdId){
+  var obj = {"stdId" : stdId};
   swal({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
@@ -2438,7 +2547,7 @@ function delEmployee(empId){
       var settings = {
         "async": true,
         "crossDomain": true,
-        "url": SERVER_URI+"/delete_employee",
+        "url": SERVER_URI+"/delete_student",
         "method": "POST",
         "headers": {
           "content-type": "application/json",
@@ -2447,9 +2556,8 @@ function delEmployee(empId){
         "processData": false,
         "data": JSON.stringify(obj)
       }
-      $.ajax(settings).done(function (response) {
-          emp_table.destroy(false);     
-          getEmployees();
+      $.ajax(settings).done(function (response) {    
+          getClass();
       });
       swal(
         'Deleted!',
