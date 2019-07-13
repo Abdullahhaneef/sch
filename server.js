@@ -150,7 +150,7 @@ app.post("/addStudent", function(req, res) {
     query_add_student = escape('INSERT INTO %s VALUES(%s) RETURNING id','student(gr_num, name, gender, dob, age,\
                                  place_of_birth, nationality, religion, class_id, f_name, address, f_profession, \
                                  m_profession, telephone_home, telephone_office, old_details, participation, \
-                                 awards, health, admission_fees, monthly_fees, issue_date, due_date, receive_date )\
+                                 awards, health, admission_fees, monthly_fees, issue_date, due_date, receive_date, sibling )\
                                  ', ["'"+req.body.data.gr_num+"','"+req.body.data.name+"','"+req.body.data.gender+"',\
                                  '"+req.body.data.dob+"','"+req.body.data.age+"','"+req.body.data.place_of_birth+"',\
                                  '"+req.body.data.nationality+"','"+req.body.data.religion+"','"+req.body.data.class_id+"',\
@@ -158,7 +158,7 @@ app.post("/addStudent", function(req, res) {
                                  '"+req.body.data.m_profession+"',"+req.body.data.telephone_home+","+req.body.data.telephone_office+",\
                                  '"+req.body.data.old_details+"','"+req.body.data.participation+"','"+req.body.data.awards+"',\
                                  '"+req.body.data.health+"',"+req.body.data.admission_fees+","+req.body.data.monthly_fees+",\
-                                 '"+req.body.data.today_date+"','"+req.body.data.today_date+"','"+req.body.data.today_date+"'"]);
+                                 '"+req.body.data.today_date+"','"+req.body.data.today_date+"','"+req.body.data.today_date+"','"+req.body.data.sibling+"'"]);
     console.log(query_add_student);
     client.query(query_add_student, function(err, result) {
         if(err) {
@@ -183,7 +183,7 @@ app.post("/updateSetStudent", function(req, res) {
                     , address='"+req.body.data.address+"', f_profession='"+req.body.data.f_profession+"'\
                     , m_profession='"+req.body.data.m_profession+"', old_details='"+req.body.data.old_details+"'\
                     , participation='"+req.body.data.participation+"', awards='"+req.body.data.awards+"'\
-                    , health='"+req.body.data.health+"', class_id='"+req.body.data.class_id+"'\
+                    , health='"+req.body.data.health+"', class_id='"+req.body.data.class_id+"', sibling='"+req.body.data.sibling+"'\
                      WHERE id = "+req.body.data.stdId+";"
     console.log(query_update_student);
     client.query(query_update_student, function(err, result) {
@@ -363,7 +363,7 @@ app.post("/change_month", jsonParser, function(req, res) {
                             f_profession, m_profession, old_details, participation, awards, \
                             health, gr_num, create_date, class_id, admission_fees, monthly_fees, \
                             arrears, security_fees, annual_fees, misc_fees, current_penalty, \
-                            issue_date, due_date, receive_date, month, transport_fees)\
+                            issue_date, due_date, receive_date, month, transport_fees,sibling)\
                             SELECT * FROM student;\
                         SELECT id, gr_num, due_date, receive_date, monthly_fees, security_fees, arrears, annual_fees, \
                         misc_fees, transport_fees, current_penalty FROM student \
@@ -424,6 +424,7 @@ app.post("/change_month", jsonParser, function(req, res) {
 });
 
 app.post("/update_student_fee", jsonParser, function(req, res) {
+    console.log(req.body);
     setupResponse(res);
     for (i=0;i<Object.keys(req.body).length;i++){
         var accessKey = Object.keys(req.body)[i];
@@ -431,6 +432,33 @@ app.post("/update_student_fee", jsonParser, function(req, res) {
             req.body[accessKey] = 0;
         }
     }
+
+    if (req.body['receive_date']==0){
+        req.body['receive_date'] = null;
+    }
+    else{
+        req.body['receive_date'] = "'"+req.body["receive_date"]+"'"
+    }
+
+    if (req.body['issue_date']==0){
+        req.body['issue_date'] = null;
+    }
+    else{
+        req.body['issue_date'] = "'"+req.body["issue_date"]+"'"
+    }
+
+    if (req.body['due_date']==0){
+        req.body['due_date'] = null;
+    }
+    else{
+        req.body['due_date'] = "'"+req.body["due_date"]+"'"
+    }
+    if (req.body['month']==0){
+        req.body['month'] = null;
+    }
+    else{
+        req.body['month'] = "'"+req.body["month"]+"'"
+    }    
     var query_update_student = "UPDATE student SET \
                                 admission_fees="+req.body['admission_fees']+", \
                                 monthly_fees="+req.body['monthly_fees']+", \
@@ -440,8 +468,12 @@ app.post("/update_student_fee", jsonParser, function(req, res) {
                                 misc_fees="+req.body['misc_fees']+", \
                                 transport_fees="+req.body['transport_fees']+", \
                                 current_penalty="+req.body['current_penalty']+", \
-                                receive_date='"+req.body['receive_date']+"' \
+                                receive_date="+req.body['receive_date']+", \
+                                issue_date="+req.body['issue_date']+", \
+                                due_date="+req.body['due_date']+" ,\
+                                month="+req.body['month']+" \
                                 WHERE id="+req.body['stdId']+";"
+    console.log(query_update_student);
     client.query(query_update_student, function(err, result) {
         if(err) {
             console.log(err)

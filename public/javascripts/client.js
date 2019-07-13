@@ -137,6 +137,7 @@ function updateStudentInfo(){
       jQuery("#participation")[0].value = std.participation;
       jQuery("#awards")[0].value = std.awards;
       jQuery("#health")[0].value = std.health;
+      jQuery("#sibling")[0].value = std.sibling;
     });
 
   });
@@ -380,6 +381,9 @@ function renderFees(response){
   var is_active;
   jQuery("#fees_table_body").empty();
   if (response['students']){
+    jQuery("#month")[0].value = response["students"][1]["month"];
+    jQuery("#issue")[0].value = response["students"][1]["issue_date"];
+    jQuery("#due")[0].value = response["students"][1]["due_date"];
     for (i=0; i < response['students'].length;i++){
 /*      if (response["students"][i]["is_active"]){
         is_active = "checked";
@@ -405,8 +409,9 @@ function renderFees(response){
                             <td> <input name="due_date" type="Date" value = "'+response["students"][i]["due_date"]+'"></td>\
                             <td> <input name="receive_date" type="Date" value = "'+response["students"][i]["receive_date"]+'"></td>\
                             <td> <span id = "updateRecord" title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="updateStudentFee('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Update</span> </td>\
-                            <td> <span id = "printAdmission" title="Print this record" class="btn btn-link" style="cursor:pointer" onclick="printAdmissionChallan('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>\
+                            <td> <span id = "printAdmission" title="Print this record" class="btn btn-link" style="cursor:pointer" onclick="printAdmTraChallan(1,'+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>\
                             <td> <span id = "printMonthly" title="Print this record" class="btn btn-link" style="cursor:pointer" onclick="printChallan('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>\
+                            <td> <span id = "printAdmission" title="Print this record" class="btn btn-link" style="cursor:pointer" onclick="printAdmTraChallan(2,'+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>\
                             </tr>');
     }
     emp_table = jQuery('#fees_table').DataTable({
@@ -521,8 +526,14 @@ function updateStudentFee(stdId,std){
             "transport_fees":jQuery(std).children().find("input")[9].value,
             "arrears":jQuery(std).children().find("input")[10].value,
             "current_penalty":jQuery(std).children().find("input")[11].value,
-            "receive_date":jQuery(std).children().find("input")[15].value
+            "receive_date":jQuery(std).children().find("input")[15].value,
+            "issue_date":jQuery(std).children().find("input")[13].value,
+            "due_date":jQuery(std).children().find("input")[14].value,
+            "month":jQuery(std).children().find("input")[12].value
           };
+  console.log(obj["receive_date"]);
+  console.log(obj["issue_date"]);
+  console.log(obj["due_date"]);
   var settings = {
     "async": true,
     "crossDomain": true,
@@ -568,16 +579,18 @@ function updateAllFees(std){
 }
 
 function print_std(){
-    printJS({printable:'student_table',type: 'html',scanStyles:false})
+    printJS({printable:'student_table',type: 'html'})
 }
 function fees_print(){
-    printJS({printable:'fees_table',type: 'html',scanStyles:false})
+    printJS({printable:'fees_table',type: 'html'})
 }
 function print_history(){
-    printJS({printable:'history_table',type: 'html',scanStyles:false})
+    printJS({printable:'history_table',type: 'html'})
 }
-function printAdmissionChallan(stdId,emp){
+function printAdmTraChallan(cat,stdId,emp){
 
+  console.log("in function");
+  console.log(cat);
   $(".print_pdf_show").empty();
   var obj = {
               "stdId":stdId,
@@ -597,8 +610,17 @@ function printAdmissionChallan(stdId,emp){
               "issue":jQuery(emp).children().find("input")[13].value,
               "due":jQuery(emp).children().find("input")[14].value
             };
-  var total = +obj["admission_fees"];
 
+  if (cat == 1){
+    var adm_total = +obj["admission_fees"];
+    var tra_total = 0;
+    var grand_total = adm_total;
+  }
+  else {
+    var adm_total = 0;
+    var tra_total = +obj["transport_fees"];
+    var grand_total = tra_total;
+  }
     var html =''
     html = '\
     <div class="container-fluid" id="printSect">\
@@ -683,47 +705,47 @@ function printAdmissionChallan(stdId,emp){
                                     <tr>\
                                         <td>1</td>\
                                         <td>Admission Fee</td>\
-                                        <td class="text-right">'+obj["admission_fees"]+'</td>\
+                                        <td class="text-right">'+adm_total+'</td>\
                                     </tr>\
                                     <tr>\
                                         <td>2</td>\
                                         <td>Security</td>\
-                                        <td class="text-right"></td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td>3</td>\
                                         <td>Annual Charges</td>\
-                                        <td class="text-right"></td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td>5</td>\
                                         <td>Tuition Fees</td>\
-                                        <td class="text-right"></td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td>6</td>\
                                         <td>Miscellaneous</td>\
-                                        <td class="text-right"></td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td>7</td>\
                                         <td>Transport Fees</td>\
-                                        <td class="text-right"></td>\
+                                        <td class="text-right">'+tra_total+'</td>\
                                     </tr>\
                                     <tr>\
                                         <td>8</td>\
                                         <td>Arrears </td>\
-                                        <td class="text-right"></td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td>9</td>\
                                         <td>Current Penalty</td>\
-                                        <td class="text-right"></td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td class="thick-line"></td>\
                                         <td class="thick-line text-right"><strong>Grand Total</strong></td>\
-                                        <td class="thick-line text-right">'+total+'</td>\
+                                        <td class="thick-line text-right">'+grand_total+'</td>\
                                     </tr>\
                                 </tbody>\
                             </table>\
@@ -829,47 +851,47 @@ function printAdmissionChallan(stdId,emp){
                             <tr>\
                                 <td>1</td>\
                                 <td>Admission Fee</td>\
-                                <td class="text-right">'+obj["admission_fees"]+'</td>\
+                                <td class="text-right">'+adm_total+'</td>\
                             </tr>\
                             <tr>\
                                 <td>2</td>\
                                 <td>Security</td>\
-                                <td class="text-right"></td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>3</td>\
                                 <td>Annual Charges</td>\
-                                <td class="text-right"></td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>5</td>\
                                 <td>Tuition Fees</td>\
-                                <td class="text-right"></td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>6</td>\
                                 <td>Miscellaneous</td>\
-                                <td class="text-right"></td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>7</td>\
                                 <td>Transport Fees</td>\
-                                <td class="text-right"></td>\
+                                <td class="text-right">'+tra_total+'</td>\
                             </tr>\
                             <tr>\
                                 <td>8</td>\
                                 <td>Arrears </td>\
-                                <td class="text-right"></td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>9</td>\
                                 <td>Current Penalty</td>\
-                                <td class="text-right"></td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td class="thick-line"></td>\
                                 <td class="thick-line text-right"><strong>Grand Total</strong></td>\
-                                <td class="thick-line text-right">'+total+'</td>\
+                                <td class="thick-line text-right">'+grand_total+'</td>\
                             </tr>\
                         </tbody>\
                     </table>\
@@ -1060,7 +1082,7 @@ function printChallan(stdId,emp){
               "issue":jQuery(emp).children().find("input")[13].value,
               "due":jQuery(emp).children().find("input")[14].value
             };
-  var total = +obj["security_fees"] + +obj["annual_fees"] + +obj["monthly_fees"] + +obj["misc_fees"] + +obj["transport_fees"] + +obj["arrears"] + +obj["current_penalty"];
+  var total = +obj["security_fees"] + +obj["annual_fees"] + +obj["monthly_fees"] + +obj["misc_fees"] + +obj["arrears"] + +obj["current_penalty"];
 
     var html =''
     html = '\
@@ -1146,7 +1168,7 @@ function printChallan(stdId,emp){
                                     <tr>\
                                         <td>1</td>\
                                         <td>Admission Fee</td>\
-                                        <td class="text-right">'+obj["admission_fees"]+'</td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td>2</td>\
@@ -1170,7 +1192,7 @@ function printChallan(stdId,emp){
                                     </tr>\
                                         <td>7</td>\
                                         <td>Transport Fees</td>\
-                                        <td class="text-right">'+obj["transport_fees"]+'</td>\
+                                        <td class="text-right">0</td>\
                                     <tr>\
                                     </tr>\
                                     <tr>\
@@ -1292,7 +1314,7 @@ function printChallan(stdId,emp){
                             <tr>\
                                 <td>1</td>\
                                 <td>Admission Fee</td>\
-                                <td class="text-right">'+obj["admission_fees"]+'</td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>2</td>\
@@ -1317,7 +1339,7 @@ function printChallan(stdId,emp){
                             <tr>\
                                 <td>7</td>\
                                 <td>Transport Fees</td>\
-                                <td class="text-right">'+obj["transport_fees"]+'</td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>8</td>\
@@ -1501,12 +1523,13 @@ margin-top: 10mm;\
 }
 
 
-function batchPrintAdmissionChallan(){
+function batchPrintAdmTraChallan(cat){
   $(".print_pdf_show").empty();
 
   jQuery("#fees_table_body tr").each(function(i,row){
     var obj={};
-    var total = 0;
+    var adm_total = 0;
+    var tra_total = 0;
     obj = {
             "gr_num": jQuery(row).children().find("input")[0].value,
             "name" : jQuery(row).children().find("input")[1].value, 
@@ -1524,8 +1547,15 @@ function batchPrintAdmissionChallan(){
             "issue":jQuery(row).children().find("input")[13].value,
             "due":jQuery(row).children().find("input")[14].value
     };
-    total = obj["admission_fees"];
-
+    if (cat == "admission"){
+      adm_total = obj["admission_fees"];
+      tra_total = 0;
+    }
+    else{
+      tra_total = obj["transport_fees"];
+      adm_total = 0;
+    }
+    var grand_total = +adm_total + +tra_total;
     var html =''
     html = '\
     <div class="container-fluid" id="printSect">\
@@ -1610,47 +1640,47 @@ function batchPrintAdmissionChallan(){
                                     <tr>\
                                         <td>1</td>\
                                         <td>Admission Fee</td>\
-                                        <td class="text-right">'+obj["admission_fees"]+'</td>\
+                                        <td class="text-right">'+adm_total+'</td>\
                                     </tr>\
                                     <tr>\
                                         <td>2</td>\
                                         <td>Security</td>\
-                                        <td class="text-right"></td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td>3</td>\
                                         <td>Annual Charges</td>\
-                                        <td class="text-right"></td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td>5</td>\
                                         <td>Tuition Fees</td>\
-                                        <td class="text-right"></td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td>6</td>\
                                         <td>Miscellaneous</td>\
-                                        <td class="text-right"></td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td>7</td>\
                                         <td>Transport Fees</td>\
-                                        <td class="text-right"></td>\
+                                        <td class="text-right">'+tra_total+'</td>\
                                     </tr>\
                                     <tr>\
                                         <td>8</td>\
                                         <td>Arrears </td>\
-                                        <td class="text-right"></td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td>9</td>\
                                         <td>Current Penalty</td>\
-                                        <td class="text-right"></td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td class="thick-line"></td>\
                                         <td class="thick-line text-right"><strong>Grand Total</strong></td>\
-                                        <td class="thick-line text-right">'+total+'</td>\
+                                        <td class="thick-line text-right">'+grand_total+'</td>\
                                     </tr>\
                                 </tbody>\
                             </table>\
@@ -1756,47 +1786,47 @@ function batchPrintAdmissionChallan(){
                             <tr>\
                                 <td>1</td>\
                                 <td>Admission Fee</td>\
-                                <td class="text-right">'+obj["admission_fees"]+'</td>\
+                                <td class="text-right">'+adm_total+'</td>\
                             </tr>\
                             <tr>\
                                 <td>2</td>\
                                 <td>Security</td>\
-                                <td class="text-right"></td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>3</td>\
                                 <td>Annual Charges</td>\
-                                <td class="text-right"></td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>5</td>\
                                 <td>Tuition Fees</td>\
-                                <td class="text-right"></td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>6</td>\
                                 <td>Miscellaneous</td>\
-                                <td class="text-right"></td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>7</td>\
                                 <td>Transport Fees</td>\
-                                <td class="text-right"></td>\
+                                <td class="text-right">'+tra_total+'</td>\
                             </tr>\
                             <tr>\
                                 <td>8</td>\
                                 <td>Arrears </td>\
-                                <td class="text-right"></td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>9</td>\
                                 <td>Current Penalty</td>\
-                                <td class="text-right"></td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td class="thick-line"></td>\
                                 <td class="thick-line text-right"><strong>Grand Total</strong></td>\
-                                <td class="thick-line text-right">'+total+'</td>\
+                                <td class="thick-line text-right">'+grand_total+'</td>\
                             </tr>\
                         </tbody>\
                     </table>\
@@ -1987,7 +2017,7 @@ function batchPrintChallan(){
             "issue":jQuery(row).children().find("input")[13].value,
             "due":jQuery(row).children().find("input")[14].value
     };
-    total = +obj["security_fees"] + +obj["annual_fees"] + +obj["monthly_fees"] + +obj["misc_fees"] + +obj["transport_fees"] + +obj["arrears"] + +obj["current_penalty"];
+    total = +obj["security_fees"] + +obj["annual_fees"] + +obj["monthly_fees"] + +obj["misc_fees"] + +obj["arrears"] + +obj["current_penalty"];
 
     var html =''
     html = '\
@@ -2073,7 +2103,7 @@ function batchPrintChallan(){
                                     <tr>\
                                         <td>1</td>\
                                         <td>Admission Fee</td>\
-                                        <td class="text-right"></td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td>2</td>\
@@ -2098,7 +2128,7 @@ function batchPrintChallan(){
                                     <tr>\
                                         <td>7</td>\
                                         <td>Transport Fees</td>\
-                                        <td class="text-right">'+obj["transport_fees"]+'</td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td>8</td>\
@@ -2219,7 +2249,7 @@ function batchPrintChallan(){
                             <tr>\
                                 <td>1</td>\
                                 <td>Admission Fee</td>\
-                                <td class="text-right"></td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>2</td>\
@@ -2244,7 +2274,7 @@ function batchPrintChallan(){
                             <tr>\
                                 <td>7</td>\
                                 <td>Transport Fees</td>\
-                                <td class="text-right">'+obj["transport_fees"]+'</td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>8</td>\

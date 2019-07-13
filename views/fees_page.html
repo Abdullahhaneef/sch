@@ -278,6 +278,7 @@
                             <th> Update Record  </th>
                             <th> Print Admission Challan </th>
                             <th> Print Monthly Challan </th>
+                            <th> Print Transport Challan </th>
                           </tr> 
                           <tr>
                             <td>  </td>
@@ -297,9 +298,9 @@
                             <td> </td>
                             <td> </td>
                             <td> <span id = "updateAllRecord" title="Update All record" class="btn btn-link" style="cursor:pointer" onclick="updateAllFees(jQuery(this).parent().parent())">Update All</span> </td>
-                            <td> <span id = "printAllAdmission" title="Print all record below" class="btn btn-link" style="cursor:pointer" onclick="batchPrintAdmissionChallan()">Print All</span> </td>
+                            <td> <span id = "printAllAdmission" title="Print all record below" class="btn btn-link" style="cursor:pointer" onclick="batchPrintAdmTraChallan('admission')">Print All</span> </td>
                             <td> <span id = "printMonthly" title="Print all record below" class="btn btn-link" style="cursor:pointer" onclick="batchPrintChallan()">Print All</span> </td>
-
+                            <td> <span id = "printAllAdmission" title="Print all record below" class="btn btn-link" style="cursor:pointer" onclick="batchPrintAdmTraChallan('transport')">Print All</span> </td>
                           </tr>
                         </thead>
                         <tbody id="fees_table_body">
