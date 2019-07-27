@@ -147,29 +147,70 @@ app.get('/update_std', (req, res) => {
 app.post("/addStudent", function(req, res) {
     setupResponse(res);
     var stdId=0;
-    query_add_student = escape('INSERT INTO %s VALUES(%s) RETURNING id','student(gr_num, name, gender, dob, age,\
-                                 place_of_birth, nationality, religion, class_id, f_name, address, f_profession, \
-                                 m_profession, telephone_home, telephone_office, old_details, participation, \
-                                 awards, health, admission_fees, monthly_fees, issue_date, due_date, receive_date, sibling )\
-                                 ', ["'"+req.body.data.gr_num+"','"+req.body.data.name+"','"+req.body.data.gender+"',\
-                                 '"+req.body.data.dob+"','"+req.body.data.age+"','"+req.body.data.place_of_birth+"',\
-                                 '"+req.body.data.nationality+"','"+req.body.data.religion+"','"+req.body.data.class_id+"',\
-                                 '"+req.body.data.f_name+"','"+req.body.data.address+"','"+req.body.data.f_profession+"',\
-                                 '"+req.body.data.m_profession+"',"+req.body.data.telephone_home+","+req.body.data.telephone_office+",\
-                                 '"+req.body.data.old_details+"','"+req.body.data.participation+"','"+req.body.data.awards+"',\
-                                 '"+req.body.data.health+"',"+req.body.data.admission_fees+","+req.body.data.monthly_fees+",\
-                                 '"+req.body.data.today_date+"','"+req.body.data.today_date+"','"+req.body.data.today_date+"','"+req.body.data.sibling+"'"]);
-    console.log(query_add_student);
-    client.query(query_add_student, function(err, result) {
+    var month;
+    var issue_date;
+    var due_date;
+    if (req.body.data.telephone_home == ''){
+        req.body.data.telephone_home = null;
+    }
+    if (req.body.data.telephone_office == ''){
+        req.body.data.telephone_office = null;
+    }
+    if (req.body.data.admission_fees == ''){
+        req.body.data.admission_fees = null;
+    }
+
+
+
+    if (req.body.data.monthly_fees == ''){
+        req.body.data.monthly_fees = null;
+    }
+    if (req.body.data.dob == ''){
+        req.body.data.dob = '01-01-1900';
+    }
+    if (req.body.data.age == ''){
+        req.body.data.age = 0;
+    }    
+    query_get_date = "SELECT max(month) as month, max(issue_date) as issue_date, max(due_date) as due_date from student;"
+    client.query(query_get_date, function(err, result) {
         if(err) {
-            console.log(err);
+            console.log(err)
         }
         else {
-            stdId = result.rows[0].id;
+            for (i=0; i<result.rows.length; i++){
+                console.log(result.rows);
+                dates = result.rows;
+            }
+            if (dates[0]['month'] != null){
+                dates[0]['month'] = "'"+dates[0]['month']+"'"
+                dates[0]['issue_date'] = "'"+dates[0]['issue_date']+"'"
+                dates[0]['due_date'] = "'"+dates[0]['due_date']+"'"
+            }
+            query_add_student = escape('INSERT INTO %s VALUES(%s) RETURNING id','student(gr_num, name, gender, dob, age,\
+                                         place_of_birth, nationality, religion, class_id, f_name, address, f_profession, \
+                                         m_profession, telephone_home, telephone_office, old_details, participation, \
+                                         awards, health, admission_fees, monthly_fees, issue_date, due_date, month, sibling )\
+                                         ', ["'"+req.body.data.gr_num+"','"+req.body.data.name+"','"+req.body.data.gender+"',\
+                                         '"+req.body.data.dob+"','"+req.body.data.age+"','"+req.body.data.place_of_birth+"',\
+                                         '"+req.body.data.nationality+"','"+req.body.data.religion+"','"+req.body.data.class_id+"',\
+                                         '"+req.body.data.f_name+"','"+req.body.data.address+"','"+req.body.data.f_profession+"',\
+                                         '"+req.body.data.m_profession+"',"+req.body.data.telephone_home+","+req.body.data.telephone_office+",\
+                                         '"+req.body.data.old_details+"','"+req.body.data.participation+"','"+req.body.data.awards+"',\
+                                         '"+req.body.data.health+"',"+req.body.data.admission_fees+","+req.body.data.monthly_fees+",\
+                                         "+dates[0]['issue_date']+","+dates[0]['due_date']+","+dates[0]['month']+",'"+req.body.data.sibling+"'"]);
+            console.log(query_add_student);
+            client.query(query_add_student, function(err, result) {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    stdId = result.rows[0].id;
+                }
+            })
             client.end();
             res.end(JSON.stringify({"status":"success", "stdId":stdId}));
         }
-    })        
+    });
 });
 
 app.post("/updateSetStudent", function(req, res) {
@@ -363,10 +404,10 @@ app.post("/change_month", jsonParser, function(req, res) {
                             f_profession, m_profession, old_details, participation, awards, \
                             health, gr_num, create_date, class_id, admission_fees, monthly_fees, \
                             arrears, security_fees, annual_fees, misc_fees, current_penalty, \
-                            issue_date, due_date, receive_date, month, transport_fees,sibling)\
+                            issue_date, due_date, receive_date, month, transport_fees,sibling,transport_arears)\
                             SELECT * FROM student;\
                         SELECT id, gr_num, due_date, receive_date, monthly_fees, security_fees, arrears, annual_fees, \
-                        misc_fees, transport_fees, current_penalty FROM student \
+                        misc_fees, transport_fees, current_penalty,transport_arears FROM student \
                         WHERE receive_date is null or receive_date > due_date;\
                         "
     client.query(query_get_student, function(err, result) {
@@ -388,12 +429,13 @@ app.post("/change_month", jsonParser, function(req, res) {
                                                 WHERE id = " + students[i]["id"] + ";"
                     }
                     else{
-                        var arrears_val = students[i]["monthly_fees"] + students[i]["security_fees"] + students[i]["annual_fees"] + students[i]["misc_fees"] + students[i]["transport_fees"] + students[i]["arrears"] + students[i]["current_penalty"];                    
+                        var arrears_val = students[i]["monthly_fees"] + students[i]["security_fees"] + students[i]["annual_fees"] + students[i]["misc_fees"] + students[i]["arrears"] + students[i]["current_penalty"];                    
+                        var transport_arrears_val = students[i]["transport_fees"] + students[i]["transport_arears"]; 
                         var a = new Date(students[i]["due_date"]);
                         var b = new Date(req.body["issue_date"]);
                         difference = dateDiffInDays(a, b);
                         update_penalty_query = update_penalty_query + " UPDATE student SET current_penalty = " + difference*10 + "\
-                                                        , arrears = " + arrears_val + " WHERE id = " + students[i]["id"] + ";"
+                                                        , arrears = " + arrears_val + ", transport_arears = " + transport_arrears_val + " WHERE id = " + students[i]["id"] + ";"
                     }
                 }
             }
@@ -463,6 +505,7 @@ app.post("/update_student_fee", jsonParser, function(req, res) {
                                 admission_fees="+req.body['admission_fees']+", \
                                 monthly_fees="+req.body['monthly_fees']+", \
                                 arrears="+req.body['arrears']+", \
+                                transport_arrears="+req.body['transport_arrears']+", \
                                 security_fees="+req.body['security_fees']+", \
                                 annual_fees="+req.body['annual_fees']+", \
                                 misc_fees="+req.body['misc_fees']+", \

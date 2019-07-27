@@ -381,9 +381,9 @@ function renderFees(response){
   var is_active;
   jQuery("#fees_table_body").empty();
   if (response['students']){
-    jQuery("#month")[0].value = response["students"][1]["month"];
-    jQuery("#issue")[0].value = response["students"][1]["issue_date"];
-    jQuery("#due")[0].value = response["students"][1]["due_date"];
+    jQuery("#month")[0].value = response["students"][0]["month"];
+    jQuery("#issue")[0].value = response["students"][0]["issue_date"];
+    jQuery("#due")[0].value = response["students"][0]["due_date"];
     for (i=0; i < response['students'].length;i++){
 /*      if (response["students"][i]["is_active"]){
         is_active = "checked";
@@ -403,6 +403,7 @@ function renderFees(response){
                             <td> <input name="misc_fees" type="number" value = "'+response["students"][i]["misc_fees"]+'"></td>\
                             <td> <input name="transport_fees" type="number" value = "'+response["students"][i]["transport_fees"]+'"></td>\
                             <td> <input name="arrears" type="number" value = "'+response["students"][i]["arrears"]+'"></td>\
+                            <td> <input name="transport_arrears" type="number" value = "'+response["students"][i]["transport_arrears"]+'"></td>\
                             <td> <input name="current_penalty" type="number" value = "'+response["students"][i]["current_penalty"]+'"></td>\
                             <td> <input name="month" type="month" value = "'+response["students"][i]["month"]+'"></td>\
                             <td> <input name="issue_date" type="Date" value = "'+response["students"][i]["issue_date"]+'"></td>\
@@ -525,11 +526,12 @@ function updateStudentFee(stdId,std){
             "misc_fees":jQuery(std).children().find("input")[8].value,
             "transport_fees":jQuery(std).children().find("input")[9].value,
             "arrears":jQuery(std).children().find("input")[10].value,
-            "current_penalty":jQuery(std).children().find("input")[11].value,
-            "receive_date":jQuery(std).children().find("input")[15].value,
-            "issue_date":jQuery(std).children().find("input")[13].value,
-            "due_date":jQuery(std).children().find("input")[14].value,
-            "month":jQuery(std).children().find("input")[12].value
+            "transport_arrears":jQuery(std).children().find("input")[11].value,
+            "current_penalty":jQuery(std).children().find("input")[12].value,
+            "receive_date":jQuery(std).children().find("input")[16].value,
+            "issue_date":jQuery(std).children().find("input")[14].value,
+            "due_date":jQuery(std).children().find("input")[15].value,
+            "month":jQuery(std).children().find("input")[13].value
           };
   console.log(obj["receive_date"]);
   console.log(obj["issue_date"]);
@@ -605,21 +607,24 @@ function printAdmTraChallan(cat,stdId,emp){
               "misc_fees":jQuery(emp).children().find("input")[8].value,
               "transport_fees":jQuery(emp).children().find("input")[9].value,
               "arrears":jQuery(emp).children().find("input")[10].value,
-              "current_penalty":jQuery(emp).children().find("input")[11].value,
-              "month":jQuery(emp).children().find("input")[12].value,
-              "issue":jQuery(emp).children().find("input")[13].value,
-              "due":jQuery(emp).children().find("input")[14].value
+              "transport_arrears":jQuery(emp).children().find("input")[11].value,
+              "current_penalty":jQuery(emp).children().find("input")[12].value,
+              "month":jQuery(emp).children().find("input")[13].value,
+              "issue":jQuery(emp).children().find("input")[14].value,
+              "due":jQuery(emp).children().find("input")[15].value
             };
 
   if (cat == 1){
     var adm_total = +obj["admission_fees"];
     var tra_total = 0;
+    var trans_arears = 0;
     var grand_total = adm_total;
   }
   else {
     var adm_total = 0;
     var tra_total = +obj["transport_fees"];
-    var grand_total = tra_total;
+    var grand_total = +obj["transport_fees"] + +obj["transport_arrears"];
+    var trans_arears = +obj["transport_arrears"];
   }
     var html =''
     html = '\
@@ -735,7 +740,7 @@ function printAdmTraChallan(cat,stdId,emp){
                                     <tr>\
                                         <td>8</td>\
                                         <td>Arrears </td>\
-                                        <td class="text-right">0</td>\
+                                        <td class="text-right">'+trans_arears+'</td>\
                                     </tr>\
                                     <tr>\
                                         <td>9</td>\
@@ -881,7 +886,7 @@ function printAdmTraChallan(cat,stdId,emp){
                             <tr>\
                                 <td>8</td>\
                                 <td>Arrears </td>\
-                                <td class="text-right">0</td>\
+                                <td class="text-right">'+trans_arears+'</td>\
                             </tr>\
                             <tr>\
                                 <td>9</td>\
@@ -1077,10 +1082,11 @@ function printChallan(stdId,emp){
               "misc_fees":jQuery(emp).children().find("input")[8].value,
               "transport_fees":jQuery(emp).children().find("input")[9].value,
               "arrears":jQuery(emp).children().find("input")[10].value,
-              "current_penalty":jQuery(emp).children().find("input")[11].value,
-              "month":jQuery(emp).children().find("input")[12].value,
-              "issue":jQuery(emp).children().find("input")[13].value,
-              "due":jQuery(emp).children().find("input")[14].value
+              "transport_arrears":jQuery(emp).children().find("input")[11].value,
+              "current_penalty":jQuery(emp).children().find("input")[12].value,
+              "month":jQuery(emp).children().find("input")[13].value,
+              "issue":jQuery(emp).children().find("input")[14].value,
+              "due":jQuery(emp).children().find("input")[15].value
             };
   var total = +obj["security_fees"] + +obj["annual_fees"] + +obj["monthly_fees"] + +obj["misc_fees"] + +obj["arrears"] + +obj["current_penalty"];
 
@@ -1530,6 +1536,7 @@ function batchPrintAdmTraChallan(cat){
     var obj={};
     var adm_total = 0;
     var tra_total = 0;
+    var trans_arears = 0;
     obj = {
             "gr_num": jQuery(row).children().find("input")[0].value,
             "name" : jQuery(row).children().find("input")[1].value, 
@@ -1542,20 +1549,23 @@ function batchPrintAdmTraChallan(cat){
             "misc_fees":jQuery(row).children().find("input")[8].value,
             "transport_fees":jQuery(row).children().find("input")[9].value,
             "arrears":jQuery(row).children().find("input")[10].value,
-            "current_penalty":jQuery(row).children().find("input")[11].value,
-            "month":jQuery(row).children().find("input")[12].value,
-            "issue":jQuery(row).children().find("input")[13].value,
-            "due":jQuery(row).children().find("input")[14].value
+            "transport_arrears":jQuery(row).children().find("input")[11].value,
+            "current_penalty":jQuery(row).children().find("input")[12].value,
+            "month":jQuery(row).children().find("input")[13].value,
+            "issue":jQuery(row).children().find("input")[14].value,
+            "due":jQuery(row).children().find("input")[15].value
     };
     if (cat == "admission"){
       adm_total = obj["admission_fees"];
+      trans_arears = 0;
       tra_total = 0;
     }
     else{
       tra_total = obj["transport_fees"];
+      trans_arears = obj["transport_arrears"];
       adm_total = 0;
     }
-    var grand_total = +adm_total + +tra_total;
+    var grand_total = +adm_total + +tra_total + +trans_arears;
     var html =''
     html = '\
     <div class="container-fluid" id="printSect">\
@@ -1670,7 +1680,7 @@ function batchPrintAdmTraChallan(cat){
                                     <tr>\
                                         <td>8</td>\
                                         <td>Arrears </td>\
-                                        <td class="text-right">0</td>\
+                                        <td class="text-right">'+trans_arears+'</td>\
                                     </tr>\
                                     <tr>\
                                         <td>9</td>\
@@ -1816,7 +1826,7 @@ function batchPrintAdmTraChallan(cat){
                             <tr>\
                                 <td>8</td>\
                                 <td>Arrears </td>\
-                                <td class="text-right">0</td>\
+                                <td class="text-right">'+trans_arears+'</td>\
                             </tr>\
                             <tr>\
                                 <td>9</td>\
@@ -2012,10 +2022,11 @@ function batchPrintChallan(){
             "misc_fees":jQuery(row).children().find("input")[8].value,
             "transport_fees":jQuery(row).children().find("input")[9].value,
             "arrears":jQuery(row).children().find("input")[10].value,
-            "current_penalty":jQuery(row).children().find("input")[11].value,
-            "month":jQuery(row).children().find("input")[12].value,
-            "issue":jQuery(row).children().find("input")[13].value,
-            "due":jQuery(row).children().find("input")[14].value
+            "transport_arrears":jQuery(row).children().find("input")[11].value,
+            "current_penalty":jQuery(row).children().find("input")[12].value,
+            "month":jQuery(row).children().find("input")[13].value,
+            "issue":jQuery(row).children().find("input")[14].value,
+            "due":jQuery(row).children().find("input")[15].value
     };
     total = +obj["security_fees"] + +obj["annual_fees"] + +obj["monthly_fees"] + +obj["misc_fees"] + +obj["arrears"] + +obj["current_penalty"];
 
