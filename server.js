@@ -189,14 +189,14 @@ app.post("/addStudent", function(req, res) {
             query_add_student = escape('INSERT INTO %s VALUES(%s) RETURNING id','student(gr_num, name, gender, dob, age,\
                                          place_of_birth, nationality, religion, class_id, f_name, address, f_profession, \
                                          m_profession, telephone_home, telephone_office, old_details, participation, \
-                                         awards, health, admission_fees, monthly_fees, issue_date, due_date, month, sibling )\
+                                         awards, health, monthly_fees, issue_date, due_date, month, sibling )\
                                          ', ["'"+req.body.data.gr_num+"','"+req.body.data.name+"','"+req.body.data.gender+"',\
                                          '"+req.body.data.dob+"','"+req.body.data.age+"','"+req.body.data.place_of_birth+"',\
                                          '"+req.body.data.nationality+"','"+req.body.data.religion+"','"+req.body.data.class_id+"',\
                                          '"+req.body.data.f_name+"','"+req.body.data.address+"','"+req.body.data.f_profession+"',\
                                          '"+req.body.data.m_profession+"',"+req.body.data.telephone_home+","+req.body.data.telephone_office+",\
                                          '"+req.body.data.old_details+"','"+req.body.data.participation+"','"+req.body.data.awards+"',\
-                                         '"+req.body.data.health+"',"+req.body.data.admission_fees+","+req.body.data.monthly_fees+",\
+                                         '"+req.body.data.health+"',"+req.body.data.monthly_fees+",\
                                          "+dates[0]['issue_date']+","+dates[0]['due_date']+","+dates[0]['month']+",'"+req.body.data.sibling+"'"]);
             console.log(query_add_student);
             client.query(query_add_student, function(err, result) {

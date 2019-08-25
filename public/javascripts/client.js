@@ -60,10 +60,10 @@ function renderStd(response){
     for (i=0; i < response['students'].length;i++){
       jQuery("#std_table_body").append('<tr>\
                             <td> '+response['students'][i]["gr_num"]+' </td>\
-                            <td> <input name="name" type="Text" value = "'+response["students"][i]["name"]+'"></td>\
-                            <td> <input name="f_name" type="Text" value = "'+response["students"][i]["f_name"]+'"></td>\
-                            <td> <input name="telephone_home" type="Text" value = "'+response["students"][i]["telephone_home"]+'"></td>\
-                            <td> <input name="telephone_office" type="Text" value = "'+response["students"][i]["telephone_office"]+'"></td>\
+                            <td> '+response["students"][i]["name"]+' </td>\
+                            <td> '+response["students"][i]["f_name"]+' </td>\
+                            <td> '+response["students"][i]["telephone_home"]+' </td>\
+                            <td> '+response["students"][i]["dob"]+' </td>\
                             <td> <span id = "updateRecord" title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="updateStudent('+parseInt(response['students'][i]["id"])+')">Update</span> </td>\
                             <td> <span title="delete this record" class="glyphicon glyphicon-trash text-danger" style="cursor:pointer" onclick="delStudent('+parseInt(response['students'][i]["id"])+')"></span> </td>\
                         </tr>');
@@ -642,7 +642,7 @@ function printAdmTraChallan(cat,stdId,emp){
                          </div>\
                          <div class="col-sm-8 text-right">\
                             <address>\
-                                <h3>UN ACADEMY</h3>\
+                                <h3>U N ACADEMY</h3>\
                                 <h4> For Kids </h4>\
                                 <p>625 / B Unit#2 Latifabad Hyderabad</p>\
                             </address>\
@@ -788,7 +788,7 @@ function printAdmTraChallan(cat,stdId,emp){
                  </div>\
                  <div class="col-sm-8 text-right">\
                     <address>\
-                        <h3>UN ACADEMY</h3>\
+                        <h3>U N ACADEMY</h3>\
                         <h4> For Kids </h4>\
                         <p>625 / B Unit#2 Latifabad Hyderabad</p>\
                     </address>\
@@ -1106,7 +1106,7 @@ function printChallan(stdId,emp){
                          </div>\
                          <div class="col-sm-8 text-right">\
                             <address>\
-                                <h3>UN ACADEMY</h3>\
+                                <h3>U N ACADEMY</h3>\
                                 <h4> For Kids </h4>\
                                 <p>625 / B Unit#2 Latifabad Hyderabad</p>\
                             </address>\
@@ -1252,7 +1252,7 @@ function printChallan(stdId,emp){
                  </div>\
                  <div class="col-sm-8 text-right">\
                     <address>\
-                        <h3>UN ACADEMY</h3>\
+                        <h3>U N ACADEMY</h3>\
                         <h4> For Kids </h4>\
                         <p>625 / B Unit#2 Latifabad Hyderabad</p>\
                     </address>\
@@ -1582,7 +1582,7 @@ function batchPrintAdmTraChallan(cat){
                          </div>\
                          <div class="col-sm-8 text-right">\
                             <address>\
-                                <h3>UN ACADEMY</h3>\
+                                <h3>U N ACADEMY</h3>\
                                 <h4> For Kids </h4>\
                                 <p>625 / B Unit#2 Latifabad Hyderabad</p>\
                             </address>\
@@ -1728,7 +1728,7 @@ function batchPrintAdmTraChallan(cat){
                  </div>\
                  <div class="col-sm-8 text-right">\
                     <address>\
-                        <h3>UN ACADEMY</h3>\
+                        <h3>U N ACADEMY</h3>\
                         <h4> For Kids </h4>\
                         <p>625 / B Unit#2 Latifabad Hyderabad</p>\
                     </address>\
@@ -2046,7 +2046,7 @@ function batchPrintChallan(){
                          </div>\
                          <div class="col-sm-8 text-right">\
                             <address>\
-                                <h3>UN ACADEMY</h3>\
+                                <h3>U N ACADEMY</h3>\
                                 <h4> For Kids </h4>\
                                 <p>625 / B Unit#2 Latifabad Hyderabad</p>\
                             </address>\
@@ -2192,7 +2192,7 @@ function batchPrintChallan(){
                  </div>\
                  <div class="col-sm-8 text-right">\
                     <address>\
-                        <h3>UN ACADEMY</h3>\
+                        <h3>U N ACADEMY</h3>\
                         <h4> For Kids </h4>\
                         <p>625 / B Unit#2 Latifabad Hyderabad</p>\
                     </address>\

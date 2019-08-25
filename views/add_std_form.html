@@ -73,7 +73,13 @@ body{
 			<form id="stdForm" class="form-horizontal">
 				<!-- Form Name -->
 				<fieldset>
-					<legend>Admission Form</legend>
+					<div style="text-align: center;">
+						<h1 class="heading_ad_form" style="font-size: 24px;line-height: 1px;">U N Academy </h1>
+						<h1 style="font-size: 20px;">For Kids</h1>
+						<div>
+							<legend>Admission Form</legend>
+						</div>
+					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label" for="gr_num">GR No. </label>
 						<div class="col-sm-9">
@@ -81,7 +87,7 @@ body{
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-3 control-label" for="name">Full Name </label>
+						<label class="col-sm-3 control-label" for="name">Student's Full Name </label>
 						<div class="col-sm-9">
 							<input type="text" id="full_name" name="name" placeholder="Full Name" class="form-control">
 						</div>
@@ -98,6 +104,7 @@ body{
 					<div class="form-group">
 						<label class="col-sm-3 control-label" for="dob">Exact Date of Birth: </label>
 						<div class="col-sm-9">
+							<!-- <input type="text" name="input" placeholder="YYYY-MM-DD" required pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" title="Enter a date in this format YYYY-MM-DD"/> -->
 							<input id="dob" name="dob" type="date" class="form-control"  onchange="getAge()">
 						</div>
 					</div>
@@ -211,12 +218,12 @@ body{
 	                        </table> -->
 	                    </div>
 					</div>						  		  
-					<div class="form-group">
+<!-- 					<div class="form-group">
 						<label class="col-sm-3 control-label" for="admission_fees">Admission Fees: </label>
 						<div class="col-sm-9">
 							<input id="admission_fees" name="admission_fees" type="number" class="form-control" >
 						</div>
-					</div>			  		  
+					</div>		 -->	  		  
 					<div class="form-group">
 						<label class="col-sm-3 control-label" for="monthly_fees">Monthly Fees: </label>
 						<div class="col-sm-9">
