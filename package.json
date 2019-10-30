@@ -31,7 +31,7 @@
     "q": "1.4.1",
     "request": "2.74.0",
     "rgb-hex": "2.1.0",
-    "sequelize": "^4.13.5",
+    "sequelize": "^5.15.1",
     "serve-favicon": "2.3.0"
   }
 }
