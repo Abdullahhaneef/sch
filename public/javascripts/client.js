@@ -938,6 +938,9 @@ function printAdmTraChallan(cat,stdId,emp){
     font-size: 12px;\
     box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);\
 }\
+address{\
+    font-style: normal;\
+}\
 address h2{\
     margin-top: 0;\
 }\
@@ -1401,6 +1404,9 @@ function printChallan(stdId,emp){
     background: #FFF;\
     font-size: 12px;\
     box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);\
+}\
+address{\
+    font-style: normal;\
 }\
 address h2{\
     margin-top: 0;\
@@ -1880,6 +1886,9 @@ function batchPrintAdmTraChallan(cat){
     font-size: 12px;\
     box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);\
 }\
+address{\
+    font-style: normal;\
+}\
 address h2{\
     margin-top: 0;\
 }\
@@ -1996,10 +2005,10 @@ body {\
     box-shadow: none;\
 }\
 @page {\
-     size: 8.2in 11in;\
+     size: 8.2in 10.5in;\
  }\
  .table {\
-margin-top: 13mm;\
+margin-top: 7mm;\
 }\
 }\
 }}'});
@@ -2343,6 +2352,9 @@ function batchPrintChallan(){
     background: #FFF;\
     font-size: 12px;\
     box-shadow: 0 0 1in -0.25in rgba(0, 0, 0, 0.5);\
+}\
+address{\
+    font-style: normal;\
 }\
 address h2{\
     margin-top: 0;\
