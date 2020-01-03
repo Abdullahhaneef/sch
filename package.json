@@ -25,7 +25,7 @@
     "morgan": "^1.9.0",
     "node-datetime": "1.0.1",
     "pdfkit": "0.8.3",
-    "pg": "6.4.0",
+    "pg": "6.4.2",
     "pg-escape": "^0.2.0",
     "phantomjs-prebuilt": "^2.1.13",
     "q": "1.4.1",
