@@ -1,4 +1,5 @@
-  var SERVER_URI = "http://localhost:8090";
+var SERVER_URI = "http://localhost:8090";
+var month_check;
 
 ///////////////////////////Get Class//////////////////////////////////////////
 function getClass(){
@@ -339,7 +340,6 @@ function getFees(){
     });
     getFeesInfo();
   });
-
 }
 
 function getFeesInfo(){
@@ -384,6 +384,7 @@ function renderFees(response){
     jQuery("#month")[0].value = response["students"][0]["month"];
     jQuery("#issue")[0].value = response["students"][0]["issue_date"];
     jQuery("#due")[0].value = response["students"][0]["due_date"];
+    month_check = jQuery('#month')[0].value;
     for (i=0; i < response['students'].length;i++){
 /*      if (response["students"][i]["is_active"]){
         is_active = "checked";
@@ -406,15 +407,12 @@ function renderFees(response){
                             <td> <input name="arrears" type="number" value = "'+response["students"][i]["arrears"]+'"></td>\
                             <td> <input name="transport_arrears" type="number" value = "'+response["students"][i]["transport_arears"]+'"></td>\
                             <td> <input name="current_penalty" type="number" value = "'+response["students"][i]["current_penalty"]+'"></td>\
-                            <td> <input name="total" type="number" value = "'+feesTotal+'"></td>\
-                            <td> '+response["students"][i]["month"]+'</td>\
-                            <td> '+response["students"][i]["issue_date"]+'</td>\
-                            <td> '+response["students"][i]["due_date"]+'</td>\
-                            <td> <input name="receive_date" type="Date" style="width: 100px" value = "'+response["students"][i]["receive_date"]+'"></td>\
-                            <td> <span id = "updateRecord" title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="updateStudentFee('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Update</span> </td>\
-                            <td> <span id = "printAdmission" title="Print this record" class="btn btn-link" style="cursor:pointer" onclick="printAdmTraChallan(1,'+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>\
-                            <td> <span id = "printMonthly" title="Print this record" class="btn btn-link" style="cursor:pointer" onclick="printChallan('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>\
-                            <td> <span id = "printAdmission" title="Print this record" class="btn btn-link" style="cursor:pointer" onclick="printAdmTraChallan(2,'+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())">Print</span> </td>\
+                            <td> '+feesTotal+'</td>\
+                            <td> <input name="receive_date" type="Date" style="width: 100px" value = "'+response["students"][i]["receive_date"]+'" min="'+month_check+'-01" max="'+month_check+'-31"></td>\
+                            <td> <i id = "updateRecord" title="Update this record" class="fa fa-floppy-o" style="cursor:pointer" onclick="updateStudentFee('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())"></i> </td>\
+                            <td> <i id = "printAdmission" title="Print this record" class="fa fa-print" style="cursor:pointer" onclick="printAdmTraChallan(1,'+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())"></i> </td>\
+                            <td> <i id = "printMonthly" title="Print this record" class="fa fa-print" style="cursor:pointer" onclick="printChallan('+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())"></i> </td>\
+                            <td> <i id = "printAdmission" title="Print this record" class="fa fa-print" style="cursor:pointer" onclick="printAdmTraChallan(2,'+parseInt(response["students"][i]["id"])+',jQuery(this).parent().parent())"></i> </td>\
                             </tr>');
     }
     emp_table = jQuery('#fees_table').DataTable({
@@ -425,54 +423,64 @@ function renderFees(response){
           "retrieve": true,
           "bPaginate": false
     });
+    //$('#receive_date').attr('min', month_check + "-01");
+    //$('#receive_date').attr('max', month_check + "-31");
   }
 }
-
+function month_changed(){
+  jQuery('#issue')[0].value = jQuery('#month')[0].value + "-01";
+  jQuery('#due')[0].value = jQuery('#month')[0].value + "-10";  
+}
 function changeMonth(){
   month = jQuery('#month')[0].value;
-  issue_date = jQuery('#issue')[0].value;
-  due_date = jQuery('#due')[0].value;
-  if (month == "" || issue_date == "" || due_date == ""){
-    jQuery.notify("Please fill all Three fields","error");
+  if (month <= month_check){
+    jQuery("#month").notify("Month selected is same or old.","error");
   }
   else{
-    var obj = {
-              "month":month,
-              "issue_date":issue_date,
-              "due_date":due_date
-            };
+    issue_date = jQuery('#issue')[0].value;
+    due_date = jQuery('#due')[0].value;
+    if (month == "" || issue_date == "" || due_date == ""){
+      jQuery.notify("Please fill all Three fields","error");
+    }
+    else{
+      var obj = {
+                "month":month,
+                "issue_date":issue_date,
+                "due_date":due_date
+              };
 
-    swal({
-      title: 'Are you sure?',
-      text: "Check the values, you won't be able to revert this.",
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, save'
-      }).then(function () {
-        var settings = {
-          "async": true,
-          "crossDomain": true,
-          "url": SERVER_URI+"/change_month",
-          "method": "POST",
-          "headers": {
-            "content-type": "application/json",
-            "cache-control": "no-cache"
-          },
-          "processData": false,
-          "data": JSON.stringify(obj)
-        };
-        $.ajax(settings).done(function (response) {
-          jQuery.notify("User Updated","success");
-          getFeesInfo();
-        });  
-        swal(
-          'Saved!',
-          'Request has been saved.',
-          'success'
-        )
-      })
+      swal({
+        title: 'Are you sure?',
+        text: "Check the values, you won't be able to revert this.",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, save'
+        }).then(function () {
+          var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": SERVER_URI+"/change_month",
+            "method": "POST",
+            "headers": {
+              "content-type": "application/json",
+              "cache-control": "no-cache"
+            },
+            "processData": false,
+            "data": JSON.stringify(obj)
+          };
+          $.ajax(settings).done(function (response) {
+            jQuery.notify("User Updated","success");
+            getFeesInfo();
+          });  
+          swal(
+            'Saved!',
+            'Request has been saved.',
+            'success'
+          )
+        })
+    }
   }
 }
 
@@ -514,30 +522,19 @@ function searchStudentFees(){
 }
 
 function updateStudentFee(stdId,std){
-
   var obj = {
             "stdId":stdId,
-            "gr_num": jQuery(std).children().find("input")[0].value,
-            "name" : jQuery(std).children().find("input")[1].value, 
-            "f_name" : jQuery(std).children().find("input")[2].value, 
-            "class_id" : jQuery(std).children().find("input")[3].value,
-            "admission_fees":jQuery(std).children().find("input")[4].value,
-            "security_fees":jQuery(std).children().find("input")[5].value,
-            "annual_fees":jQuery(std).children().find("input")[6].value,
-            "monthly_fees":jQuery(std).children().find("input")[7].value,
-            "misc_fees":jQuery(std).children().find("input")[8].value,
-            "transport_fees":jQuery(std).children().find("input")[9].value,
-            "arrears":jQuery(std).children().find("input")[10].value,
-            "transport_arrears":jQuery(std).children().find("input")[11].value,
-            "current_penalty":jQuery(std).children().find("input")[12].value,
-            "receive_date":jQuery(std).children().find("input")[16].value,
-            "issue_date":jQuery(std).children().find("input")[14].value,
-            "due_date":jQuery(std).children().find("input")[15].value,
-            "month":jQuery(std).children().find("input")[13].value
+            "admission_fees":jQuery(std).children().find("input")[0].value,
+            "security_fees":jQuery(std).children().find("input")[1].value,
+            "annual_fees":jQuery(std).children().find("input")[2].value,
+            "monthly_fees":jQuery(std).children().find("input")[3].value,
+            "misc_fees":jQuery(std).children().find("input")[4].value,
+            "transport_fees":jQuery(std).children().find("input")[5].value,
+            "arrears":jQuery(std).children().find("input")[6].value,
+            "transport_arrears":jQuery(std).children().find("input")[7].value,
+            "current_penalty":jQuery(std).children().find("input")[8].value,
+            "receive_date":jQuery(std).children().find("input")[9].value
           };
-  console.log(obj["receive_date"]);
-  console.log(obj["issue_date"]);
-  console.log(obj["due_date"]);
   var settings = {
     "async": true,
     "crossDomain": true,
@@ -553,7 +550,6 @@ function updateStudentFee(stdId,std){
   $.ajax(settings).done(function (response) {
     jQuery.notify("User Updated","success");
   });
-
 }
 
 function updateAllFees(std){
@@ -592,9 +588,6 @@ function print_history(){
     printJS({printable:'history_table',type: 'html'})
 }
 function printAdmTraChallan(cat,stdId,emp){
-
-  console.log("in function");
-  console.log(cat);
   $(".print_pdf_show").empty();
   var obj = {
               "stdId":stdId,
@@ -611,9 +604,9 @@ function printAdmTraChallan(cat,stdId,emp){
               "arrears":jQuery(emp).children().find("input")[6].value,
               "transport_arrears":jQuery(emp).children().find("input")[7].value,
               "current_penalty":jQuery(emp).children().find("input")[8].value,
-              "month":jQuery(emp).children()[14].innerText,
-              "issue":jQuery(emp).children()[15].innerText,
-              "due":jQuery(emp).children()[16].innerText
+              "month":jQuery('#month')[0].value,
+              "issue":jQuery('#issue')[0].value,
+              "due":jQuery('#due')[0].value
             };
 
   if (cat == 1){
@@ -661,7 +654,7 @@ function printAdmTraChallan(cat,stdId,emp){
                                 <tbody>\
                                     <tr>\
                                         <th><span>Challan No</span></th>\
-                                        <td><span>101138</span></td>\
+                                        <td><span>'+obj["month"].replace("-","")+'</span></td>\
                                     </tr>\
                                 </tbody>\
                             </table>\
@@ -807,7 +800,7 @@ function printAdmTraChallan(cat,stdId,emp){
                         <tbody>\
                             <tr>\
                                 <th><span>Challan No</span></th>\
-                                <td><span>101138</span></td>\
+                                <td><span>'+obj["month"].replace("-","")+'</span></td>\
                             </tr>\
                         </tbody>\
                     </table>\
@@ -1089,9 +1082,9 @@ function printChallan(stdId,emp){
               "arrears":jQuery(emp).children().find("input")[6].value,
               "transport_arrears":jQuery(emp).children().find("input")[7].value,
               "current_penalty":jQuery(emp).children().find("input")[8].value,
-              "month":jQuery(emp).children()[14].innerText,
-              "issue":jQuery(emp).children()[15].innerText,
-              "due":jQuery(emp).children()[16].innerText
+              "month":jQuery('#month')[0].value,
+              "issue":jQuery('#issue')[0].value,
+              "due":jQuery('#due')[0].value
             };
   var total = +obj["security_fees"] + +obj["annual_fees"] + +obj["monthly_fees"] + +obj["misc_fees"] + +obj["arrears"] + +obj["current_penalty"];
 
@@ -1128,7 +1121,7 @@ function printChallan(stdId,emp){
                                 <tbody>\
                                     <tr>\
                                         <th><span>Challan No</span></th>\
-                                        <td><span>101138</span></td>\
+                                        <td><span>'+obj["month"].replace("-","")+'</span></td>\
                                     </tr>\
                                 </tbody>\
                             </table>\
@@ -1274,7 +1267,7 @@ function printChallan(stdId,emp){
                         <tbody>\
                             <tr>\
                                 <th><span>Challan No</span></th>\
-                                <td><span>101138</span></td>\
+                                <td><span>'+obj["month"].replace("-","")+'</span></td>\
                             </tr>\
                         </tbody>\
                     </table>\
@@ -1560,9 +1553,9 @@ function batchPrintAdmTraChallan(cat){
             "arrears":jQuery(row).children().find("input")[6].value,
             "transport_arrears":jQuery(row).children().find("input")[7].value,
             "current_penalty":jQuery(row).children().find("input")[8].value,
-            "month":jQuery(row).children()[14].innerText,
-            "issue":jQuery(row).children()[15].innerText,
-            "due":jQuery(row).children()[16].innerText
+            "month":jQuery('#month')[0].value,
+            "issue":jQuery('#issue')[0].value,
+            "due":jQuery('#due')[0].value
     };
     if (cat == "admission"){
       adm_total = obj["admission_fees"];
@@ -1608,7 +1601,7 @@ function batchPrintAdmTraChallan(cat){
                                 <tbody>\
                                     <tr>\
                                         <th><span>Challan No</span></th>\
-                                        <td><span>101138</span></td>\
+                                        <td><span>'+obj["month"].replace("-","")+'</span></td>\
                                     </tr>\
                                 </tbody>\
                             </table>\
@@ -1754,7 +1747,7 @@ function batchPrintAdmTraChallan(cat){
                         <tbody>\
                             <tr>\
                                 <th><span>Challan No</span></th>\
-                                <td><span>101138</span></td>\
+                                <td><span>'+obj["month"].replace("-","")+'</span></td>\
                             </tr>\
                         </tbody>\
                     </table>\
@@ -2008,7 +2001,7 @@ body {\
     box-shadow: none;\
 }\
 @page {\
-     size: 8.2in 10.5in;\
+     size: 8.27in 11in;\
  }\
  .table {\
 margin-top: 7mm;\
@@ -2036,9 +2029,9 @@ function batchPrintChallan(){
             "arrears":jQuery(row).children().find("input")[6].value,
             "transport_arrears":jQuery(row).children().find("input")[7].value,
             "current_penalty":jQuery(row).children().find("input")[8].value,
-            "month":jQuery(row).children()[14].innerText,
-            "issue":jQuery(row).children()[15].innerText,
-            "due":jQuery(row).children()[16].innerText
+            "month":jQuery('#month')[0].value,
+            "issue":jQuery('#issue')[0].value,
+            "due":jQuery('#due')[0].value
     };
     total = +obj["security_fees"] + +obj["annual_fees"] + +obj["monthly_fees"] + +obj["misc_fees"] + +obj["arrears"] + +obj["current_penalty"];
 
@@ -2075,7 +2068,7 @@ function batchPrintChallan(){
                                 <tbody>\
                                     <tr>\
                                         <th><span>Challan No</span></th>\
-                                        <td><span>101138</span></td>\
+                                        <td><span>'+obj["month"].replace("-","")+'</span></td>\
                                     </tr>\
                                 </tbody>\
                             </table>\
@@ -2221,7 +2214,7 @@ function batchPrintChallan(){
                         <tbody>\
                             <tr>\
                                 <th><span>Challan No</span></th>\
-                                <td><span>101138</span></td>\
+                                <td><span>'+obj["month"].replace("-","")+'</span></td>\
                             </tr>\
                         </tbody>\
                     </table>\
@@ -2475,7 +2468,7 @@ body {\
     box-shadow: none;\
 }\
 @page {\
-     size: 8.2in 10.5in;\
+     size: 8.27in 11in;\
  }\
  .table {\
 margin-top: 7mm;\

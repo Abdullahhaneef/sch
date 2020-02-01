@@ -481,40 +481,17 @@ app.post("/update_student_fee", jsonParser, function(req, res) {
     else{
         req.body['receive_date'] = "'"+req.body["receive_date"]+"'"
     }
-
-    if (req.body['issue_date']==0){
-        req.body['issue_date'] = null;
-    }
-    else{
-        req.body['issue_date'] = "'"+req.body["issue_date"]+"'"
-    }
-
-    if (req.body['due_date']==0){
-        req.body['due_date'] = null;
-    }
-    else{
-        req.body['due_date'] = "'"+req.body["due_date"]+"'"
-    }
-    if (req.body['month']==0){
-        req.body['month'] = null;
-    }
-    else{
-        req.body['month'] = "'"+req.body["month"]+"'"
-    }    
     var query_update_student = "UPDATE student SET \
                                 admission_fees="+req.body['admission_fees']+", \
                                 monthly_fees="+req.body['monthly_fees']+", \
                                 arrears="+req.body['arrears']+", \
-                                transport_arrears="+req.body['transport_arrears']+", \
+                                transport_arears="+req.body['transport_arrears']+", \
                                 security_fees="+req.body['security_fees']+", \
                                 annual_fees="+req.body['annual_fees']+", \
                                 misc_fees="+req.body['misc_fees']+", \
                                 transport_fees="+req.body['transport_fees']+", \
                                 current_penalty="+req.body['current_penalty']+", \
-                                receive_date="+req.body['receive_date']+", \
-                                issue_date="+req.body['issue_date']+", \
-                                due_date="+req.body['due_date']+" ,\
-                                month="+req.body['month']+" \
+                                receive_date="+req.body['receive_date']+"\
                                 WHERE id="+req.body['stdId']+";"
     console.log(query_update_student);
     client.query(query_update_student, function(err, result) {
