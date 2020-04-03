@@ -121,6 +121,13 @@ app.get('/fees_page', (req, res) => {
         res.redirect('/login');
     }
 });
+app.get('/class_page', (req, res) => {
+    if (req.session.user && req.cookies.user_sid && req.session.user.username == 'admin') {
+        res.sendFile(__dirname + '/views/class_mng.html');
+    } else {
+        res.redirect('/login');
+    }
+});
 app.get('/fees_history', (req, res) => {
     if (req.session.user && req.cookies.user_sid && req.session.user.username == 'admin') {
         res.sendFile(__dirname + '/views/fees_history.html');
@@ -241,7 +248,7 @@ app.post("/updateSetStudent", function(req, res) {
 app.post("/addClass", function(req, res) {
     setupResponse(res);
     var classId=0;
-    query_add_class = escape('INSERT INTO %s VALUES(%s) RETURNING id','class(name)', ["'"+req.body.data.name+"'"]);
+    query_add_class = escape('INSERT INTO %s VALUES(%s) RETURNING id','class(code,name)', [req.body.data.code+", '"+req.body.data.name+"'"]);
 
     client.query(query_add_class, function(err, result) {
         if(err) {
@@ -505,6 +512,26 @@ app.post("/update_student_fee", jsonParser, function(req, res) {
     });
 });
 
+app.post("/update_class", jsonParser, function(req, res) {
+    console.log(req.body);
+    setupResponse(res);
+    var query_update_class = "UPDATE class SET \
+                                code="+req.body['code']+", \
+                                name='"+req.body['name']+"' \
+                                WHERE id="+req.body['stdId']+";"
+    console.log(query_update_class);
+    client.query(query_update_class, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            client.end();
+            res.end(JSON.stringify({"status":"success"}));
+        }
+    });
+});
+
+
 app.post("/update_all_fees", jsonParser, function(req, res) {
     setupResponse(res);
     for (i=0;i<Object.keys(req.body).length;i++){
@@ -545,6 +572,20 @@ app.post("/delete_student", jsonParser, function(req, res) {
     });
 });
 
+app.post("/delete_class", jsonParser, function(req, res) {
+    setupResponse(res);
+    var query_delete_class = "DELETE FROM class \
+                                WHERE id="+req.body['stdId']+";"
+    client.query(query_delete_class, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            client.end();
+            res.end(JSON.stringify({"status":"success"}));
+        }
+    });
+});
 
 // route for handling 404 requests(unavailable routes)
 app.use(function (req, res, next) {

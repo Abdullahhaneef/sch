@@ -1,6 +1,14 @@
 var SERVER_URI = "http://localhost:8090";
 var month_check;
 
+$("#dob").on("change", function() {
+    this.setAttribute(
+        "data-date",
+        moment(this.value, "MM/DD/YYYY")
+        .format( this.getAttribute("data-date-format") )
+    )
+}).trigger("change")
+
 ///////////////////////////Get Class//////////////////////////////////////////
 function getClass(){
   var settings = {
@@ -19,8 +27,70 @@ function getClass(){
     });
     getStd();
   });
-
 }
+
+function getClassInfo(){
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": SERVER_URI+"/get_class",
+    "method": "GET",
+    "headers": {
+      "cache-control": "no-cache"
+    }
+  }
+  $.ajax(settings).done(function (response) {
+    renderClass(response)
+  });  
+}
+
+function renderClass(response){
+  jQuery("#class_table_body").empty();
+  console.log(response);
+  if (response['employees']){
+    for (i=0; i < response['employees'].length;i++){
+      jQuery("#class_table_body").append('<tr>\
+                            <td> <input name="admission_fees" value = "'+response["employees"][i]["code"]+'"> </td>\
+                            <td> <input name="admission_fees" value = "'+response["employees"][i]["name"]+'"> </td>\
+                            <td> <span id = "updateRecord" title="Update this record" class="btn btn-link" style="cursor:pointer" onclick="updateClass('+parseInt(response["employees"][i]["id"])+',jQuery(this).parent().parent())">Update</span> </td>\
+                            <td> <span title="delete this record" class="glyphicon glyphicon-trash text-danger" style="cursor:pointer" onclick="delClass('+parseInt(response['employees'][i]["id"])+')"></span> </td>\
+                        </tr>');
+    }
+    class_table = jQuery('#class_table').DataTable({
+          "lengthChange": true,
+          "ordering": true,
+          "searching": false,
+          "autoWidth": true,
+          "retrieve": true,
+          "bPaginate": false
+    });
+  }
+}
+
+function updateClass(stdId,std){
+  var obj = {
+            "stdId":stdId,
+            "code":jQuery(std).children().find("input")[0].value,
+            "name":jQuery(std).children().find("input")[1].value
+            };
+  var settings = {
+    "async": true,
+    "crossDomain": true,
+    "url": SERVER_URI+"/update_class",
+    "method": "POST",
+    "headers": {
+      "content-type": "application/json",
+      "cache-control": "no-cache"
+    },
+    "processData": false,
+    "data": JSON.stringify(obj)
+  };
+  $.ajax(settings).done(function (response) {
+    jQuery.notify("User Updated","success");
+  });
+}
+
+
 function getClassUpdate(){
   var settings = {
     "async": true,
@@ -578,14 +648,17 @@ function updateAllFees(std){
 
 }
 
+function std_info_print(){
+    printJS({printable:'stdForm',type: 'html',targetStyles: ['*']})
+}
 function print_std(){
-    printJS({printable:'student_table',type: 'html'})
+    printJS({printable:'student_table',type: 'html',targetStyles: ['*']})
 }
 function fees_print(){
-    printJS({printable:'fees_table',type: 'html'})
+    printJS({printable:'fees_table',type: 'html',targetStyles: ['*']})
 }
 function print_history(){
-    printJS({printable:'history_table',type: 'html'})
+    printJS({printable:'history_table',type: 'html',targetStyles: ['*']})
 }
 function printAdmTraChallan(cat,stdId,emp){
   $(".print_pdf_show").empty();
@@ -1086,7 +1159,7 @@ function printChallan(stdId,emp){
               "issue":jQuery('#issue')[0].value,
               "due":jQuery('#due')[0].value
             };
-  var total = +obj["security_fees"] + +obj["annual_fees"] + +obj["monthly_fees"] + +obj["misc_fees"] + +obj["arrears"] + +obj["current_penalty"];
+  var total = +obj["annual_fees"] + +obj["monthly_fees"] + +obj["misc_fees"] + +obj["arrears"] + +obj["current_penalty"];
 
     var html =''
     html = '\
@@ -1177,7 +1250,7 @@ function printChallan(stdId,emp){
                                     <tr>\
                                         <td>2</td>\
                                         <td>Security</td>\
-                                        <td class="text-right">'+obj["security_fees"]+'</td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td>3</td>\
@@ -1323,7 +1396,7 @@ function printChallan(stdId,emp){
                             <tr>\
                                 <td>2</td>\
                                 <td>Security</td>\
-                                <td class="text-right">'+obj["security_fees"]+'</td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>3</td>\
@@ -2033,7 +2106,7 @@ function batchPrintChallan(){
             "issue":jQuery('#issue')[0].value,
             "due":jQuery('#due')[0].value
     };
-    total = +obj["security_fees"] + +obj["annual_fees"] + +obj["monthly_fees"] + +obj["misc_fees"] + +obj["arrears"] + +obj["current_penalty"];
+    total = +obj["annual_fees"] + +obj["monthly_fees"] + +obj["misc_fees"] + +obj["arrears"] + +obj["current_penalty"];
 
     var html =''
     html = '\
@@ -2124,7 +2197,7 @@ function batchPrintChallan(){
                                     <tr>\
                                         <td>2</td>\
                                         <td>Security</td>\
-                                        <td class="text-right">'+obj["security_fees"]+'</td>\
+                                        <td class="text-right">0</td>\
                                     </tr>\
                                     <tr>\
                                         <td>3</td>\
@@ -2270,7 +2343,7 @@ function batchPrintChallan(){
                             <tr>\
                                 <td>2</td>\
                                 <td>Security</td>\
-                                <td class="text-right">'+obj["security_fees"]+'</td>\
+                                <td class="text-right">0</td>\
                             </tr>\
                             <tr>\
                                 <td>3</td>\
@@ -2485,6 +2558,10 @@ function fees_mng(){
   window.open(SERVER_URI + '/fees_page','_self');
 }
 
+function class_mng(){
+  window.open(SERVER_URI + '/class_page','_self');
+}
+
 function fees_his(){
   window.open(SERVER_URI + '/fees_history','_self');
 }
@@ -2629,6 +2706,40 @@ function delStudent(stdId){
       swal(
         'Deleted!',
         'Employee has been deleted.',
+        'success'
+      )
+  })
+}
+
+function delClass(stdId){
+  var obj = {"stdId" : stdId};
+  swal({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    type: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  }).then(function () {
+      var settings = {
+        "async": true,
+        "crossDomain": true,
+        "url": SERVER_URI+"/delete_class",
+        "method": "POST",
+        "headers": {
+          "content-type": "application/json",
+          "cache-control": "no-cache"
+        },
+        "processData": false,
+        "data": JSON.stringify(obj)
+      }
+      $.ajax(settings).done(function (response) {    
+          getClass();
+      });
+      swal(
+        'Deleted!',
+        'Class has been deleted.',
         'success'
       )
   })
