@@ -196,7 +196,7 @@ app.post("/addStudent", function(req, res) {
             query_add_student = escape('INSERT INTO %s VALUES(%s) RETURNING id','student(gr_num, name, gender, dob, age,\
                                          place_of_birth, nationality, religion, class_id, f_name, address, f_profession, \
                                          m_profession, telephone_home, telephone_office, old_details, participation, \
-                                         awards, health, monthly_fees, issue_date, due_date, month, sibling )\
+                                         awards, health, monthly_fees, issue_date, due_date, month, sibling, class )\
                                          ', ["'"+req.body.data.gr_num+"','"+req.body.data.name+"','"+req.body.data.gender+"',\
                                          '"+req.body.data.dob+"','"+req.body.data.age+"','"+req.body.data.place_of_birth+"',\
                                          '"+req.body.data.nationality+"','"+req.body.data.religion+"','"+req.body.data.class_id+"',\
@@ -204,7 +204,7 @@ app.post("/addStudent", function(req, res) {
                                          '"+req.body.data.m_profession+"',"+req.body.data.telephone_home+","+req.body.data.telephone_office+",\
                                          '"+req.body.data.old_details+"','"+req.body.data.participation+"','"+req.body.data.awards+"',\
                                          '"+req.body.data.health+"',"+req.body.data.monthly_fees+",\
-                                         "+dates[0]['issue_date']+","+dates[0]['due_date']+","+dates[0]['month']+",'"+req.body.data.sibling+"'"]);
+                                         "+dates[0]['issue_date']+","+dates[0]['due_date']+","+dates[0]['month']+",'"+req.body.data.sibling+"',(select code from class where name = '"+req.body.data.class_id+"')"]);
             console.log(query_add_student);
             client.query(query_add_student, function(err, result) {
                 if(err) {
@@ -232,6 +232,7 @@ app.post("/updateSetStudent", function(req, res) {
                     , m_profession='"+req.body.data.m_profession+"', old_details='"+req.body.data.old_details+"'\
                     , participation='"+req.body.data.participation+"', awards='"+req.body.data.awards+"'\
                     , health='"+req.body.data.health+"', class_id='"+req.body.data.class_id+"', sibling='"+req.body.data.sibling+"'\
+                    ,class = (select code from class where name = '"+req.body.data.class_id+"')\
                      WHERE id = "+req.body.data.stdId+";"
     console.log(query_update_student);
     client.query(query_update_student, function(err, result) {
@@ -242,7 +243,7 @@ app.post("/updateSetStudent", function(req, res) {
             client.end();
             res.end(JSON.stringify({"status":"success"}));
         }
-    })        
+    })
 });
 
 app.post("/addClass", function(req, res) {
@@ -349,6 +350,37 @@ app.get("/get_student", function(req, res) {
         }
     });
 });
+app.get("/promote_std", function(req, res) {
+    setupResponse(res);
+    
+    query_promote_student = "Update student set class = class + 1 Where class_id != 'Graduated';\
+                            Update student set class_id = (select name from class where code = class);"
+    console.log(query_promote_student);
+    client.query(query_promote_student, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            res.end(JSON.stringify({"status":"success"}));
+        }
+    });
+});
+
+app.get("/std_alumnai", function(req, res) {
+    setupResponse(res);
+    
+    query_alumnai_student = "INSERT INTO alumnai SELECT * FROM student WHERE class_id = 'Graduated'; DELETE FROM student WHERE class_id='Graduated'"
+    console.log(query_alumnai_student);
+    client.query(query_alumnai_student, function(err, result) {
+        if(err) {
+            console.log(err)
+        }
+        else {
+            res.end(JSON.stringify({"status":"success"}));
+        }
+    });
+});
+
 app.post("/get_student_id", jsonParser, function(req, res) {
     setupResponse(res);
     var student;
@@ -372,7 +404,7 @@ app.get("/get_class", function(req, res) {
     setupResponse(res);
     var employees;
     query_get_class = "SELECT * \
-                            FROM class\
+                            FROM class Order By code\
                             ";
     client.query(query_get_class, function(err, result) {
         if(err) {

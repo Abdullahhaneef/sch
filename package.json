@@ -28,6 +28,7 @@
     "pg": "6.4.0",
     "pg-escape": "^0.2.0",
     "phantomjs-prebuilt": "^2.1.13",
+    "print-js": "^1.0.63",
     "q": "1.4.1",
     "request": "2.74.0",
     "rgb-hex": "2.1.0",

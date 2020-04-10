@@ -13,8 +13,14 @@
 	<script type="text/javascript" charset="utf-8" src="javascripts/notify.min.js"></script> 
 	<script type="text/javascript" charset="utf-8" src="javascripts/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" charset="utf-8" src="javascripts/core.js"></script>
+	<!-- <script type="text/javascript" charset="utf-8" src="javascripts/print.min58.js"></script> -->
+	<script type="text/javascript" charset="utf-8" src="javascripts/print59.js"></script>
+	<!-- <script type="text/javascript" charset="utf-8" src="javascripts/print.min58.js"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/print-js@1.0.54/dist/print.min.js"></script>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/print-js@1.0.63/dist/print.min.js"></script> -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/print-js@1.0.59/dist/print.min.js"></script> -->
+	<!-- <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="https://printjs-4de6.kxcdn.com/print.min.css"> -->
 </head>
 <style type="text/css">
 body{
@@ -79,13 +85,15 @@ body{
 				<!-- Form Name -->
 				<fieldset>
 					
+
+					<div class="form-field" id="form-field">
+					
 					<div style="text-align: center;">
 						<img src="static/img/logo-w.jpg" style="float: left;width: 100px">
 						
 							<h1 style="height: 95px;display: inline-block;">Admission Form</h1>
 						
 					</div>
-					<div class="form-field" id="form-field">
 					<div class="row">
 						<div class="form-group col-sm-4">
 							<div class="row">
@@ -176,12 +184,12 @@ body{
 						</div>
 						<div class="form-group col-sm-4">
 							<div class="row">
-								<label class="col-sm-9" for="class_id">Class in which Admitted</label>
+								<label class="col-sm-9" for="class_id">Class Admitted</label>
 							</div>
 							<div class="row">
 								<div class="col-sm-11">	
 									<select name="class_id" id="classes" class="form-control">
-										<option value=""></option>
+									
 									</select>
 								</div>
 							</div>
@@ -190,7 +198,7 @@ body{
 					<div class="row">
 						<div class="form-group col-sm-4">
 							<div class="row">
-								<label class="col-sm-9" for="f_name">Father's Name/Guardian's Name</label>
+								<label class="col-sm-9" for="f_name">Father's Name</label>
 							</div>
 							<div class="row">
 								<div class="col-sm-11">	
@@ -254,7 +262,7 @@ body{
 					<div class="row">
 						<div class="form-group col-sm-6">
 							<div class="row">
-								<label class="col-sm-9" for="old_details">Brief details of any previous schooling  the child has /had: </label>
+								<label class="col-sm-9" for="old_details">Brief details of any previous schooling  the child had: </label>
 							</div>
 							<div class="row">
 								<div class="col-sm-11">
@@ -286,6 +294,18 @@ body{
 						</div>			  		  
 						<div class="form-group col-sm-6">
 							<div class="row">
+								<label class="col-sm-9" for="monthly_fees"> Brother/Sister studying in U N Academy </label>
+							</div>
+							<div class="row">
+								<div class="col-sm-11">
+									<textarea id="sibling" name="sibling" rows="4" class="form-control"></textarea>
+			                    </div>
+			                </div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="form-group col-sm-6">
+							<div class="row">
 								<label class="col-sm-9" for="health">Is there anything you would like to tell us about child's health habits, and educational Standard etc? </label>
 							</div>
 							<div class="row">
@@ -294,18 +314,6 @@ body{
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="form-group col-sm-6">
-							<div class="row">
-								<label class="col-sm-9" for="monthly_fees"> His/Her brother/sister studying in U N Academy </label>
-							</div>
-							<div class="row">
-								<div class="col-sm-11">
-									<textarea id="sibling" name="sibling" rows="4" class="form-control"></textarea>
-			                    </div>
-			                </div>
-						</div>	
 
 <!-- 					<div class="form-group">
 						<label class="col-sm-3 col-sm-9" for="admission_fees">Admission Fees: </label>
@@ -329,6 +337,7 @@ body{
 					<div class="btn" style="width: 100%">
 						<div id="add_std_button" class="">
 							<button onclick="addStudent(); return false;" style="width: 17%; padding: 12px;" class="btn btn-primary">Submit</button>							
+							<button onclick="std_info_print(); return false;" style="width: 17%; padding: 12px;" class="btn btn-primary">Print</button>							
 						</div>
 					</div>
 				</div>				
