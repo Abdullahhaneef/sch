@@ -196,7 +196,7 @@ app.post("/addStudent", function(req, res) {
             query_add_student = escape('INSERT INTO %s VALUES(%s) RETURNING id','student(gr_num, name, gender, dob, age,\
                                          place_of_birth, nationality, religion, class_id, f_name, address, f_profession, \
                                          m_profession, telephone_home, telephone_office, old_details, participation, \
-                                         awards, health, monthly_fees, issue_date, due_date, month, sibling, class )\
+                                         awards, health, monthly_fees, issue_date, due_date, month, sibling, class, class_admitted )\
                                          ', ["'"+req.body.data.gr_num+"','"+req.body.data.name+"','"+req.body.data.gender+"',\
                                          '"+req.body.data.dob+"','"+req.body.data.age+"','"+req.body.data.place_of_birth+"',\
                                          '"+req.body.data.nationality+"','"+req.body.data.religion+"','"+req.body.data.class_id+"',\
@@ -204,7 +204,7 @@ app.post("/addStudent", function(req, res) {
                                          '"+req.body.data.m_profession+"',"+req.body.data.telephone_home+","+req.body.data.telephone_office+",\
                                          '"+req.body.data.old_details+"','"+req.body.data.participation+"','"+req.body.data.awards+"',\
                                          '"+req.body.data.health+"',"+req.body.data.monthly_fees+",\
-                                         "+dates[0]['issue_date']+","+dates[0]['due_date']+","+dates[0]['month']+",'"+req.body.data.sibling+"',(select code from class where name = '"+req.body.data.class_id+"')"]);
+                                         "+dates[0]['issue_date']+","+dates[0]['due_date']+","+dates[0]['month']+",'"+req.body.data.sibling+"',(select code from class where name = '"+req.body.data.class_id+"'),'"+req.body.data.class_id+"'"]);
             console.log(query_add_student);
             client.query(query_add_student, function(err, result) {
                 if(err) {
@@ -231,8 +231,7 @@ app.post("/updateSetStudent", function(req, res) {
                     , address='"+req.body.data.address+"', f_profession='"+req.body.data.f_profession+"'\
                     , m_profession='"+req.body.data.m_profession+"', old_details='"+req.body.data.old_details+"'\
                     , participation='"+req.body.data.participation+"', awards='"+req.body.data.awards+"'\
-                    , health='"+req.body.data.health+"', class_id='"+req.body.data.class_id+"', sibling='"+req.body.data.sibling+"'\
-                    ,class = (select code from class where name = '"+req.body.data.class_id+"')\
+                    , health='"+req.body.data.health+"', class_admitted='"+req.body.data.class_id+"', sibling='"+req.body.data.sibling+"'\
                      WHERE id = "+req.body.data.stdId+";"
     console.log(query_update_student);
     client.query(query_update_student, function(err, result) {
@@ -443,8 +442,10 @@ app.post("/change_month", jsonParser, function(req, res) {
                             f_profession, m_profession, old_details, participation, awards, \
                             health, gr_num, create_date, class_id, admission_fees, monthly_fees, \
                             arrears, security_fees, annual_fees, misc_fees, current_penalty, \
-                            issue_date, due_date, receive_date, month, transport_fees,sibling,transport_arears)\
+                            issue_date, due_date, receive_date, month, transport_fees,sibling,transport_arears,class,class_admitted)\
                             SELECT * FROM student;\
+                            UPDATE student SET arrears=0, transport_arears=0, current_penalty =0\
+                            WHERE receive_date <= due_date;\
                         SELECT id, gr_num, due_date, receive_date, monthly_fees, security_fees, arrears, annual_fees, \
                         misc_fees, transport_fees, current_penalty,transport_arears FROM student \
                         WHERE receive_date is null or receive_date > due_date;\
@@ -464,7 +465,8 @@ app.post("/change_month", jsonParser, function(req, res) {
                         var a = new Date(students[i]["due_date"]);
                         var b = new Date(students[i]["receive_date"]);
                         difference = dateDiffInDays(a, b);
-                        update_penalty_query = update_penalty_query + " UPDATE student SET current_penalty = " + difference*10 + " \
+                        update_penalty_query = update_penalty_query + " UPDATE student SET current_penalty = " + difference*10 + ",\
+                                                arrears = 0, transport_arears = 0 \
                                                 WHERE id = " + students[i]["id"] + ";"
                     }
                     else{
@@ -473,7 +475,14 @@ app.post("/change_month", jsonParser, function(req, res) {
                         var a = new Date(students[i]["due_date"]);
                         var b = new Date(req.body["issue_date"]);
                         difference = dateDiffInDays(a, b);
-                        update_penalty_query = update_penalty_query + " UPDATE student SET current_penalty = " + difference*10 + "\
+                        var diff_amount = 0;
+                        if (difference*10 > 200){
+                            diff_amount = 200
+                        }
+                        else{
+                            diff_amount = difference*10;
+                        }
+                        update_penalty_query = update_penalty_query + " UPDATE student SET current_penalty = " + diff_amount + "\
                                                         , arrears = " + arrears_val + ", transport_arears = " + transport_arrears_val + " WHERE id = " + students[i]["id"] + ";"
                     }
                 }

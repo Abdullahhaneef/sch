@@ -197,7 +197,7 @@ function updateStudentInfo(){
       jQuery("#pob")[0].value = std.place_of_birth;
       jQuery("#nationality")[0].value = std.nationality;
       jQuery("#religion")[0].value = std.religion;
-      jQuery("#classes")[0].value = std.class_id;
+      jQuery("#classes")[0].value = std.class_admitted;
       jQuery("#f_name")[0].value = std.f_name;
       jQuery("#address")[0].value = std.address;
       jQuery("#f_profession")[0].value = std.f_profession;
