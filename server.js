@@ -304,7 +304,7 @@ app.post("/searchHistory", function(req, res) {
         query_get_history = query_get_history + accessKey +" = '" + req.body.data[accessKey] + "'  AND "
     }
     query_get_history  = query_get_history.substring(0, query_get_history.length - 6);
-    query_get_history = query_get_history + ";";
+    query_get_history = query_get_history + " ORDER BY class;";
     console.log(query_get_history);
     client.query(query_get_history, function(err, result) {
         if(err) {
@@ -335,7 +335,7 @@ app.get("/get_student", function(req, res) {
     setupResponse(res);
     var students;
     query_get_student = "SELECT *\
-                            FROM student order by id Desc;"
+                            FROM student order by class;"
     client.query(query_get_student, function(err, result) {
         if(err) {
             console.log(err)
@@ -575,17 +575,24 @@ app.post("/update_class", jsonParser, function(req, res) {
 
 app.post("/update_all_fees", jsonParser, function(req, res) {
     setupResponse(res);
+    console.log(req.body);
+    var query_string = ""
     for (i=0;i<Object.keys(req.body).length;i++){
         var accessKey = Object.keys(req.body)[i];
-        if(req.body[accessKey] == ""){
-            req.body[accessKey] = 0;
+        if(req.body[accessKey] != ""){
+            console.log(accessKey);
+            console.log(req.body[accessKey]);
+            query_string = query_string + accessKey +" = " + req.body[accessKey] + ", "
+            //req.body[accessKey] = 0;
         }
     }
-    var query_update_student = "UPDATE student SET \
-                                monthly_fees="+req.body['monthly_fees']+", \
-                                security_fees="+req.body['security_fees']+", \
-                                annual_fees="+req.body['annual_fees']+", \
-                                misc_fees="+req.body['misc_fees']+";";
+    var query_update_student = "UPDATE student SET " + query_string.substring(0, query_string.length - 2) + ";";
+    // var query_update_student = "UPDATE student SET \
+    //                             monthly_fees="+req.body['monthly_fees']+", \
+    //                             security_fees="+req.body['security_fees']+", \
+    //                             annual_fees="+req.body['annual_fees']+", \
+    //                             misc_fees="+req.body['misc_fees']+";";
+    console.log(query_update_student);
     client.query(query_update_student, function(err, result) {
         if(err) {
             console.log(err)

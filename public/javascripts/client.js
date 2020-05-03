@@ -691,6 +691,7 @@ function printAdmTraChallan(cat,stdId,emp){
   }
   else {
     var adm_total = 0;
+    var sec_total = 0;
     var tra_total = +obj["transport_fees"];
     var grand_total = +obj["transport_fees"] + +obj["transport_arrears"];
     var trans_arears = +obj["transport_arrears"];
