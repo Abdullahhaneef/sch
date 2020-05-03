@@ -275,10 +275,11 @@ app.post("/searchStd", function(req, res) {
         var query_get_student = "SELECT * FROM student WHERE "
         for (i=0;i<Object.keys(req.body.data).length;i++){
             var accessKey = Object.keys(req.body.data)[i];
-            query_get_student = query_get_student + accessKey +" = '" + req.body.data[accessKey] + "'  AND "
+            query_get_student = query_get_student + "lower(" + accessKey +") like lower('" + req.body.data[accessKey] + "%')  AND "
         }
         query_get_student  = query_get_student.substring(0, query_get_student.length - 6);
         query_get_student = query_get_student + ";";
+        console.log(query_get_student);
     }
     client.query(query_get_student, function(err, result) {
         if(err) {
