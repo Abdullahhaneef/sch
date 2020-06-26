@@ -649,6 +649,10 @@ function updateAllFees(std){
 }
 
 function std_info_print(){
+    var sel_class = document.getElementById("classes");
+    $("#classes option:first").text(sel_class.options[sel_class.selectedIndex].text);
+    var sel_gender = document.getElementById("gender");
+    $("#gender option:first").text(sel_gender.options[sel_gender.selectedIndex].text);    
     printJS({printable:'form-field',type: 'html',targetStyles: ['*']})
 }
 function print_std(){

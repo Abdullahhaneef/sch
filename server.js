@@ -445,7 +445,7 @@ app.post("/change_month", jsonParser, function(req, res) {
                             arrears, security_fees, annual_fees, misc_fees, current_penalty, \
                             issue_date, due_date, receive_date, month, transport_fees,sibling,transport_arears,class,class_admitted)\
                             SELECT * FROM student;\
-                            UPDATE student SET arrears=0, transport_arears=0, current_penalty =0\
+                            UPDATE student SET arrears=0, transport_arears=0, current_penalty=0, annual_fees=0, misc_fees=0\
                             WHERE receive_date <= due_date;\
                         SELECT id, gr_num, due_date, receive_date, monthly_fees, security_fees, arrears, annual_fees, \
                         misc_fees, transport_fees, current_penalty,transport_arears FROM student \
@@ -466,12 +466,19 @@ app.post("/change_month", jsonParser, function(req, res) {
                         var a = new Date(students[i]["due_date"]);
                         var b = new Date(students[i]["receive_date"]);
                         difference = dateDiffInDays(a, b);
-                        update_penalty_query = update_penalty_query + " UPDATE student SET current_penalty = " + difference*10 + ",\
-                                                arrears = 0, transport_arears = 0 \
+                        var diff_amount = 0;
+                        if (difference*10 > 200){
+                            diff_amount = 200
+                        }
+                        else{
+                            diff_amount = difference*10;
+                        }
+                        update_penalty_query = update_penalty_query + " UPDATE student SET current_penalty = " + diff_amount + ",\
+                                                arrears = 0, transport_arears = 0, annual_fees=0, misc_fees=0 \
                                                 WHERE id = " + students[i]["id"] + ";"
                     }
                     else{
-                        var arrears_val = students[i]["monthly_fees"] + students[i]["security_fees"] + students[i]["annual_fees"] + students[i]["misc_fees"] + students[i]["arrears"] + students[i]["current_penalty"];                    
+                        var arrears_val = students[i]["monthly_fees"] + students[i]["arrears"] + students[i]["current_penalty"];
                         var transport_arrears_val = students[i]["transport_fees"] + students[i]["transport_arears"]; 
                         var a = new Date(students[i]["due_date"]);
                         var b = new Date(req.body["issue_date"]);
