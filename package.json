@@ -20,7 +20,7 @@
     "express-session": "^1.15.6",
     "html-pdf": "^2.2.0",
     "html2canvas": "^1.0.0-rc.3",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "method-override": "2.3.6",
     "morgan": "^1.9.0",
     "node-datetime": "1.0.1",
