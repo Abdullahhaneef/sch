@@ -18,7 +18,7 @@
     "es6-promise": "^4.2.6",
     "express": "^4.15.3",
     "express-session": "^1.15.6",
-    "html-pdf": "^2.2.0",
+    "html-pdf": "^3.0.1",
     "html2canvas": "^1.0.0-rc.3",
     "jspdf": "^1.5.3",
     "method-override": "2.3.6",
